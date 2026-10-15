@@ -287,6 +287,12 @@ button, input, textarea { font: inherit; }
 }
 .reveal { animation: rise-in .45s both cubic-bezier(.2,.7,.2,1); }
 @keyframes rise-in { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+.hero-thiruvalluvar { background-size: cover, cover; background-position: center, center; }
+@media (min-width: 1024px) {
+  .hero-thiruvalluvar { background-size: cover, auto 135%; background-position: center, 82% 20%; }
+}
+.verse-ticker-slide { animation: verse-enter .45s ease-out both; }
+@keyframes verse-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .status-verified { color: #285b49; background: #e7f0e9; border-color: #b8cfbd; }
 .status-near { color: #805f22; background: #f5efd9; border-color: #dfce9c; }
 .status-not-found { color: #87513e; background: #f5eae3; border-color: #dfc1b0; }

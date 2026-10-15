@@ -4,6 +4,26 @@ KuralGuard checks Tamil quotations against a local Tirukkural corpus. Exact
 corpus matches can be confirmed; near matches show the corresponding source
 text for review; a missing match is **not** a claim that a quote is fake.
 `/verify` is deterministic and uses no LLM or network lookup.
+The web interface can also extract Tamil text from PNG, JPEG, or WebP
+screenshots and check it through the same verifier. OCR runs in the browser;
+the screenshot is not uploaded. Extracted text is only a draft: review and
+correct it before submitting it to the verifier. The OCR engine and Tamil
+language data are downloaded when image checking is first used.
+
+The quotation input also offers opt-in Tamil voice transcription using the
+browser's Web Speech API with the `ta-IN` language tag. Browser support and
+Tamil availability vary; this currently depends on a compatible Chromium-based
+browser and its configured speech service. It requires microphone permission,
+a secure context (HTTPS or localhost), and typically an internet connection.
+The app does not record or store audio, but the browser or its speech-service
+provider may process it under their own privacy policy. Transcripts are
+editable and are not checked until you submit them. English speech and
+meaning-based search are not supported.
+
+The home-page ticker uses all 1,330 couplets from the local corpus. Its
+Thiruvalluvar statue photograph is by PKharote, shared under
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) via
+[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Indian_Temple_at_dusk_Thiruvalluvar_Statue.jpg).
 
 ## Run it
 

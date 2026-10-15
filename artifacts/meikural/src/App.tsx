@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type FormEvent, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { getGetEvaluationResultsQueryKey, getGetHealthQueryKey, getGetKuralQueryKey, getHealthCheckQueryKey, useGuardAnswer, useGetEvaluationResults, useGetHealth, useGetKural, useHealthCheck, useVerifyQuote } from '@workspace/api-client-react';
 import type { EvaluationResults, GuardQuote, Kural, Verification } from '@workspace/api-client-react';
@@ -7,12 +7,30 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
 import { Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
-import { Activity, ArrowRight, BookOpen, Check, ChevronDown, CircleHelp, Clipboard, FileSearch, Gauge, Leaf, LoaderCircle, RefreshCw, ScanText, ShieldCheck, Sparkles, TriangleAlert } from 'lucide-react';
+import { Activity, ArrowRight, BookOpen, Check, ChevronDown, CircleHelp, Clipboard, FileSearch, Gauge, Leaf, LoaderCircle, Mic, MicOff, RefreshCw, ScanText, ShieldCheck, Sparkles, TriangleAlert, Upload } from 'lucide-react';
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip as ChartTooltip, XAxis, YAxis } from 'recharts';
 
 const queryClient = new QueryClient();
 type Tab = 'verify' | 'guard' | 'evaluation';
 type Language = 'ta' | 'en';
+type KuralVerse = { id: number; line1: string; line2: string };
+type SpeechRecognitionLike = {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  maxAlternatives: number;
+  onresult: ((event: { results: ArrayLike<ArrayLike<{ transcript: string; confidence: number }> & { isFinal: boolean }> }) => void) | null;
+  onerror: ((event: { error: string }) => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+  abort: () => void;
+};
+type SpeechRecognitionWindow = Window & {
+  SpeechRecognition?: new () => SpeechRecognitionLike;
+  webkitSpeechRecognition?: new () => SpeechRecognitionLike;
+};
+type VoiceState = 'idle' | 'listening' | 'processing' | 'error';
 const LanguageContext = createContext<{ language: Language; setLanguage: (language: Language) => void }>({ language: 'ta', setLanguage: () => undefined });
 const useLanguage = () => useContext(LanguageContext);
 const text = (language: Language, tamil: string, english: string) => language === 'ta' ? tamil : english;
@@ -26,9 +44,34 @@ const tabs: { id: Tab; label: Record<Language, string>; icon: typeof ScanText; n
 function Home() {
   const { language, setLanguage } = useLanguage();
   const [activeTab, setActiveTab] = useState<Tab>('verify');
+  const [verses, setVerses] = useState<KuralVerse[]>([]);
+  const [verseIndex, setVerseIndex] = useState(0);
+  const [versesError, setVersesError] = useState(false);
   const health = useGetHealth({ query: { queryKey: getGetHealthQueryKey() } });
   const healthz = useHealthCheck({ query: { queryKey: getHealthCheckQueryKey() } });
   const apiOnline = Boolean(health.data || healthz.data);
+  useEffect(() => {
+    let active = true;
+    void fetch('/api/kurals/verses')
+      .then(async (response) => {
+        if (!response.ok) throw new Error(`Could not load Kural verses (${response.status}).`);
+        const records = await response.json() as KuralVerse[];
+        if (records.length !== 1330) throw new Error(`Expected 1330 Kural verses, received ${records.length}.`);
+        if (active) setVerses(records);
+      })
+      .catch((error: unknown) => {
+        console.error('Could not load Kural verses for the home-page ticker.', error);
+        if (active) setVersesError(true);
+      });
+    return () => { active = false; };
+  }, []);
+  useEffect(() => {
+      if (verses.length === 0) return;
+      const timer = window.setInterval(() => {
+        setVerseIndex((index) => (index + 1) % verses.length);
+      }, 3000);
+      return () => window.clearInterval(timer);
+  }, [verses.length]);
   return (
     <main className="grain min-h-[100dvh] overflow-hidden bg-background text-foreground">
       <div className="mx-auto flex min-h-[100dvh] max-w-[1440px]">
@@ -69,11 +112,23 @@ function Home() {
             <div className="flex items-center gap-3"><div className="flex items-center gap-2 text-xs text-muted-foreground"><span className={`h-1.5 w-1.5 rounded-full ${apiOnline ? 'bg-primary' : 'bg-amber-500'}`} /><span data-testid="text-service-state">{health.isError && healthz.isError ? text(language, 'சேவை கிடைக்கவில்லை', 'Service unavailable') : apiOnline ? text(language, 'தொகுப்பு இணைப்பில் உள்ளது', 'Corpus connected') : text(language, 'சேவையைச் சரிபார்க்கிறது…', 'Checking service…')}</span></div><button type="button" onClick={() => setLanguage(language === 'ta' ? 'en' : 'ta')} className="rounded-lg border border-border px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-muted" aria-label={text(language, 'ஆங்கிலத்திற்கு மாற்றவும்', 'Switch to Tamil')}>{language === 'ta' ? 'English' : 'தமிழ்'}</button></div>
           </header>
           <div className="mx-auto max-w-[1080px] px-5 pb-14 pt-9 sm:px-8 sm:pt-12 lg:px-12">
-            <div className="mb-9 reveal">
-              <div className="flex items-center gap-2 font-data text-[10px] uppercase tracking-[.22em] text-primary"><span className="h-px w-6 bg-primary" />{text(language, 'தமிழ் இலக்கியம் · ஆதாரத்துடன்', 'Tamil literature · evidence first')}</div>
-              <h1 className="mt-4 max-w-3xl font-display text-[2.35rem] leading-[1.12] tracking-[-.035em] text-foreground sm:text-[3.4rem]">{language === 'ta' ? <>சொல்லின் <em className="font-display font-medium text-primary">மூலத்தை</em> அறியுங்கள்.</> : <>Find the <em className="font-display font-medium text-primary">source</em> of a quotation.</>}</h1>
-              <p className="mt-4 max-w-[590px] text-[15px] leading-7 text-muted-foreground">{text(language, 'மேற்கோளை உள்ளூர் திருக்குறள் தொகுப்புடன் ஒப்பிடுங்கள். அப்படியே பொருந்தினால் உறுதிப்படுத்தலாம்; சந்தேகம் இருந்தால் உறுதியற்றதாகவே தெரிவிப்போம்.', 'Compare a quotation with the local Tirukkural corpus. We confirm exact matches and report uncertain results as uncertain.')}</p>
-            </div>
+            <section className="hero-thiruvalluvar relative mb-9 min-h-[330px] overflow-hidden rounded-[24px] bg-[#15382f] text-[#f7f2e7] shadow-[0_18px_50px_rgba(21,56,47,.18)] sm:min-h-[345px] lg:min-h-[460px] xl:min-h-[480px]" style={{ backgroundImage: "linear-gradient(90deg, rgba(15, 43, 36, .97) 0%, rgba(15, 43, 36, .84) 38%, rgba(15, 43, 36, .18) 100%), url('/thiruvalluvar-statue.jpg')" }} data-testid="hero-thiruvalluvar">
+              <div className="relative z-10 max-w-[650px] px-6 pb-24 pt-7 sm:px-9 sm:pb-28 sm:pt-9">
+                <div className="flex items-center gap-2 font-data text-[10px] uppercase tracking-[.22em] text-[#e7c989]"><span className="h-px w-6 bg-[#e7c989]" />{text(language, 'தமிழ் இலக்கியம் · ஆதாரத்துடன்', 'Tamil literature · evidence first')}</div>
+                <h1 className="mt-4 max-w-3xl font-display text-[2.1rem] leading-[1.12] tracking-[-.035em] sm:text-[3.15rem]">{language === 'ta' ? <>சொல்லின் <em className="font-display font-medium text-[#e7c989]">மூலத்தை</em> அறியுங்கள்.</> : <>Find the <em className="font-display font-medium text-[#e7c989]">source</em> of a quotation.</>}</h1>
+                <p className="mt-4 max-w-[540px] text-[14px] leading-7 text-white/80">{text(language, 'மேற்கோளை உள்ளூர் திருக்குறள் தொகுப்புடன் ஒப்பிடுங்கள். அப்படியே பொருந்தினால் உறுதிப்படுத்தலாம்; சந்தேகம் இருந்தால் உறுதியற்றதாகவே தெரிவிப்போம்.', 'Compare a quotation with the local Tirukkural corpus. We confirm exact matches and report uncertain results as uncertain.')}</p>
+              </div>
+              {verses.length > 0
+                ? <div className="absolute inset-x-0 bottom-0 z-10 min-h-[66px] border-t border-white/15 bg-[#102c25]/85 px-5 py-2.5 backdrop-blur-sm sm:px-8" aria-label={text(language, 'திருக்குறளின் 1330 குறள்களும் வரிசையாக நகர்கின்றன', 'All 1,330 Tirukkural couplets advance in order')} data-testid="verse-ticker">
+                    <div key={verses[verseIndex]?.id} className="verse-ticker-slide flex items-center gap-3 sm:gap-5" aria-hidden="true">
+                      <span className="shrink-0 font-data text-[9px] tracking-[.08em] text-[#e7c989]">#{verses[verseIndex]?.id}<span className="ml-1 text-white/55">/ 1330</span></span>
+                      <p className="font-tamil text-[11px] leading-5 text-white/90 sm:text-[12px] sm:leading-6">{verses[verseIndex]?.line1}<br />{verses[verseIndex]?.line2}</p>
+                    </div>
+                  </div>
+                : <div className="absolute inset-x-0 bottom-0 z-10 border-t border-white/15 bg-[#102c25]/85 px-6 py-3 font-data text-[10px] text-white/70">
+                    {versesError ? text(language, 'குறள் ஓட்டத்தை ஏற்ற முடியவில்லை.', 'Could not load the Kural ticker.') : text(language, 'திருக்குறளின் 1330 குறள்களை ஏற்றுகிறது…', 'Loading all 1,330 Tirukkural couplets…')}
+                  </div>}
+            </section>
             <div className="mb-8 grid grid-cols-3 gap-1 rounded-2xl border border-border bg-card p-1.5 md:hidden" role="tablist" aria-label={text(language, 'மெய்க்குறள் கருவிகள்', 'Meikural tools')}>
               {tabs.map((tab) => { const Icon = tab.icon; return <button role="tab" aria-selected={activeTab === tab.id} key={tab.id} onClick={() => setActiveTab(tab.id)} data-testid={`mobile-tab-${tab.id}`} className={`flex min-h-12 items-center justify-center gap-1.5 rounded-xl px-2 text-[12px] font-semibold transition-all ${activeTab === tab.id ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted'}`}><Icon size={15} />{tab.label[language]}</button>; })}
             </div>
@@ -107,10 +162,69 @@ function Brand({ compact = false }: { compact?: boolean }) {
   </div>;
 }
 
+async function readTamilFromImage(image: File): Promise<{ text: string; confidence: number }> {
+  const { createWorker } = await import('tesseract.js');
+  const bitmap = await createImageBitmap(image);
+  const canvas = document.createElement('canvas');
+  const scale = Math.min(2, 2400 / Math.max(bitmap.width, bitmap.height));
+  canvas.width = Math.round(bitmap.width * scale);
+  canvas.height = Math.round(bitmap.height * scale);
+  const context = canvas.getContext('2d');
+  if (!context) {
+    bitmap.close();
+    throw new Error('Could not prepare the image for Tamil text recognition.');
+  }
+  context.imageSmoothingQuality = 'high';
+  context.filter = 'grayscale(1) contrast(1.25)';
+  context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  bitmap.close();
+  const preparedImage = await new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (blob) resolve(blob);
+      else reject(new Error('Could not prepare the image for Tamil text recognition.'));
+    }, 'image/png');
+  });
+  const worker = await createWorker('tam');
+  try {
+    await worker.setParameters({ preserve_interword_spaces: '1', user_defined_dpi: '300' });
+    const { data } = await worker.recognize(preparedImage, { rotateAuto: true });
+    return { text: data.text.trim(), confidence: data.confidence };
+  } finally {
+    await worker.terminate();
+  }
+}
+
+function formatVoiceTranscript(transcript: string): { text: string; splitCouplet: boolean } {
+  const words = transcript.trim().split(/\s+/);
+  if (words.length !== 7) return { text: transcript.trim(), splitCouplet: false };
+  return {
+    text: `${words.slice(0, 4).join(' ')}\n${words.slice(4).join(' ')}`,
+    splitCouplet: true,
+  };
+}
+
 function VerifyPanel() {
   const { language } = useLanguage();
   const [quoteText, setText] = useState('');
   const [claimedId, setClaimedId] = useState('');
+  const [ocrState, setOcrState] = useState<'idle' | 'reading' | 'ready' | 'error'>('idle');
+  const [ocrError, setOcrError] = useState<string | null>(null);
+  const [ocrConfidence, setOcrConfidence] = useState<number | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [voiceState, setVoiceState] = useState<VoiceState>('idle');
+  const [voiceMessage, setVoiceMessage] = useState<string | null>(null);
+  const [voiceDraft, setVoiceDraft] = useState('');
+  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+  const hadFinalVoiceResultRef = useRef(false);
+  const voiceFailureRef = useRef(false);
+  const interimVoiceRef = useRef('');
+  useEffect(() => () => {
+    if (imagePreview) URL.revokeObjectURL(imagePreview);
+  }, [imagePreview]);
+  useEffect(() => () => {
+    recognitionRef.current?.abort();
+    recognitionRef.current = null;
+  }, []);
   const verify = useVerifyQuote();
   const sampleOne = useGetKural(1, { query: { queryKey: getGetKuralQueryKey(1) } });
   const sampleTwo = useGetKural(2, { query: { queryKey: getGetKuralQueryKey(2) } });
@@ -118,13 +232,206 @@ function VerifyPanel() {
   const samples = sampleReady ? makeSamples(sampleOne.data!, sampleTwo.data!) : null;
   const lookupId = Number(claimedId);
   const kuralLookup = useGetKural(lookupId || 0, { query: { enabled: lookupId >= 1 && lookupId <= 1330, queryKey: getGetKuralQueryKey(lookupId || 0) } });
-  const onSubmit = (event: FormEvent) => { event.preventDefault(); if (!quoteText.trim()) return; verify.mutate({ data: { text: quoteText.trim(), ...(claimedId ? { claimed_id: Number(claimedId) } : {}) } }); };
+  const submitQuote = (quote: string) => { verify.mutate({ data: { text: quote, ...(claimedId ? { claimed_id: Number(claimedId) } : {}) } }); };
+  const onSubmit = (event: FormEvent) => { event.preventDefault(); if (!quoteText.trim()) return; submitQuote(quoteText.trim()); };
+  const onVoiceButton = () => {
+    if (voiceState === 'listening') {
+      setVoiceState('processing');
+      setVoiceMessage(text(language, 'பேச்சைச் செயலாக்குகிறது…', 'Processing your speech…'));
+      try {
+        recognitionRef.current?.stop();
+      } catch (error) {
+        console.error('Could not stop Tamil speech recognition.', error);
+        recognitionRef.current?.abort();
+        recognitionRef.current = null;
+        setVoiceState('error');
+        setVoiceMessage(text(language, 'பதிவை நிறுத்த முடியவில்லை. மீண்டும் முயற்சிக்கவும்.', 'Could not stop recording. Please try again.'));
+      }
+      return;
+    }
+    if (voiceState === 'processing') return;
+    if (!window.isSecureContext) {
+      setVoiceState('error');
+      setVoiceMessage(text(language, 'குரல் தேடலுக்கு பாதுகாப்பான இணைப்பு தேவை. HTTPS அல்லது localhost-ஐப் பயன்படுத்தவும்.', 'Voice search requires a secure connection. Use HTTPS or localhost.'));
+      return;
+    }
+    if (!navigator.onLine) {
+      setVoiceState('error');
+      setVoiceMessage(text(language, 'குரல் அறிதலுக்கு இணைய இணைப்பு தேவை. இணையத்தைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.', 'Speech recognition needs an internet connection. Check your connection and try again.'));
+      return;
+    }
+    const SpeechRecognition = (window as SpeechRecognitionWindow).SpeechRecognition
+      ?? (window as SpeechRecognitionWindow).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      setVoiceState('error');
+      setVoiceMessage(text(language, 'இந்த உலாவியில் குரல் அறிதல் கிடைக்கவில்லை. தமிழில் தட்டச்சு செய்யவும் அல்லது படத்தைப் பதிவேற்றவும்.', 'Speech recognition is not available in this browser. Type in Tamil or upload an image instead.'));
+      return;
+    }
+
+    try {
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'ta-IN';
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.maxAlternatives = 1;
+      hadFinalVoiceResultRef.current = false;
+      interimVoiceRef.current = '';
+      voiceFailureRef.current = false;
+      setVoiceDraft('');
+      setVoiceState('listening');
+      setVoiceMessage(text(language, 'தமிழில் பேசுங்கள். முடிந்ததும் நிறுத்து பொத்தானை அழுத்தவும்.', 'Speak in Tamil. Press Stop when you are finished.'));
+
+      recognition.onresult = (event) => {
+        let finalTranscript = '';
+        let interimTranscript = '';
+        for (let index = 0; index < event.results.length; index += 1) {
+          const result = event.results[index];
+          if (!result) continue;
+          const recognizedText = result[0]?.transcript ?? '';
+          if (result.isFinal) finalTranscript += `${recognizedText} `;
+          else interimTranscript += `${recognizedText} `;
+        }
+        interimVoiceRef.current = interimTranscript.trim();
+        setVoiceDraft(interimVoiceRef.current);
+        if (finalTranscript.trim()) {
+          const formattedTranscript = formatVoiceTranscript(finalTranscript);
+          hadFinalVoiceResultRef.current = true;
+          setText(formattedTranscript.text.slice(0, 5000));
+          setVoiceDraft('');
+          interimVoiceRef.current = '';
+          setVoiceState('processing');
+          setVoiceMessage(formattedTranscript.splitCouplet
+            ? text(language, '7 சொற்கள் கண்டறியப்பட்டன: முதல் 4 சொற்கள் முதல் வரியிலும், அடுத்த 3 சொற்கள் இரண்டாம் வரியிலும். சரிபார்த்து, பிறகு சரிபார்ப்பை அழுத்தவும்.', 'Seven words detected and split into 4 words on line one and 3 on line two. Review the text, then click Verify.')
+            : text(language, 'உரை கிடைத்தது. அதைத் திருத்தி, சரிபார்ப்பை அழுத்தவும்.', 'Transcript ready. Review or edit it, then click Verify.'));
+        }
+      };
+      recognition.onerror = (event) => {
+        const messages: Record<string, string> = {
+          'not-allowed': text(language, 'மைக்ரோஃபோன் அனுமதி மறுக்கப்பட்டது. உலாவி அமைப்புகளில் மைக்ரோஃபோன் அனுமதியை இயக்கி மீண்டும் முயற்சிக்கவும்.', 'Microphone permission was denied. Allow microphone access in browser settings and try again.'),
+          'service-not-allowed': text(language, 'உலாவியின் குரல் அறிதல் சேவை அனுமதிக்கப்படவில்லை.', 'The browser speech-recognition service is not allowed.'),
+          'language-not-supported': text(language, 'உலாவியின் குரல் சேவை தமிழ் (ta-IN) மொழியை ஆதரிக்கவில்லை.', 'The browser speech service does not support Tamil (ta-IN).'),
+          'no-speech': text(language, 'பேச்சு கேட்கப்படவில்லை. மைக்ரோஃபோனைச் சரிபார்த்து அமைதியான இடத்தில் மீண்டும் முயற்சிக்கவும்.', 'No speech was detected. Check your microphone and try again somewhere quieter.'),
+          'audio-capture': text(language, 'மைக்ரோஃபோன் கிடைக்கவில்லை. அது இணைக்கப்பட்டுள்ளதா, வேறு செயலி பயன்படுத்தவில்லையா எனச் சரிபார்க்கவும்.', 'No microphone is available. Check that it is connected and not in use by another app.'),
+          network: text(language, 'குரல் அறிதல் இணைப்பு தோல்வியடைந்தது. இணையத்தைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.', 'Speech recognition connection failed. Check your internet connection and try again.'),
+          aborted: text(language, 'குரல் பதிவு ரத்து செய்யப்பட்டது.', 'Voice recording was cancelled.'),
+        };
+        const message = messages[event.error] ?? text(language, 'குரல் உரையைப் புரிந்துகொள்ள முடியவில்லை. மீண்டும் முயற்சிக்கவும்.', 'Could not recognize the spoken words. Please try again.');
+        voiceFailureRef.current = event.error !== 'aborted';
+        setVoiceState(event.error === 'aborted' ? 'idle' : 'error');
+        setVoiceMessage(message);
+        if (event.error !== 'aborted') console.error('Tamil speech recognition failed:', event.error);
+      };
+      recognition.onend = () => {
+        if (recognitionRef.current === recognition) recognitionRef.current = null;
+        if (voiceFailureRef.current) return;
+        if (hadFinalVoiceResultRef.current) {
+          setVoiceState((current) => current === 'error' ? current : 'idle');
+          return;
+        }
+        const partialTranscript = interimVoiceRef.current.trim();
+        if (partialTranscript) {
+          const formattedTranscript = formatVoiceTranscript(partialTranscript);
+          setText(formattedTranscript.text.slice(0, 5000));
+          setVoiceState('error');
+          setVoiceMessage(formattedTranscript.splitCouplet
+            ? text(language, 'பகுதி உரையில் 7 சொற்கள் இருந்ததால் அதை 4 + 3 எனப் பிரித்தோம். உரையைச் சரிபார்த்து, தேவையானால் திருத்தவும்.', 'The partial transcript had 7 words, so it was split 4 + 3. Review and correct it before verifying.')
+            : text(language, 'பகுதி உரை மட்டுமே கிடைத்தது. அதைச் சரிபார்த்து, தேவையானால் திருத்தவும்.', 'Only a partial transcript was captured. Review and correct it before verifying.'));
+        } else {
+          setVoiceState('error');
+          setVoiceMessage(text(language, 'பேச்சு கிடைக்கவில்லை. மீண்டும் பேசவும் அல்லது தமிழில் தட்டச்சு செய்யவும்.', 'No transcript was captured. Try speaking again or type in Tamil.'));
+        }
+      };
+      recognitionRef.current = recognition;
+      recognition.start();
+    } catch (error) {
+      console.error('Could not start Tamil speech recognition.', error);
+      recognitionRef.current = null;
+      setVoiceState('error');
+      setVoiceMessage(text(language, 'மைக்ரோஃபோனைத் தொடங்க முடியவில்லை. அனுமதி மற்றும் உலாவி அமைப்புகளைச் சரிபார்க்கவும்.', 'Could not start the microphone. Check permission and browser settings.'));
+    }
+  };
+  const onImageSelected = async (event: ChangeEvent<HTMLInputElement>) => {
+    const image = event.currentTarget.files?.[0];
+    event.currentTarget.value = '';
+    if (!image) return;
+    if (!image.type.startsWith('image/')) {
+      setOcrError(text(language, 'படக் கோப்பைத் தேர்ந்தெடுக்கவும்.', 'Choose an image file.'));
+      setOcrState('error');
+      return;
+    }
+    if (image.size > 10 * 1024 * 1024) {
+      setOcrError(text(language, 'படம் 10 MB-ஐ விடச் சிறியதாக இருக்க வேண்டும்.', 'The image must be smaller than 10 MB.'));
+      setOcrState('error');
+      return;
+    }
+
+    setImagePreview(URL.createObjectURL(image));
+    setOcrState('reading');
+    setOcrError(null);
+    setOcrConfidence(null);
+    try {
+      const { text: extractedText, confidence } = await readTamilFromImage(image);
+      if (!extractedText) {
+        setOcrError(text(language, 'படத்தில் படிக்கக்கூடிய தமிழ் உரை கிடைக்கவில்லை. தெளிவான படத்தை முயற்சிக்கவும்.', 'No readable Tamil text was found. Try a clearer image.'));
+        setOcrState('error');
+        return;
+      }
+      setOcrConfidence(confidence);
+      setText(extractedText.slice(0, 5000));
+      if (extractedText.length > 5000) {
+        setOcrError(text(language, 'படத்திலிருந்து 5,000 எழுத்துகளுக்கு மேல் கிடைத்தது. உரை சுருக்கப்பட்டுள்ளது; சரிபார்ப்பதற்கு முன் அதைத் திருத்தவும்.', 'More than 5,000 characters were found. The text was shortened; review it before verifying.'));
+        setOcrState('error');
+        return;
+      }
+      setOcrState('ready');
+    } catch (error) {
+      console.error('Could not read Tamil text from the selected image.', error);
+      setOcrError(text(language, 'படத்திலிருந்து உரையைப் படிக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.', 'Could not read text from the image. Please try again.'));
+      setOcrState('error');
+    }
+  };
   return <div className="grid gap-6 lg:grid-cols-[minmax(0,1.06fr)_minmax(320px,.94fr)]">
     <section className="rounded-[22px] border border-border bg-card p-5 shadow-[0_8px_32px_hsl(36_26%_45%/.05)] sm:p-7">
       <div className="flex items-start justify-between gap-3"><div><p className="font-data text-[10px] uppercase tracking-[.18em] text-muted-foreground">{text(language, '01 / ஒரு மேற்கோள்', '01 / Single quote')}</p><h2 className="mt-2 font-display text-[24px] tracking-[-.02em]">{text(language, 'ஒரு பகுதியைச் சரிபார்க்கவும்', 'Verify a passage')}</h2></div><span className="rounded-full bg-secondary px-3 py-1.5 font-data text-[10px] text-secondary-foreground">{text(language, 'உள்ளூர் தொகுப்பு', 'Local corpus')}</span></div>
       <form className="mt-7" onSubmit={onSubmit}>
         <label htmlFor="quote-input" className="mb-2 flex items-center justify-between text-[12px] font-semibold">{text(language, 'மேற்கோள் உரை', 'Quotation text')} <span className="text-right text-[10px] font-normal text-muted-foreground">{text(language, 'வரி 1: 4 சொற்கள் · வரி 2: 3 சொற்கள்', 'Line 1: 4 words · line 2: 3 words')}</span></label>
-        <textarea id="quote-input" data-testid="input-quote" value={quoteText} onChange={(event) => setText(event.target.value)} maxLength={5000} placeholder={text(language, 'மேற்கோள் உரையை இங்கே ஒட்டவும்…', 'Paste the quotation here…')} className="min-h-[164px] w-full resize-y rounded-xl border border-input bg-background px-4 py-3.5 text-[15px] leading-7 outline-none placeholder:text-muted-foreground/60 focus:border-primary focus:ring-2 focus:ring-primary/15" />
+        <div className="mb-4 rounded-xl border border-dashed border-border bg-muted/35 px-4 py-3.5" aria-busy={ocrState === 'reading'}>
+          <div className="flex flex-wrap items-center gap-3">
+            <label htmlFor="quote-image" className={`inline-flex h-10 cursor-pointer items-center gap-2 rounded-lg border border-border bg-background px-3 text-[12px] font-semibold transition-colors hover:border-primary hover:text-primary ${ocrState === 'reading' ? 'pointer-events-none opacity-50' : ''}`}>
+              {ocrState === 'reading' ? <LoaderCircle size={15} className="animate-spin" /> : <Upload size={15} />}
+              {ocrState === 'reading' ? text(language, 'படத்தைப் படிக்கிறது…', 'Reading image…') : text(language, 'குறள் படத்தைப் பதிவேற்றவும்', 'Upload a Kural image')}
+            </label>
+            <input id="quote-image" type="file" accept="image/png,image/jpeg,image/webp" className="sr-only" onChange={onImageSelected} disabled={ocrState === 'reading'} data-testid="input-quote-image" />
+            <p className="text-[10px] leading-5 text-muted-foreground">{text(language, 'PNG, JPG அல்லது WebP · அதிகபட்சம் 10 MB', 'PNG, JPG, or WebP · 10 MB max')}</p>
+          </div>
+          <p className="mt-2 text-[10px] leading-5 text-muted-foreground">{text(language, 'படம் உங்கள் சாதனத்திலேயே செயலாக்கப்படும். கண்டறிந்த உரையைச் சரிபார்த்து திருத்தலாம்.', 'The image is processed on your device. You can review and edit the detected text.')}</p>
+          {imagePreview && <img src={imagePreview} alt={text(language, 'பதிவேற்றிய குறள் படம்', 'Uploaded Kural screenshot')} className="mt-3 max-h-36 max-w-full rounded-lg border border-border object-contain" data-testid="image-quote-preview" />}
+          {ocrState === 'ready' && <div role="status" className="mt-2 text-[11px] leading-5">
+            <p className="font-semibold text-primary">{text(language, 'படத்திலிருந்து கண்டறிந்த உரை கீழே உள்ளது. அதைத் திருத்தி, சரிபார்ப்பை அழுத்தவும்.', 'Extracted text is below. Review or correct it, then click Verify.')}</p>
+            {ocrConfidence !== null && <p className={ocrConfidence < 70 ? 'mt-1 text-amber-700' : 'mt-1 text-muted-foreground'}>{text(language, 'OCR நம்பிக்கை மதிப்பீடு', 'OCR confidence estimate')}: {Math.round(ocrConfidence)}%{ocrConfidence < 70 ? text(language, ' · உரையை கவனமாகச் சரிபார்க்கவும்.', ' · Check the text carefully.') : ''}</p>}
+          </div>}
+          {ocrError && <p role="alert" className="mt-2 text-[11px] leading-5 text-destructive">{ocrError}</p>}
+        </div>
+        <div className="relative">
+          <textarea id="quote-input" data-testid="input-quote" value={quoteText} onChange={(event) => setText(event.target.value)} maxLength={5000} placeholder={text(language, 'மேற்கோள் உரையை இங்கே ஒட்டவும்…', 'Paste the quotation here…')} className="min-h-[164px] w-full resize-y rounded-xl border border-input bg-background px-4 py-3.5 pb-14 pr-28 text-[15px] leading-7 outline-none placeholder:text-muted-foreground/60 focus:border-primary focus:ring-2 focus:ring-primary/15" />
+          <button
+            type="button"
+            onClick={onVoiceButton}
+            disabled={voiceState === 'processing'}
+            aria-label={voiceState === 'listening' ? text(language, 'பேச்சை நிறுத்தவும்', 'Stop listening') : voiceState === 'processing' ? text(language, 'பேச்சைச் செயலாக்குகிறது', 'Processing speech') : text(language, 'தமிழில் குரல் தேடல்', 'Search by speaking Tamil')}
+            aria-pressed={voiceState === 'listening'}
+            data-testid="button-voice-search"
+            className={`absolute bottom-3 right-3 inline-flex h-9 items-center gap-1.5 rounded-lg px-2.5 text-[11px] font-semibold transition-colors disabled:cursor-wait disabled:opacity-70 ${voiceState === 'listening' ? 'animate-pulse bg-destructive text-destructive-foreground' : 'border border-border bg-card text-foreground hover:border-primary hover:text-primary'}`}
+          >
+            {voiceState === 'listening' ? <MicOff size={15} /> : voiceState === 'processing' ? <LoaderCircle size={15} className="animate-spin" /> : <Mic size={15} />}
+            {voiceState === 'listening' ? text(language, 'நிறுத்து', 'Stop') : voiceState === 'processing' ? text(language, 'செயலாக்கம்', 'Processing') : text(language, 'பேசு', 'Speak')}
+          </button>
+        </div>
+        <div className="mt-2 min-h-5" aria-live="polite" data-testid="voice-search-status">
+          {voiceMessage && <p className={`text-[11px] leading-5 ${voiceState === 'error' ? 'text-destructive' : voiceState === 'listening' ? 'font-medium text-primary' : 'text-muted-foreground'}`}>{voiceMessage}</p>}
+          {voiceDraft && voiceState === 'listening' && <p className="mt-1 font-tamil text-[12px] leading-6 text-muted-foreground">{voiceDraft}</p>}
+        </div>
+        <p className="mt-1 text-[10px] leading-4 text-muted-foreground">{text(language, 'குரலுக்கு உலாவி சேவையைப் பயன்படுத்துகிறது; ஆடியோவை மெய்க்குறள் பதிவு செய்யாது. சேவை வழங்குநரின் தனியுரிமைக் கொள்கை பொருந்தும்.', 'Voice uses your browser speech service; Meikural does not record or store audio. The provider’s privacy policy applies.')}</p>
         <div className="mt-3">
           <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
             <span className="font-data text-[9px] uppercase tracking-[.13em] text-muted-foreground">{text(language, 'தொகுப்பிலிருந்து மாதிரியைத் தேர்ந்தெடுக்கவும்', 'Choose a corpus sample')}</span>

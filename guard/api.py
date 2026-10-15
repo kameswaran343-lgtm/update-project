@@ -35,6 +35,12 @@ class Kural(BaseModel):
     needs_human_review: bool
 
 
+class KuralVerse(BaseModel):
+    id: int
+    line1: str
+    line2: str
+
+
 class DiffPart(BaseModel):
     kind: Literal["same", "changed", "input_only", "corpus_only"]
     input: str
@@ -112,6 +118,14 @@ def read_kural(kural_id: int) -> dict:
     if record is None:
         raise HTTPException(status_code=404, detail="Kural not found.")
     return record
+
+
+@router.get("/kurals/verses", response_model=list[KuralVerse])
+def read_kural_verses() -> list[dict[str, int | str]]:
+    return [
+        {"id": record["id"], "line1": record["line1"], "line2": record["line2"]}
+        for record in get_matcher().records
+    ]
 
 
 @router.post("/verify", response_model=Verification)

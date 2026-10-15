@@ -202,6 +202,14 @@ def test_kural_lookup_and_health_endpoints() -> None:
     assert client.get("/api/health").json() == {"status": "ok"}
     assert client.get("/api/healthz").json() == {"status": "ok"}
     assert client.get("/health").json() == {"status": "ok"}
+    verses = client.get("/api/kurals/verses")
+    assert verses.status_code == 200
+    assert len(verses.json()) == 1330
+    assert verses.json()[0] == {
+        "id": CORPUS[0]["id"],
+        "line1": CORPUS[0]["line1"],
+        "line2": CORPUS[0]["line2"],
+    }
     result = client.get(f"/api/kural/{CORPUS[0]['id']}")
     assert result.status_code == 200
     assert result.json()["id"] == CORPUS[0]["id"]
