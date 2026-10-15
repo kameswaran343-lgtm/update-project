@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "மெய்க்குறள்"
+description = "A Tamil-first quotation verifier that checks literary quotes against a versioned local Tirukkural corpus, annotates pasted AI answers, and reports reproducible evaluation metrics."
+version = "1.0.0"
+id = "artifacts/meikural"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25997
+
+[services.development]
+run = "pnpm --filter @workspace/kuralguard run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/kuralguard", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/meikural/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25997"
+BASE_PATH = "/"

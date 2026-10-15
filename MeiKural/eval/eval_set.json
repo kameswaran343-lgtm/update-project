@@ -1,0 +1,1062 @@
+{
+  "seed": 42,
+  "base_counts": {
+    "real_exact": 50,
+    "real_typo": 30,
+    "tricky": 20,
+    "fake": 50
+  },
+  "total_count": 150,
+  "examples": [
+    {
+      "case_id": "real_exact_01",
+      "label": "real_exact",
+      "text": "ஊடல் உணங்க விடுவாரோடு என்நெஞ்சம்\nகூடுவேம் என்பது அவா.",
+      "expected_id": 1310,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_02",
+      "label": "real_exact",
+      "text": "இரத்தலின் இன்னாது மன்ற நிரப்பிய\nதாமே தமியர் உணல்.",
+      "expected_id": 229,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_03",
+      "label": "real_exact",
+      "text": "மனைமாட்சி இல்லாள்கண் இல்லாயின் வாழ்க்கை\nஎனைமாட்சித் தாயினும் இல்.",
+      "expected_id": 52,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_04",
+      "label": "real_exact",
+      "text": "இறைகடியன் என்றுரைக்கும் இன்னாச்சொல் வேந்தன்\nஉறைகடுகி ஒல்லைக் கெடும்.",
+      "expected_id": 564,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_05",
+      "label": "real_exact",
+      "text": "குடிப்பிறந்து குற்றத்தின் நீங்கி வடுப்பரியும்\nநாணுடையான் சுட்டே தெளிவு.",
+      "expected_id": 502,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_06",
+      "label": "real_exact",
+      "text": "மனநலம் நன்குடைய ராயினும் சான்றோர்க்கு\nஇனநலம் ஏமாப் புடைத்து.",
+      "expected_id": 458,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_07",
+      "label": "real_exact",
+      "text": "அளவின்கண் நின்றொழுகல் ஆற்றார் களவின்கண்\nகன்றிய காத லவர்.",
+      "expected_id": 286,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_08",
+      "label": "real_exact",
+      "text": "அருங்கேடன் என்பது அறிக மருங்கோடித்\nதீவினை செய்யான் எனின்.",
+      "expected_id": 210,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_09",
+      "label": "real_exact",
+      "text": "அறுவாய் நிறைந்த அவிர்மதிக்குப் க்குப் போல\nமறுவுண்டோ மாதர் முகத்து.",
+      "expected_id": 1117,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_10",
+      "label": "real_exact",
+      "text": "அறனறிந்து வெஃகா அறிவுடையார்ச் சேரும்\nதிறன்அறிந் தாங்கே திரு.",
+      "expected_id": 179,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_11",
+      "label": "real_exact",
+      "text": "விடாஅது சென்றாரைக் கண்ணினால் காணப்\nபடாஅதி வாழி மதி.",
+      "expected_id": 1210,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_12",
+      "label": "real_exact",
+      "text": "வழிநோக்கான் வாய்ப்பன செய்யான் பழிநோக்கான்\nபண்பிலன் பற்றார்க்கு இனிது.",
+      "expected_id": 865,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_13",
+      "label": "real_exact",
+      "text": "குழல்இனிது யாழ்இனிது என்பதம் மக்கள்\nமழலைச்சொல் கேளா தவர்.",
+      "expected_id": 66,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_14",
+      "label": "real_exact",
+      "text": "எழுபிறப்பும் தீயவை தீண்டா பழிபிறங்காப்\nபண்புடை மக்கட் பெறின்.",
+      "expected_id": 62,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_15",
+      "label": "real_exact",
+      "text": "பயனில பல்லார்முன் சொல்லல் நயனில\nநட்டார்கண் செய்தலிற் றீது.",
+      "expected_id": 192,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_16",
+      "label": "real_exact",
+      "text": "இடிப்பாரை இல்லாத ஏமரா மன்னன்\nகெடுப்பா ரிலானுங் கெடும்.",
+      "expected_id": 448,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_17",
+      "label": "real_exact",
+      "text": "ஆற்றின் அறவறிந்து ஈக அதுபொருள்\nபோற்றி வழங்கு நெறி.",
+      "expected_id": 477,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_18",
+      "label": "real_exact",
+      "text": "இரவார் இரப்பார்க்கொன்று ஈவர் கரவாது\nகைசெய்தூண் மாலை யவர்.",
+      "expected_id": 1035,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_19",
+      "label": "real_exact",
+      "text": "தணந்தமை சால அறிவிப்ப போலும்\nமணந்தநாள் வீங்கிய தோள்.",
+      "expected_id": 1233,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_20",
+      "label": "real_exact",
+      "text": "தெய்வம் தொழாஅள் கொழுநன் தொழுதெழுவாள்\nபெய்யெனப் பெய்யும் மழை.",
+      "expected_id": 55,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_21",
+      "label": "real_exact",
+      "text": "தாம்வேண்டின் நல்குவர் காதலர் யாம்வேண்டும்\nகெளவை எடுக்கும்இவ் வூர்.",
+      "expected_id": 1150,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_22",
+      "label": "real_exact",
+      "text": "நல்லார்கண் பட்ட வறுமையின் இன்னாதே\nகல்லார்கண் பட் ட திரு.",
+      "expected_id": 408,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_23",
+      "label": "real_exact",
+      "text": "இகலானாம் இன்னாத எல்லாம் நகலானாம்\nநன்னயம் என்னும் செருக்கு.",
+      "expected_id": 860,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_24",
+      "label": "real_exact",
+      "text": "நிலத்தியல்பால் நீர்திரிந் தற்றாகும் மாந்தர்க்கு\nஇனத்தியல்ப தாகும் அறிவு.",
+      "expected_id": 452,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_25",
+      "label": "real_exact",
+      "text": "இருமனப் பெண்டிரும் கள்ளும் கவறும்\nதிருநீக்கப் பட்டார் தொடர்பு.",
+      "expected_id": 920,
+      "edit": "source_text"
+    },
+    {
+      "case_id": "real_exact_26",
+      "label": "real_exact",
+      "text": "  மறப்பின் எவனாவன் மற்கொல் மறப்பறியேன் !!! \n   உள்ளினும் உள்ளம் சுடும். ,  ",
+      "expected_id": 1207,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_27",
+      "label": "real_exact",
+      "text": "  கல்லார்ப் பிணிக்கும் கடுங்கோல் அதுவல்லது !!! \n   இல்லை நிலக்குப் பொறை. ,  ",
+      "expected_id": 570,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_28",
+      "label": "real_exact",
+      "text": "  ஏரின் உழாஅர் உழவர் புயல்என்னும் !!! \n   வாரி வளங்குன்றிக் கால். ,  ",
+      "expected_id": 14,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_29",
+      "label": "real_exact",
+      "text": "  தன்னுயிர் நீப்பினும் செய்யற்க தான்பிறிது !!! \n   இன்னுயிர் நீக்கும் வினை. ,  ",
+      "expected_id": 327,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_30",
+      "label": "real_exact",
+      "text": "  காணாச் சினத்தான் கழிபெருங் காமத்தான் !!! \n   பேணாமை பேணப் படும். ,  ",
+      "expected_id": 866,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_31",
+      "label": "real_exact",
+      "text": "  வேட்பன சொல்லி வினையில எஞ்ஞான்றும் !!! \n   கேட்பினும் சொல்லா விடல். ,  ",
+      "expected_id": 697,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_32",
+      "label": "real_exact",
+      "text": "  பிறர்க்கின்னா முற்பகல் செய்யின் தமக்குஇன்னா !!! \n   பிற்பகல் தாமே வரும். ,  ",
+      "expected_id": 319,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_33",
+      "label": "real_exact",
+      "text": "  அறனறிந்து மூத்த அறிவுடையார் கேண்மை !!! \n   திறனறிந்து தேர்ந்து கொளல். ,  ",
+      "expected_id": 441,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_34",
+      "label": "real_exact",
+      "text": "  இறுதி பயப்பினும் எஞ்சாது இறைவற்கு !!! \n   உறுதி பயப்பதாம் தூது. ,  ",
+      "expected_id": 690,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_35",
+      "label": "real_exact",
+      "text": "  ஏதிலார் குற்றம்போல் தங்குற்றங் காண்கிற்பின் !!! \n   தீதுண்டோ மன்னும் உயிர்க்கு. ,  ",
+      "expected_id": 190,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_36",
+      "label": "real_exact",
+      "text": "  இழைத்தது இகவாமைச் சாவாரை யாரே !!! \n   பிழைத்தது ஒறுக்கிற் பவர். ,  ",
+      "expected_id": 779,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_37",
+      "label": "real_exact",
+      "text": "  பொருள்தீர்ந்த பொச்சாந்துஞ் சொல்லார் மருள்தீர்ந்த !!! \n   மாசறு காட்சி யவர். ,  ",
+      "expected_id": 199,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_38",
+      "label": "real_exact",
+      "text": "  கேடறியாக் கெட்ட இடத்தும் வளங்குன்றா !!! \n   நாடென்ப நாட்டின் தலை. ,  ",
+      "expected_id": 736,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_39",
+      "label": "real_exact",
+      "text": "  குறிப்பிற் குறிப்புணரா வாயின் உறுப்பினுள் !!! \n   என்ன பயத்தவோ கண்? ,  ",
+      "expected_id": 705,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_40",
+      "label": "real_exact",
+      "text": "  பாடு பெறுதியோ நெஞ்சே கொடியார்க்கென் !!! \n   வாடுதோட் பூசல் உரைத்து. ,  ",
+      "expected_id": 1237,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_41",
+      "label": "real_exact",
+      "text": "  வானோக்கி வாழும் உலகெல்லாம் மன்னவன் !!! \n   கோல் நோக்கி வாழுங் குடி. ,  ",
+      "expected_id": 542,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_42",
+      "label": "real_exact",
+      "text": "  உடைமையுள் இன்மை விருந்தோம்பல் ஓம்பா !!! \n   மடமை மடவார்கண் உண்டு. ,  ",
+      "expected_id": 89,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_43",
+      "label": "real_exact",
+      "text": "  மிகினும் குறையினும் நோய்செய்யும் நூலோர் !!! \n   வளிமுதலா எண்ணிய மூன்று. ,  ",
+      "expected_id": 941,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_44",
+      "label": "real_exact",
+      "text": "  ஏதிலார் போலப் பொதுநோக்கு நோக்குதல் !!! \n   காதலார் கண்ணே உள. ,  ",
+      "expected_id": 1099,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_45",
+      "label": "real_exact",
+      "text": "  தினற்பொருட்டால் கொல்லாது உலகெனின் யாரும் !!! \n   விலைப்பொருட்டால் ஊன்றருவா ரில். ,  ",
+      "expected_id": 256,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_46",
+      "label": "real_exact",
+      "text": "  விழுப்புண் படாதநாள் எல்லாம் வழுக்கினுள் !!! \n   வைக்கும்தன் நாளை எடுத்து. ,  ",
+      "expected_id": 776,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_47",
+      "label": "real_exact",
+      "text": "  விழுப்பேற்றின் அஃதொப்பது இல்லையார் மாட்டும் !!! \n   அழுக்காற்றின் அன்மை பெறின். ,  ",
+      "expected_id": 162,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_48",
+      "label": "real_exact",
+      "text": "  காமம் உழந்து வருந்தினார்க்கு ஏமம் !!! \n   மடலல்லது இல்லை வலி. ,  ",
+      "expected_id": 1131,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_49",
+      "label": "real_exact",
+      "text": "  குடியென்னும் குன்றா விளக்கம் மடியென்னும் !!! \n   மாசூர மாய்ந்து கெடும். ,  ",
+      "expected_id": 601,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_exact_50",
+      "label": "real_exact",
+      "text": "  இளித்தக்க இன்னா செயினும் களித்தார்க்குக் !!! \n   கள்ளற்றே கள்வநின் மார்பு. ,  ",
+      "expected_id": 1288,
+      "edit": "extra_whitespace_and_punctuation"
+    },
+    {
+      "case_id": "real_typo_01",
+      "label": "real_typo",
+      "text": "புலப்பேன்கொல் புல்லுவேன் கொல்ோ கலப்பேன்கொல்\nகண்அன்ன கேளிர் விரன்.",
+      "expected_id": 1267,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_02",
+      "label": "real_typo",
+      "text": "றஆ்று பவர்க்கும் அரண்பொருள் அஞ்சித்தற்\nபோற்று பவர்க்கும் பொருள்.",
+      "expected_id": 741,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_03",
+      "label": "real_typo",
+      "text": "சாலும் நாணும் அவர்கொண்டார் கைம்மாறா\nநோயும் பசலையும் தந்து.",
+      "expected_id": 1183,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_04",
+      "label": "real_typo",
+      "text": "உவப்பத் தலைக்கூடி உள்ளப் பிரிலத்\nஅனைத்தே புலவர் தொழில்.",
+      "expected_id": 394,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_05",
+      "label": "real_typo",
+      "text": "விளிந்தாரின் ேறல்லர் மன்ற தெளிந்தாரில்\nதீமை புரிந்து ஒழுகு வார்.",
+      "expected_id": 143,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_06",
+      "label": "real_typo",
+      "text": "துன்புறூஉம் துவ்வாமை இல்லாகும் யார்மாட்டும்\nஇன்புறூஉம் னஇ்சொ லவர்க்கு.",
+      "expected_id": 94,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_07",
+      "label": "real_typo",
+      "text": "எண்ணித் துணிக கருமம் துணிந்தபின்\nஎண்ணுமவ் என்பது இழுக்கு.",
+      "expected_id": 467,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_08",
+      "label": "real_typo",
+      "text": "ஆக்கம் இழந்தேமென்று அல்லாவார் ஊக்கம்\nஒருவந்தம் கைத்துடை யா்.",
+      "expected_id": 593,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_09",
+      "label": "real_typo",
+      "text": "அழுக்காற்றின் அல்லவை செய்யார் இழுக்காற்றின்\nஏதம் படுபாக்ு அறிந்து.",
+      "expected_id": 164,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_10",
+      "label": "real_typo",
+      "text": "ஆற்றின் றவறிந்து ஈக அதுபொருள்\nபோற்றி வழங்கு நெறி.",
+      "expected_id": 477,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_11",
+      "label": "real_typo",
+      "text": "எனைப்பகை யுற்றாரும் உய்வர் வினைப்கை\nவீயாது பின்சென்று அடும்.",
+      "expected_id": 207,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_12",
+      "label": "real_typo",
+      "text": "இழைத்தது இகவாமைச் சாவாரை யாரே\nபிழைத்தது ஒறுக்ிற் பவர்.",
+      "expected_id": 779,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_13",
+      "label": "real_typo",
+      "text": "கல்லார்ப் பிணிக்கும் கடுங்கோல் அதுவல்லது\nஇல்லை நிலக்கு் பொறை.",
+      "expected_id": 570,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_14",
+      "label": "real_typo",
+      "text": "களித்தானைக் காரணம் காட்டுதல் கீழ்நீர்க்\nகுளித்ானைத் தீத்துரீஇ அற்று.",
+      "expected_id": 929,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_15",
+      "label": "real_typo",
+      "text": "உப்பமை் தற்றால் புலவி அதுசிறிது\nமிக்கற்றால் நீள விடல்.",
+      "expected_id": 1302,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_16",
+      "label": "real_typo",
+      "text": "முற்ாற்றி முற்றி யவரையும் பற்றாற்றிப்\nபற்றியார் வெல்வது அரண்.",
+      "expected_id": 748,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_17",
+      "label": "real_typo",
+      "text": "நாளென னஒ்றுபோற் காட்டி உயிர்ஈரும்\nவாளது உணர்வார்ப் பெறின்.",
+      "expected_id": 334,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_18",
+      "label": "real_typo",
+      "text": "செய்க பொருைச் செறுநர் செருக்கறுக்கும்\nஎஃகதனிற் கூரிய தில்.",
+      "expected_id": 759,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_19",
+      "label": "real_typo",
+      "text": "பல்லவை கற்றும் பயமிலரே லந்லவையுள்\nநன்கு செலச்சொல்லா தார்.",
+      "expected_id": 728,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_20",
+      "label": "real_typo",
+      "text": "அறிவுடையார் எல்லா முடையா் அறிவிலார்\nஎன்னுடைய ரேனும் இலர்.",
+      "expected_id": 430,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_21",
+      "label": "real_typo",
+      "text": "இறைகாக்கும் வையகம் எல்லாம் வனை\nமுறைகாக்கும் முட்டாச் செயின்.",
+      "expected_id": 547,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_22",
+      "label": "real_typo",
+      "text": "ஊடிப் பெறுகுவம் கொல்லோ நுதல்வெயர்்பக்\nகூடலில் தோன்றிய உப்பு.",
+      "expected_id": 1328,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_23",
+      "label": "real_typo",
+      "text": "றஅனியலான் இல்வாழ்வான் என்பான் பிறனியலாள்\nபெண்மை நயவா தவன்.",
+      "expected_id": 147,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_24",
+      "label": "real_typo",
+      "text": "பரிந்வதர் நல்காரென்று ஏங்கிப் பிரிந்தவர்\nபின்செல்வாய் பேதைஎன் நெஞ்சு.",
+      "expected_id": 1248,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_25",
+      "label": "real_typo",
+      "text": "புல்லா திராஅப் புலத்தை அவர்றஉும்\nஅல்லல்நோய் காண்கம் சிறிது.",
+      "expected_id": 1301,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_26",
+      "label": "real_typo",
+      "text": "பொருளல்ல வற்றைப் பொருளென்று ணஉரும்\nமருளானாம் மாணாப் பிறப்பு.",
+      "expected_id": 351,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_27",
+      "label": "real_typo",
+      "text": "யான்நோக்கும் காலை நிலன்நோக்கும் நோக்காக்கால்\nதான்நோக்கி மெ்ல நகும்.",
+      "expected_id": 1094,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_28",
+      "label": "real_typo",
+      "text": "ுடிப்பிறந்து குற்றத்தின் நீங்கி வடுப்பரியும்\nநாணுடையான் சுட்டே தெளிவு.",
+      "expected_id": 502,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_29",
+      "label": "real_typo",
+      "text": "நாச்செற்று விக்குள்மேல் வாராமுன் நல்வினை\nமேற்சென்று செய்யப் டபும்",
+      "expected_id": 335,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "real_typo_30",
+      "label": "real_typo",
+      "text": "தீயள வன்றித் தெரியான் பெரிதுண்ணி்\nநோயள வின்றிப் படும்.",
+      "expected_id": 947,
+      "edit": "one_character_delete_or_swap"
+    },
+    {
+      "case_id": "tricky_01",
+      "label": "tricky",
+      "text": "அஞ்சுவ தோரும் அறனே ஒருவனை\nவஞ்சிப்ப தோரும் இன்பம்.",
+      "expected_id": 366,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_02",
+      "label": "tricky",
+      "text": "துன்னியார் அசைஇ இருப்பாரைக் காணின்\nநிலமென்னும் நல்லாள் நகும்.",
+      "expected_id": 1040,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_03",
+      "label": "tricky",
+      "text": "சூழக் பருவத்தும் ஒப்புரவிற்கு ஒல்கார்\nகடனறி காட்சி யவர்.",
+      "expected_id": 218,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_04",
+      "label": "tricky",
+      "text": "உள்ளக் களித்தலும் காண இல்\nகள்ளுக்கில் காமத்திற் குண்டு.",
+      "expected_id": 1281,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_05",
+      "label": "tricky",
+      "text": "வினைக்கண் வினைகெடல் ஓம்பல் வினைக்குறை\nதலைப்பிரிந்த தீர்ந்தன்று உலகு.",
+      "expected_id": 612,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_06",
+      "label": "tricky",
+      "text": "நீரும் நிழலது இனிதே புலவியும்\nவீழுநர் தன்னைத்தான் இனிது.",
+      "expected_id": 1309,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_07",
+      "label": "tricky",
+      "text": "பரிந்தவர் நின்றது ஏங்கிப் பிரிந்தவர்\nபின்செல்வாய் பேதைஎன் நெஞ்சு.",
+      "expected_id": 1248,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_08",
+      "label": "tricky",
+      "text": "நல்லார்கண் பட்ட வறுமையின் இன்னாதே\nகல்லார்கண் பட் அற்றந் திரு.",
+      "expected_id": 408,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_09",
+      "label": "tricky",
+      "text": "இன்னாசெய் தாரை ஒறுத்தல் அவர்நாண\nநன்னயஞ் செய்து ஈயப்.",
+      "expected_id": 314,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_10",
+      "label": "tricky",
+      "text": "மறமானம் மாண்ட சோர தேற்றம்\nஎனநான்கே ஏமம் படைக்கு.",
+      "expected_id": 766,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_11",
+      "label": "tricky",
+      "text": "நில்லாத வற்றை நிலையின என்றுணரும்\nபுல்லறி எதிர்நிற்கும் கடை.",
+      "expected_id": 331,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_12",
+      "label": "tricky",
+      "text": "வேட்ட பொழுதின் அவையவை போலுமே\nகையறி கதுப்பினாள் தோள்.",
+      "expected_id": 1105,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_13",
+      "label": "tricky",
+      "text": "கடாஅக் அழிவதூஉம் கட்படாம் மாதர்\nபடாஅ முலைமேல் துகில்.",
+      "expected_id": 1087,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_14",
+      "label": "tricky",
+      "text": "கற்றதனால் ஆய வழியெஞ்சல் வாலறிவன்\nநற்றாள் தொழாஅர் எனின்.",
+      "expected_id": 2,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_15",
+      "label": "tricky",
+      "text": "காலை அரும்பிப் பகலெல்லாம் போதாகி\nசெல்வார்க்குச் மலரும்இந் நோய்.",
+      "expected_id": 1227,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_16",
+      "label": "tricky",
+      "text": "சொல்லுதல் கெடுப்பதூஉம் எளிய அரியவாம்\nசொல்லிய வண்ணம் செயல்.",
+      "expected_id": 664,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_17",
+      "label": "tricky",
+      "text": "வைத்தான்வாய் சான்ற பெரும்பொருள் அஃதுண்ணான்\nசெத்தான் கெட்டார்க்கு இல்.",
+      "expected_id": 1001,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_18",
+      "label": "tricky",
+      "text": "செயற்பால ஒழுக்க அறனே ஒருவற்கு\nஉயற்பால தோரும் பழி.",
+      "expected_id": 40,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_19",
+      "label": "tricky",
+      "text": "சாதலின் இன்னாத தில்லை இனிததூஉம்\nஈதல் இயையாக் செய்வினை.",
+      "expected_id": 230,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "tricky_20",
+      "label": "tricky",
+      "text": "சிறுகாப்பிற் பேரிடத்த தாகி உறுபகை\nசுமக்க அழிப்ப தரண்.",
+      "expected_id": 744,
+      "edit": "one_word_replaced_from_another_kural"
+    },
+    {
+      "case_id": "fake_01",
+      "label": "fake",
+      "text": "நகையுள்ளும் இன்னா திகழ்ச்சி பகையுள்ளும்\nபண்புபா ராட்டும் உலகு.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_02",
+      "label": "fake",
+      "text": "வேட்ட பொழுதின் அவையவை போலுமே\nதாமரைக் கண்ணான் உலகு.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_03",
+      "label": "fake",
+      "text": "உள்ளம்போன்று உள்வழிச் செல்கிற்பின் வெள்ளநீர்\nஎன்னல்லது இல்லை துணை.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_04",
+      "label": "fake",
+      "text": "சிறுபடையான் செல்லிடம் சேரின் உறுபடையான்\nஉறைநிலத்தோடு ஒட்டல் அரிது.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_05",
+      "label": "fake",
+      "text": "ஓதி உணர்ந்தும் பிறர்க்குரைத்தும் தானடங்காப்\nதான்புக் கழுந்தும் அளறு.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_06",
+      "label": "fake",
+      "text": "நயன்சாரா நன்மையின் நீக்கும் பயன்சாராப்\nநட்டார்கண் செய்தலிற் றீது.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_07",
+      "label": "fake",
+      "text": "உட்பகை அஞ்சித்தற் காக்க உலைவிடத்து\nஉட்பகை உற்ற குடி.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_08",
+      "label": "fake",
+      "text": "குணனிலனாய்க் குற்றம் பலவாயின் மாற்றார்க்கு\nமாணாத செய்வான் பகை.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_09",
+      "label": "fake",
+      "text": "குடிப்பிறந்தார் கண்விளங்கும் குற்றம் விசும்பின்\nசெப்பமும் நாணும் ஒருங்கு.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_10",
+      "label": "fake",
+      "text": "புல்லி விடாஅப் புலவியுள் தோன்றுமென்\nவாடினும் பாடு பெறும்.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_11",
+      "label": "fake",
+      "text": "எல்லார்க்கும் நன்றாம் பணிதல் அவருள்ளும்\nநன்றாகா தாகி விடும்.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_12",
+      "label": "fake",
+      "text": "எப்பொருளும் ஓரார் தொடரார்மற் றப்பொருளை\nமன்னிய ஆக்கந் தரும்.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_13",
+      "label": "fake",
+      "text": "தேரான் தெளிவும் தெளிந்தான்கண் ஐயுறவும்\nமிகைநாடி மிக்க கொளல்.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_14",
+      "label": "fake",
+      "text": "கொடையளி செங்கோல் குடியோம்பல் நான்கும்\nகவிகைக்கீழ்த் தங்கும் உலகு.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_15",
+      "label": "fake",
+      "text": "வரைவிலா மாணிழையார் மென்தோள் புரையிலாப்\nஏத஧ல் பிணந்தழீஇ அற்று.",
+      "expected_id": null,
+      "edit": "same_chapter_splice"
+    },
+    {
+      "case_id": "fake_16",
+      "label": "fake",
+      "text": "வழிநோக்கான் வாய்ப்பன செய்யான் பழிநோக்கான்\nசொரியினும் போகா தம.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_17",
+      "label": "fake",
+      "text": "கண்ணோட்டம் என்னும் கழிபெருங் காரிகை\nகுலத்தின்கண் ஐயப் படும்.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_18",
+      "label": "fake",
+      "text": "வாரி பெருக்கி வளம்படுத்து உற்றவை\nபொறுத்தாரைப் பொன்போற் பொதிந்து.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_19",
+      "label": "fake",
+      "text": "நட்டார் குறைமுடியார் நன்றாற்றார் நன்னுதலாள்\nமறையிறந்து மன்று படும்.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_20",
+      "label": "fake",
+      "text": "தீவினையார் அஞ்சார் விழுமியார் அஞ்சுவர்\nகொள்வர் பயன்தெரி வார்.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_21",
+      "label": "fake",
+      "text": "வீழும் இருவர்க்கு இனிதே வளியிடை\nஆக்கம் எவனோ உயிர்க்கு.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_22",
+      "label": "fake",
+      "text": "பயனில பல்லார்முன் சொல்லல் நயனில\nநீங்கின் அதனைப் பிற.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_23",
+      "label": "fake",
+      "text": "யாதனின் யாதனின் நீங்கியான் நோதல்\nசெறுவார்க்கும் செய்தல் அரிது.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_24",
+      "label": "fake",
+      "text": "நகையுள்ளும் இன்னா திகழ்ச்சி பகையுள்ளும்\nதுலையல்லார் கண்ணும் கொளல்.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_25",
+      "label": "fake",
+      "text": "பற்றுள்ளம் என்னும் இவறன்மை எற்றுள்ளும்\nகையல்ல தன்கட் செயல்.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_26",
+      "label": "fake",
+      "text": "அடக்கம் அமரருள் உய்க்கும் அடங்காமை\nவலைப்பட்டார் மற்றை யவர்.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_27",
+      "label": "fake",
+      "text": "சுழலும் இசைவேண்டி வேண்டா உயிரார்\nபொருள்சேர் புகழ்புரிந்தார் மாட்டு.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_28",
+      "label": "fake",
+      "text": "மருவுக மாசற்றார் கேண்மைஒன் றீத்தும்\nஅடிதழீஇ நிற்கும் உலகு.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_29",
+      "label": "fake",
+      "text": "ஒன்றெய்தி நூறிழக்கும் சூதர்க்கும் உண்டாங்கொல்\nஉகாஅமை வல்லதே ஒற்று.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_30",
+      "label": "fake",
+      "text": "கொடுத்தும் கொளல்வேண்டும் மன்ற அடுத்திருந்து\nபலர்நாண நீத்தக் கடை.",
+      "expected_id": null,
+      "edit": "cross_chapter_splice"
+    },
+    {
+      "case_id": "fake_31",
+      "label": "fake",
+      "text": "இல்லா மரம்போல்வர் ரேனும் மக்கட்பண்பு அரம்போலும் கூர்மைய தவர்.",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_32",
+      "label": "fake",
+      "text": "செயல். இன்னா தானறிவான் ஏன்னாமை மன்னுயிர்க்கு தன்னுயிர்ககு என்கொலோ",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_33",
+      "label": "fake",
+      "text": "உலகு. தங்கும் சொற்பொறுக்கும் பண்புடை வேந்தன் செவிகைப்பச் கவிகைக்கீழ்த்",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_34",
+      "label": "fake",
+      "text": "மடிமை அடிமை ஒன்னார்க்கு குடிமைக்கண் தங்கின்தன் விடும். புகுத்தி",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_35",
+      "label": "fake",
+      "text": "செற்றார் தக்கா தில். வல்லானைச் தானொழுக செயக்கிடந்த ரினத்தனாய்த்",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_36",
+      "label": "fake",
+      "text": "செய்வார்க்கு வாணிகம் தமபோல் செயின். பிறவும் பேணிப் வாணிகம்",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_37",
+      "label": "fake",
+      "text": "பசப்பு. அவ்வளவில் புல்லிக் வற்றே கிடந்தேன் புடைபெயர்ந்தேன் அள்ளிக்கொள்",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_38",
+      "label": "fake",
+      "text": "நன்னீரை மென்னீரள் யாம்வீழ் நின்னினும் வாழி பவள். அனிச்சமே",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_39",
+      "label": "fake",
+      "text": "அவருள்ளும் நன்றாம் பணிதல் எல்லார்க்கும் தகைத்து. செல்வம் செல்வர்க்கே",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_40",
+      "label": "fake",
+      "text": "வேட்ப கேளாரும் சொல். தகையவாய்க் பிணிக்கும் கேட்டார்ப் மொழிவதாம்",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_41",
+      "label": "fake",
+      "text": "அமைந்தொருபால் சமன்செய்து கணி. கோல்போல் சீர்தூக்குங் கோடாமை சான்றோர்க்",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_42",
+      "label": "fake",
+      "text": "பயன்தூக்கார் நன்மை நயன்தூக்கின் பெரிது. செய்த உதவி கடலின்",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_43",
+      "label": "fake",
+      "text": "வான். ஒருவர்கண் பைதலும் காமன் நின்றொழுகு பருவரலும் காணான்கொல்",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_44",
+      "label": "fake",
+      "text": "சிறப்புந்தான் சீரல் படின். லவர்கண் புரிந்த தொழிற்றாம் இறப்பே",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_45",
+      "label": "fake",
+      "text": "கொன்றிட வீழும் குடி. இடுக்கண்கால் அடுத்தூன்றும் இலாத நல்லாள்",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_46",
+      "label": "fake",
+      "text": "உடைந்ததே ஞாட்பினுள் பீடு. ஒண்ணுதற் நண்ணாரும் கோஒ உட்குமென்",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_47",
+      "label": "fake",
+      "text": "நன்று. பின்சாரப் பொய்யாமை கொல்லாமை ஒன்றாக நல்லது மற்றதன்",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_48",
+      "label": "fake",
+      "text": "நடுவாக தாழ்வு. நன்றிக்கண் கெடுவாக தங்கியான் வையாது உலகம்",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_49",
+      "label": "fake",
+      "text": "இன்மையின் யாதெனின் இன்மையின் தது. இன்னாதது இன்னா இன்மையே",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    },
+    {
+      "case_id": "fake_50",
+      "label": "fake",
+      "text": "பது. கேடீன் வழுக்காயும் அதுசாலும் உடையார்க்கு அழுக்காறு ஒன்னார்",
+      "expected_id": null,
+      "edit": "word_shuffle"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+# The format of this file is identical to `.dockerignore`.
+# It is used to reduce the size of deployed images to make the process of publishing faster.
+
+# No need to store the pnpm store twice.
+.local
+
+# Raw upstream snapshots are preserved in the workspace and can be rebuilt.
+# The normalized local corpus ships with the app and is small enough to include.
+data/raw
+__pycache__
+.pytest_cache
