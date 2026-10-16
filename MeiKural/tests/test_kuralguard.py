@@ -10,6 +10,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from guard import education
+from engine.corpora import CorpusUnavailableError, get_work_catalog, verify_literature
 from engine.matcher import Matcher
 from engine.normalize import normalize
 from guard.api import ABSTAIN_MESSAGE, app
@@ -20,6 +21,10 @@ from scripts.build_corpus import CorpusBuildError, _validate
 ROOT = Path(__file__).resolve().parents[1]
 with (ROOT / "data" / "clean" / "kural.json").open(encoding="utf-8") as source:
     CORPUS = json.load(source)
+with (ROOT / "data" / "clean" / "aathichudi.json").open(encoding="utf-8") as source:
+    AATHICHUDI_CORPUS = json.load(source)
+with (ROOT / "data" / "clean" / "purananuru.json").open(encoding="utf-8") as source:
+    PURANANURU_CORPUS = json.load(source)
 
 client = TestClient(app)
 
@@ -52,6 +57,68 @@ def test_exact_full_couplet_is_verified(matcher: Matcher) -> None:
     assert result.verdict == "verified"
     assert result.matched_id == record["id"]
     assert result.matched_scope == "full"
+
+
+def test_aathichudi_exact_line_uses_its_own_shape() -> None:
+    record = AATHICHUDI_CORPUS[0]
+    result = Matcher(
+        records=AATHICHUDI_CORPUS,
+        work_id="aathichudi",
+    ).verify(record["text"])
+
+    assert result.verdict == "verified"
+    assert result.matched_id == record["id"]
+    assert len(normalize(record["text"]).split()) == 3
+
+
+def test_auto_literature_verification_identifies_aathichudi() -> None:
+    record = AATHICHUDI_CORPUS[0]
+
+    result = verify_literature(record["text"])
+
+    assert result["verdict"] == "verified"
+    assert result["work_id"] == "aathichudi"
+    assert result["work_name"] == "ஆத்திசூடி"
+    assert result["matched_record"]["section"] == record["section"]
+
+
+def test_auto_literature_verification_identifies_purananuru() -> None:
+    record = PURANANURU_CORPUS[0]
+
+    result = verify_literature("\n".join(record["lines"]))
+
+    assert result["verdict"] == "verified"
+    assert result["work_id"] == "purananuru"
+    assert result["work_name"] == "புறநானூறு"
+    assert result["matched_record"]["id"] == record["id"]
+    assert result["matched_record"]["lines"] == record["lines"]
+
+
+def test_purananuru_dataset_has_explicit_source_coverage() -> None:
+    present_ids = {record["id"] for record in PURANANURU_CORPUS}
+    known_source_gaps = set(range(151, 161)) | {244, 267, 268, 320, 362}
+
+    assert len(PURANANURU_CORPUS) == 385
+    assert present_ids == set(range(1, 401)) - known_source_gaps
+    assert all(len(record["lines"]) >= 4 for record in PURANANURU_CORPUS)
+
+
+def test_every_purananuru_poem_matches_runtime_verifier() -> None:
+    matcher = Matcher(records=PURANANURU_CORPUS, work_id="purananuru")
+
+    for record in PURANANURU_CORPUS:
+        result = matcher.verify("\n".join(record["lines"]))
+
+        assert result.verdict == "verified"
+        assert result.matched_id == record["id"]
+
+
+def test_tolkappiyam_unavailable_is_reported_without_fallback() -> None:
+    catalog = {entry["id"]: entry for entry in get_work_catalog()}
+
+    assert catalog["tolkappiyam"]["available"] is False
+    with pytest.raises(CorpusUnavailableError, match="tolkappiyam"):
+        verify_literature("தமிழ் உரை", work_id="tolkappiyam")
 
 
 def test_flattened_full_couplet_is_not_verified(matcher: Matcher) -> None:
@@ -199,6 +266,42 @@ def test_verify_endpoint_uses_local_corpus() -> None:
     assert payload["verdict"] == "verified"
     assert payload["matched_id"] == record["id"]
     assert payload["warning"] == "attribution_mismatch"
+
+
+def test_literature_verify_endpoint_reports_detected_work() -> None:
+    record = AATHICHUDI_CORPUS[0]
+    response = client.post(
+        "/api/literature/verify",
+        json={"text": record["text"], "work_id": "all"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["work_id"] == "aathichudi"
+    assert response.json()["matched_record"]["text"] == record["text"]
+
+
+def test_literature_verify_endpoint_reports_purananuru() -> None:
+    record = PURANANURU_CORPUS[0]
+    response = client.post(
+        "/api/literature/verify",
+        json={"text": "\n".join(record["lines"]), "work_id": "all"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["work_id"] == "purananuru"
+    assert response.json()["matched_record"]["id"] == record["id"]
+
+
+def test_literature_catalog_reports_installed_datasets() -> None:
+    response = client.get("/api/literature/catalog")
+
+    assert response.status_code == 200
+    catalog = {record["id"]: record for record in response.json()}
+    assert catalog["thirukkural"]["available"] is True
+    assert catalog["aathichudi"]["entry_count"] == 109
+    assert catalog["purananuru"]["available"] is True
+    assert catalog["purananuru"]["entry_count"] == 385
+    assert catalog["tolkappiyam"]["available"] is False
 
 
 def test_kural_lookup_and_health_endpoints() -> None:

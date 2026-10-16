@@ -98,9 +98,45 @@ def _combined_score(query: str, candidate: str) -> float:
     return round(score, 2)
 
 
-def _record_text(record: dict[str, Any], scope: Scope) -> str:
+def _record_lines(record: dict[str, Any], work_id: str) -> list[str]:
+    if work_id == "thirukkural":
+        return [str(record["line1"]), str(record["line2"])]
+    if work_id == "aathichudi":
+        return [str(record["text"])]
+    if work_id == "purananuru":
+        lines = record["lines"]
+        if not isinstance(lines, list) or not all(
+            isinstance(line, str) for line in lines
+        ):
+            raise ValueError("Each Purananuru record must contain a string `lines` list.")
+        return lines
+    if work_id == "tolkappiyam":
+        text = record.get("text", record.get("sutra_text"))
+        if isinstance(text, str):
+            return text.splitlines() or [text]
+        lines = record.get("lines")
+        if isinstance(lines, list) and all(isinstance(line, str) for line in lines):
+            return lines
+        raise ValueError(
+            "Each Tolkappiyam record must contain `text`, `sutra_text`, or `lines`."
+        )
+    raise ValueError(f"Unsupported literary work: {work_id}.")
+
+
+def _record_id(record: dict[str, Any]) -> int:
+    for key in ("id", "poem_no", "sutra_no"):
+        value = record.get(key)
+        if isinstance(value, int):
+            return value
+        if isinstance(value, str) and value.isdecimal():
+            return int(value)
+    raise ValueError("Each literary record must have an integer id, poem_no, or sutra_no.")
+
+
+def _record_text(record: dict[str, Any], scope: Scope, work_id: str) -> str:
     if scope == "full":
-        return f"{record['line1']} {record['line2']}"
+        separator = " " if work_id == "thirukkural" else "\n"
+        return separator.join(_record_lines(record, work_id))
     return str(record[scope])
 
 
@@ -120,14 +156,26 @@ def _has_expected_couplet_shape(text: str, record: dict[str, Any]) -> bool:
     )
 
 
+def _has_expected_work_shape(text: str, record: dict[str, Any], work_id: str) -> bool:
+    if work_id == "thirukkural":
+        return _has_expected_couplet_shape(text, record)
+    input_lines = _word_counts_by_line(text)
+    record_lines = [
+        line for line in _record_lines(record, work_id)
+        if normalize(line)
+    ]
+    return len(input_lines) == len(record_lines)
+
+
 class Matcher:
-    """An in-memory index of all full couplets and both half-couplets."""
+    """An in-memory index of full literary entries and optional Kural half-lines."""
 
     def __init__(
         self,
         corpus_path: Path = CORPUS_PATH,
         near_threshold: int = NEAR_THRESHOLD,
         records: list[dict[str, Any]] | None = None,
+        work_id: str = "thirukkural",
     ) -> None:
         if not 0 <= near_threshold <= 100:
             raise ValueError("NEAR_THRESHOLD must be between 0 and 100.")
@@ -141,13 +189,19 @@ class Matcher:
                 records = json.load(source)
         self.records = records
         self.near_threshold = near_threshold
-        self.by_id = {int(record["id"]): record for record in records}
+        self.work_id = work_id
+        self.by_id = {_record_id(record): record for record in records}
         if len(self.by_id) != len(records):
-            raise ValueError("The local corpus contains duplicate IDs.")
+            raise ValueError("The literary corpus contains duplicate IDs.")
         self.index: list[IndexedText] = []
         for record in records:
-            for scope in ("full", "line1", "line2"):
-                text = _record_text(record, scope)  # type: ignore[arg-type]
+            scopes: tuple[Scope, ...] = (
+                ("full", "line1", "line2")
+                if work_id == "thirukkural"
+                else ("full",)
+            )
+            for scope in scopes:
+                text = _record_text(record, scope, work_id)
                 normalized = normalize(text)
                 self.index.append(
                     IndexedText(
@@ -175,10 +229,15 @@ class Matcher:
         ]
         if exact_candidates:
             selected = self._select_claimed_candidate(exact_candidates, claimed_id)
-            matched_id = int(selected.record["id"])
-            if selected.scope != "full" or not _has_expected_couplet_shape(
-                text, selected.record
+            matched_id = _record_id(selected.record)
+            if selected.scope != "full" or not _has_expected_work_shape(
+                text, selected.record, self.work_id
             ):
+                warning = (
+                    "line_word_count_mismatch"
+                    if self.work_id == "thirukkural"
+                    else "line_structure_mismatch"
+                )
                 return Verification(
                     verdict="near_match",
                     matched_id=matched_id,
@@ -188,7 +247,7 @@ class Matcher:
                     claimed_id_ok=(
                         None if claimed_id is None else matched_id == claimed_id
                     ),
-                    warning="line_word_count_mismatch",
+                    warning=warning,
                     matched_kural=selected.record,
                 )
             return Verification(
@@ -216,8 +275,12 @@ class Matcher:
             score = _combined_score(query_normalized, item.normalized)
             if score > best_score:
                 best, best_score = item, score
-            elif score == best_score and claimed_id is not None and item.record["id"] == claimed_id:
-                if best is None or best.record["id"] != claimed_id:
+            elif (
+                score == best_score
+                and claimed_id is not None
+                and _record_id(item.record) == claimed_id
+            ):
+                if best is None or _record_id(best.record) != claimed_id:
                     best = item
 
         if best is None or best_score < self.near_threshold:
@@ -232,7 +295,7 @@ class Matcher:
                 matched_kural=None,
             )
 
-        matched_id = int(best.record["id"])
+        matched_id = _record_id(best.record)
         return Verification(
             verdict="near_match",
             matched_id=matched_id,
@@ -256,7 +319,7 @@ class Matcher:
     ) -> IndexedText:
         if claimed_id is not None:
             for candidate in candidates:
-                if int(candidate.record["id"]) == claimed_id:
+                if _record_id(candidate.record) == claimed_id:
                     return candidate
         return candidates[0]
 

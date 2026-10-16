@@ -1,9 +1,9 @@
 # KuralGuard
 
-KuralGuard checks Tamil quotations against a local Tirukkural corpus. Exact
-corpus matches can be confirmed; near matches show the corresponding source
-text for review; a missing match is **not** a claim that a quote is fake.
-`/verify` is deterministic and uses no LLM or network lookup.
+KuralGuard checks Tamil quotations against installed local literary corpora.
+Exact corpus matches can be confirmed; near matches show the corresponding
+source text for review; a missing match is **not** a claim that a quote is fake.
+`/literature/verify` is deterministic and uses no LLM or network lookup.
 The web interface can also extract Tamil text from PNG, JPEG, or WebP
 screenshots and check it through the same verifier. OCR runs in the browser;
 the screenshot is not uploaded. Extracted text is only a draft: review and
@@ -16,9 +16,11 @@ Tamil availability vary; this currently depends on a compatible Chromium-based
 browser and its configured speech service. It requires microphone permission,
 a secure context (HTTPS or localhost), and typically an internet connection.
 The app does not record or store audio, but the browser or its speech-service
-provider may process it under their own privacy policy. Transcripts are
-editable and are not checked until you submit them. English speech and
-meaning-based search are not supported.
+provider may process it under their own privacy policy. Recording starts only
+when you press **Speak** and continues until you press **Stop**. The transcript
+is copied into the editable quote field only after you stop; it is not checked
+until you separately submit it. English speech and meaning-based search are
+not supported.
 
 ## Education and simple explanations
 
@@ -97,7 +99,7 @@ thresholds, paths, or CORS settings. There are no API keys in the project.
 
 ## Corpus sources and handling
 
-The corpus builder inspects and fetches source A's actual JSON layout:
+The Thirukkural corpus builder inspects and fetches source A's actual JSON layout:
 
 - [tk120404/thirukkural](https://github.com/tk120404/thirukkural) —
   `thirukkural.json` supplies couplet text and English translation;
@@ -120,6 +122,39 @@ A is retained and `needs_human_review` is set. Every disagreement is written
 to `data/clean/mismatches.csv`. The builder fails rather than emitting a partial
 corpus if it cannot obtain two complete sources or if the 1,330/133-by-10
 integrity checks fail.
+
+The multi-literature verifier currently has local text for:
+
+- Thirukkural — 1,330 couplets, built as described above.
+- Aathichudi (ஆத்திசூடி) — 109 entries from
+  [tamizhilakkiyam/aathichudi](https://github.com/tamizhilakkiyam/aathichudi),
+  pinned to commit `77896642fae2d72d46ddee6c339f2b0ae25c48fe` and retained
+  under its MIT license in `data/licenses/AATHICHUDI-LICENSE`. The normalized
+  data is in `data/clean/aathichudi.json`; regenerate it with
+  `python scripts/import_aathichudi.py`.
+- Purananuru (புறநானூறு) — 385 transcribed poems from
+  [Tamil Wikisource](https://ta.wikisource.org/wiki/புறநானூறு), distributed
+  under CC BY-SA 4.0 with attribution and revision URLs preserved in each
+  record. License and source notes are in
+  `data/licenses/PURANANURU-LICENSE`; regenerate the data with
+  `python scripts/import_purananuru.py`.
+
+The current Wikisource transcription omits poems 151–160 (the page for that
+range duplicates poems 161–170), 267–268, 320, and 362. Poem 244 has only an
+editorial note stating that its text is damaged. These poems are excluded
+rather than inferred or filled with OCR. The supplied
+[CICT scan](https://library.cict.in/api/storage/ebooks/PURA-CICT__1_.pdf) is
+retained as edition-reference metadata, but its image-only pages were not
+transcribed because OCR did not reliably separate poem text from commentary.
+Purananuru matches are therefore limited to the 385 bundled records; a
+`not_found` result cannot establish that a quote is absent from the complete
+work.
+
+Tolkappiyam (தொல்காப்பியம்) remains an unavailable choice until a complete
+corpus with suitable reuse permissions is identified. The app does not
+fabricate or silently substitute its text. The backend catalog reports its
+unavailable status, and an explicit request to verify against it returns an
+error.
 
 ## Matching and threshold
 
@@ -151,6 +186,10 @@ accepts the same routes without that prefix for direct local use:
 - `GET /health` and `GET /healthz`
 - `GET /kural/{id}`
 - `POST /verify` with `{ "text": "...", "claimed_id": 123 }`
+- `GET /literature/catalog` — list corpus availability and entry counts
+- `POST /literature/verify` with
+  `{ "text": "...", "work_id": "all" }`; `work_id` may also select an
+  available literary corpus such as `thirukkural` or `aathichudi`
 - `POST /guard` with `{ "llm_answer": "..." }`
 - `GET /eval/results`
 
@@ -164,8 +203,12 @@ answers from any chatbot; optional LLM answer generation is not enabled.
 
 - Editions, orthography, spacing, punctuation, and editorial variants can
   differ. Source conflicts are flagged, not silently adjudicated.
-- The corpus contains the Tirukkural only. A passage from other Tamil
-  literature is outside its scope.
+- Only installed corpora can be checked. The verifier has Thirukkural,
+  Aathichudi, and a partial Purananuru transcription; Tolkappiyam is not yet
+  searchable.
+- Purananuru verification covers 385 transcribed poems. Poems 151–160, 244,
+  267–268, 320, and 362 are absent from the usable source text and cannot be
+  verified.
 - English translations are displayed as reference metadata; the matcher
   deliberately checks Tamil letters only.
 - Near-match thresholds and generated fakes are evaluation aids, not proof of

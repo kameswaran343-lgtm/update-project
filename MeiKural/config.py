@@ -14,6 +14,15 @@ DATA_RAW_DIR = Path(os.getenv("DATA_RAW_DIR", ROOT_DIR / "data" / "raw"))
 DATA_CLEAN_DIR = Path(os.getenv("DATA_CLEAN_DIR", ROOT_DIR / "data" / "clean"))
 EVAL_DIR = Path(os.getenv("EVAL_DIR", ROOT_DIR / "eval"))
 CORPUS_PATH = Path(os.getenv("CORPUS_PATH", DATA_CLEAN_DIR / "kural.json"))
+AATHICHUDI_CORPUS_PATH = Path(
+    os.getenv("AATHICHUDI_CORPUS_PATH", DATA_CLEAN_DIR / "aathichudi.json")
+)
+PURANANURU_CORPUS_PATH = Path(
+    os.getenv("PURANANURU_CORPUS_PATH", DATA_CLEAN_DIR / "purananuru.json")
+)
+TOLKAPPIYAM_CORPUS_PATH = Path(
+    os.getenv("TOLKAPPIYAM_CORPUS_PATH", DATA_CLEAN_DIR / "tolkappiyam.json")
+)
 EVAL_RESULTS_PATH = Path(os.getenv("EVAL_RESULTS_PATH", EVAL_DIR / "results.json"))
 EVAL_SET_PATH = Path(os.getenv("EVAL_SET_PATH", EVAL_DIR / "eval_set.json"))
 

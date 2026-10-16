@@ -1,0 +1,19 @@
+Purananuru transcription attribution
+
+The bundled Purananuru text is transcribed from Tamil Wikisource:
+https://ta.wikisource.org/wiki/புறநானூறு
+
+The Wikisource text is identified as CC BY-SA 4.0. The normalized records retain a per-page URL and revision ID in
+data/clean/purananuru.json. Attribute the source to Tamil Wikisource
+contributors, retain the revision links, and retain the CC BY-SA 4.0 terms
+when copying or adapting this transcription:
+https://creativecommons.org/licenses/by-sa/4.0/
+
+The CICT scan URL is retained as edition-reference metadata only. Its scanned
+pages were not used to generate the bundled text because OCR could not
+reliably separate the poems from commentary.
+
+The current Wikisource transcription omits poems 151–160 (the corresponding
+page duplicates poems 161–170), 267–268, 320, and 362. Poem 244 has only an
+editorial note stating that its text is damaged. The importer validates and
+preserves these omissions rather than fabricating text.

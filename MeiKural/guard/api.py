@@ -15,6 +15,13 @@ from config import (
     MAX_GUARD_TEXT_LENGTH,
     MAX_VERIFY_TEXT_LENGTH,
 )
+from engine.corpora import (
+    CorpusUnavailableError,
+    SearchWorkId,
+    WorkId,
+    get_work_catalog,
+    verify_literature,
+)
 from engine.matcher import get_matcher
 from guard.education import (
     ExplanationUnavailableError,
@@ -79,6 +86,34 @@ class DiffPart(BaseModel):
 class VerifyInput(BaseModel):
     text: str = Field(min_length=1, max_length=MAX_VERIFY_TEXT_LENGTH)
     claimed_id: int | None = Field(default=None, ge=1, le=1330)
+
+
+class LiteratureVerifyInput(BaseModel):
+    text: str = Field(min_length=1, max_length=MAX_VERIFY_TEXT_LENGTH)
+    work_id: SearchWorkId = "all"
+    claimed_id: int | None = Field(default=None, ge=1, le=1330)
+
+
+class LiteratureWork(BaseModel):
+    id: WorkId
+    name: str
+    available: bool
+    entry_count: int
+    source_file: str
+
+
+class LiteratureVerification(BaseModel):
+    verdict: Literal["verified", "near_match", "not_found"]
+    matched_id: int | None
+    score: float
+    matched_scope: Literal["full", "line1", "line2"] | None
+    diff: list[DiffPart]
+    claimed_id_ok: bool | None
+    warning: str | None
+    work_id: WorkId | None
+    work_name: str | None
+    matched_record: dict | None
+    searched_work_ids: list[WorkId] | None = None
 
 
 class GuardInput(BaseModel):
@@ -160,6 +195,25 @@ def read_kural_verses() -> list[dict[str, int | str]]:
 @router.get("/kurals/catalog", response_model=list[Kural])
 def read_kural_catalog() -> list[dict]:
     return get_matcher().records
+
+
+@router.get("/literature/catalog", response_model=list[LiteratureWork])
+def read_literature_catalog() -> list[dict]:
+    return get_work_catalog()
+
+
+@router.post("/literature/verify", response_model=LiteratureVerification)
+def verify_literary_quote(request: LiteratureVerifyInput) -> dict:
+    try:
+        return verify_literature(
+            request.text,
+            work_id=request.work_id,
+            claimed_id=request.claimed_id,
+        )
+    except CorpusUnavailableError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
 @router.post("/memory/quizzes")

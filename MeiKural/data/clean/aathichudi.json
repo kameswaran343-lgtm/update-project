@@ -1,0 +1,983 @@
+[
+  {
+    "id": 1,
+    "section": "உயிர் வருக்கம்",
+    "text": "அறம் செய்ய விரும்பு",
+    "meaning_ta": "அறம் - தருமத்தை, செய - செய்வதற்கு, விரும்பு - நீ ஆசை கொள்ளு",
+    "paraphrase_ta": "நீ தருமம் செய்ய ஆசைப்படு",
+    "translation_en": "Intend to do right deeds",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 2,
+    "section": "உயிர் வருக்கம்",
+    "text": "ஆறுவது சினம்",
+    "meaning_ta": "ஆறுவது-தணியவேண்டுவது, சினம்-கோபமாம்",
+    "paraphrase_ta": "கோபம் தணியத் தகுவதாம்",
+    "translation_en": "Anger is temporary",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 3,
+    "section": "உயிர் வருக்கம்",
+    "text": "இயல்வது கரவேல்",
+    "meaning_ta": "இயல்வது-கொடுக்கக்கூடிய பொருளை, கரவேல்- (இரப்பவர்களுக்கு) ஒளியாதே,",
+    "paraphrase_ta": "கொடுக்க முடிந்த பொருளை இரப்பவர்க்கு ஒளியாமல் கொடு",
+    "translation_en": "Aid to your capacity",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 4,
+    "section": "உயிர் வருக்கம்",
+    "text": "ஈவது விலக்கேல்",
+    "meaning_ta": "ஈவது-(ஒருவர்க்கு மற்றொருவர்) கொடுப்பதை, விலக்கேல்-தடுக்காதே",
+    "paraphrase_ta": "ஒருவர் மற்றொருவர்க்குக் கொடுப்பதைக் கொடுக்க வேண்டாமென்று நீ தடுக்காதே",
+    "translation_en": "Never stop aiding",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 5,
+    "section": "உயிர் வருக்கம்",
+    "text": "உடையது விளம்பேல்",
+    "meaning_ta": "உடையது - (உனக்கு) உள்ள பொருளை, விளம்பேல் - (பிறர் அறியும்படி) சொல்லாதே",
+    "paraphrase_ta": "உன்னுடைய பொருளைப் பிறர் அறியும்படி சொல்லாதே உன்னுடைய பொருளை அல்லது கல்வி முதலிய சிறப்பை நீயே புகழ்ந்து பேசவேண்டா.",
+    "translation_en": "Never boast your possession",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 6,
+    "section": "உயிர் வருக்கம்",
+    "text": "ஊக்கமது கைவிடேல்",
+    "meaning_ta": "ஊக்கம் - (செய்யுந் தொழிலில்) மன எழுச்சியை, கைவிடேல் - கைவிடாதே",
+    "paraphrase_ta": "நீ எத்தொழில் செய்யும்பொழுதும் மனவலிமை யினைக் கைவிடாதே(அது: பகுதிப்பொருள் விகுதி.)",
+    "translation_en": "Never give up enthusiasm",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 7,
+    "section": "உயிர் வருக்கம்",
+    "text": "எண்ணெழுத் திகழேல்",
+    "meaning_ta": "எண் - கணித நூலையும், எழுத்து - இலக்கண நூலையும், இகழேல் - இகழ்ந்து தள்ளாதே",
+    "paraphrase_ta": "கணிதத்தையும், இலக்கணத்தையும் இகழாமல் நன்றாகக் கற்றுக்கொள்(கணிதம் - கணக்கு.)",
+    "translation_en": "Never degrade learning",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 8,
+    "section": "உயிர் வருக்கம்",
+    "text": "ஏற்ப திகழ்ச்சி",
+    "meaning_ta": "ஏற்பது-(ஒருவரிடத்திலே போய்) இரப்பது, இகழ்ச்சி- பழிப்பாகும்",
+    "paraphrase_ta": "இரந்துண்டு வாழ்வது பழிப்பாகையால் நீ ஒருவரிடத்தும் சென்று ஒன்றை வேண்டாதே",
+    "translation_en": "Accepting alms is ashamed",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 9,
+    "section": "உயிர் வருக்கம்",
+    "text": "ஐய மிட்டுண்",
+    "meaning_ta": "ஐயம் - பிச்சையை, இட்டு - (இரப்பவர்களுக்குக்) கொடுத்து, உண் - நீ உண்ணு",
+    "paraphrase_ta": "இரப்பவர்க்குப் பிச்சையிட்டுப் பின்பு நீ உண்ணு ஏழைகட்கும், குருடர் முடவர் முதலானவர்கட்கும் பிச்சையிட வேண்டும்.",
+    "translation_en": "Share with the needy before you eat",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 10,
+    "section": "உயிர் வருக்கம்",
+    "text": "ஒப்புர வொழுகு",
+    "meaning_ta": "ஒப்புரவு-உலக நடையை அறிந்து, ஒழுகு- (அந்த வழியிலே) நட",
+    "paraphrase_ta": "உலகத்தோடு பொருந்த நடந்துகொள்",
+    "translation_en": "Act virtuous",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 11,
+    "section": "உயிர் வருக்கம்",
+    "text": "ஓதுவ தொழியேல்",
+    "meaning_ta": "ஓதுவது - எப்பொழுதும் படிப்பதை, ஒழியேல் - விடாதே",
+    "paraphrase_ta": "அறிவு தரும் நல்ல நூல்களை நீ எப்பொழுதும் படித்துக்கொண்டிரு",
+    "translation_en": "Never fail learning",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 12,
+    "section": "உயிர் வருக்கம்",
+    "text": "ஔவியம் பேசேல்",
+    "meaning_ta": "ஔவியம் - பொறாமை வார்த்தைகளை, பேசேல் - பேசாதே",
+    "paraphrase_ta": "நீ ஒருவரிடத்தும் பொறாமைகொண்டு பேசாதே",
+    "translation_en": "Never gossip",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 13,
+    "section": "உயிர் வருக்கம்",
+    "text": "அஃகஞ் சுருக்கேல்",
+    "meaning_ta": "அஃகம் - (நெல் முதலிய) தானியங்களை, சுருக்கேல் - குறைத்து விற்காதே",
+    "paraphrase_ta": "மிகுந்த இலாபத்துக்கு ஆசைப்பட்டுத் தானியங்களைக் குறைத்து விற்காதே",
+    "translation_en": "Never compromise in food grains",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 14,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "கண்டொன்று சொல்லேல்",
+    "meaning_ta": "கண்டு-(ஒன்றைக்) கண்டு, ஒன்று-வேறொன்றை, சொல்லேல் - சொல்லாதே",
+    "paraphrase_ta": "கண்ணாற் கண்டதற்கு மாறாகச் சொல்லாதே(பொய்ச்சாட்சி சொல்லலாகாது.)",
+    "translation_en": "Don't exaggerate what you saw.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 15,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "ஙப்போல் வளை",
+    "meaning_ta": "ஙப்போல் - ஙகரம்போல், வளை - உன் இனத்தைத் தழுவு",
+    "paraphrase_ta": "ஙஎன்னும் எழுத்தானது தான்பயனுடையதாயிருந்து பயனில்லாத ஙா முதலிய தன் வருக்க எழுத்துகளைத் தழுவிக் கொள்ளுதல் போல, நீ பயனுடையவனாயிருந்து உன் இனத்தார் பயனில்லாதவராயினும் அவரைத் தழுவிக்கொள்  [ஙா முதலிய பதினொரெழுத்தும் எந்தச் சொல்லிலும் வருவதில்லை. ஙகரத்தின் பொருட்டே அவற்றையும் சுவடியில் எழுதுகிறார்கள். இனி இதற்கு ஙகர வொற்றானது அகரவுயிர் ஒன்றையே தழுவுவது போல நீ ஒருவனையே தழுவு என மாதர்க்குக் கூறியதாகவும் பொருள் சொல்லலாம்.]",
+    "translation_en": "Bend to befriend.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 16,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "சனிநீ ராடு",
+    "meaning_ta": "சனி-சனிக்கிழமைதோறும், நீர் ஆடு-(எண்ணெய் தேய்த்துக்கொண்டு) நீரிலே தலைமுழுகு",
+    "paraphrase_ta": "சனிக்கிழமைதோறும் எண்ணெய் தேய்த்து முழுகு(புதன்கிழமைகளிலும் முழுகலாம்.)",
+    "translation_en": "Shower regularly.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 17,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "ஞயம்பட வுரை",
+    "meaning_ta": "ஞயம்பட - இனிமையுண்டாக, உரை - பேசு",
+    "paraphrase_ta": "கேட்பவர்களுக்கு இன்ப முண்டாகும்படி இனிமை யாகப் பேசு [நயம் என்பதன் போலி.]",
+    "translation_en": "Sweeten your speech.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 18,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "இடம்பட வீடெடேல்",
+    "meaning_ta": "இடம்பட - விசாலமாக, வீடு - வீட்டை, எடேல் - கட்டாதே",
+    "paraphrase_ta": "அளவுக்குமேல் இடம் வீணாய்க் கிடககும்படி வீட்டைப்பெரிதாகக் கட்டாதே ''சிறுகக் கட்டிப் பெருக வாழ்'' என்பது பழமொழி.",
+    "translation_en": "Judiciously space your home.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 19,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "இணக்கமறிந் திணங்கு",
+    "meaning_ta": "இணக்கம் - (நட்புக்கு ஏதுவாகிய) நற்குண நற்செய்கைகளை, அறிந்து - ஆராய்ந்தறிந்து, இணங்கு - (பின் ஒருவரோடு) நண்பு கொள்",
+    "paraphrase_ta": "நற்குண நற்செய்கை உடையவ ரென்பது தெரிந்து கொண்டு ஒருவரோடு நட்புச் செய",
+    "translation_en": "Befriend the best.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 20,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "தந்தைதாய்ப் பேண்",
+    "meaning_ta": "தந்தை-பிதாவையும், தாய்-மாதாவையும், பேண்-காப்பாற்று",
+    "paraphrase_ta": "உன் தாய் தந்தையரை அன்புடன் போற்றிக் காப்பாற்று",
+    "translation_en": "Protect your parents.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 21,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "நன்றி மறவேல்",
+    "meaning_ta": "நன்றி - (ஒருவர் உனக்குச் செய்த) உதவியை, மறவேல் - (ஒருபோதும்) மறவாதே",
+    "paraphrase_ta": "உனக்குப் பிறர் செய்த நன்மையை எப் பொழுதும் மறக்காமல் தீமையை மறந்துவிடு  உதவி செய்தவர்க்கு ஒருபொழுதும் தீமை செய்தலாகாது.",
+    "translation_en": "Don't forget gratitude.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 22,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "பருவத்தே பயிர்செய்",
+    "meaning_ta": "பருவத்தே - தக்க காலத்திலே, பயிர்செய்-பயிரிடு",
+    "paraphrase_ta": "விளையும் பருவமறிந்து பயிரிடு  எச்செயலும் அதற்குரிய காலத்திலே செய்யப்படவேண்டும்.",
+    "translation_en": "Husbandry has its season.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 23,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "மன்றுபறித் துண்ணேல்",
+    "meaning_ta": "மன்று - நீதிமன்றத்திலே இருந்துகொண்டு, பறித்து- (வழக்குத் தீர்ப்புக்கு வரும் குடிகளுடைய பொருளைக்) கவர்ந்து, உண்ணேல் - உண்டு வாழாதே",
+    "paraphrase_ta": "நீதிமன்றத்திலே இருந்துகொண்டு இலஞ்சம் வாங்கி வாழாதே 'மண்பறித் துண்ணேல்' என்று பாடமிருந்தால் பிறர் நிலத்தைக் கவர்ந்து வாழாதே என்று பொருளாம்.",
+    "translation_en": "Don't land-grab.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 24,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "இயல்பலா தனசெயேல்",
+    "meaning_ta": "இயல்பு அலாதன - இயற்கைக்கு மாறான செயல்களை, செயேல் - செய்யாதே",
+    "paraphrase_ta": "நல்லொழுக்கத்திற்கு மாறான செயல்களைச் செய்யாதே",
+    "translation_en": "Desist demeaning deeds.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 25,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "அரவ மாட்டேல்",
+    "meaning_ta": "அரவம் - (நஞ்சுடைய) பாம்புகளை, ஆட்டேல் - பிடித்து ஆட்டாதே",
+    "paraphrase_ta": "பாம்பைப் பிடித்து ஆட்டி விளையாடாதே",
+    "translation_en": "Don't play with snakes.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 26,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "இலவம்பஞ்சிற் றுயில்",
+    "meaning_ta": "இலவம்பஞ்சில் - இலவம்பஞ்சு மெத்தையிலே, துயில் - உறங்கு",
+    "paraphrase_ta": "இலவம்பஞ்சினாற் செய்த மெத்தையிலே படுத்து உறங்கு",
+    "translation_en": "Cotton bed better for comfort.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 27,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "வஞ்சகம் பேசேல்",
+    "meaning_ta": "வஞ்சகம்-கபடச் சொற்களை, பேசேல்-பேசாதே",
+    "paraphrase_ta": "கபடச் சொற்களைப் பேசாதே",
+    "translation_en": "Don't wile.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 28,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "அழகலா தனசெயேல்",
+    "meaning_ta": "அழகு அலாதன - சிறப்பில்லாத செயல்களை, செயேல் - செய்யாதே",
+    "paraphrase_ta": "இழிவான செயல்களைச் செய்யாதே",
+    "translation_en": "Detest the disorderly.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 29,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "இளமையிற் கல்",
+    "meaning_ta": "இளமையில் - இளமைப் பருவத்திலே, கல் - கல்வியைக் கற்றுக்கொள்",
+    "paraphrase_ta": "இளமைப் பருவத்திலேயே படிக்கத்தொடங்கிக் கல்வியைக் கற்றுக்கொள்",
+    "translation_en": "Learn when young.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 30,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "அறனை மறவேல்",
+    "meaning_ta": "அறனை-தருமத்தை, மறவேல் - (ஒருபோதும்) மறவாதே",
+    "paraphrase_ta": "தருமத்தை எப்பொழுதும் மறவாமல் செய்",
+    "translation_en": "Cherish charity.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 31,
+    "section": "உயிர்மெய் வருக்கம்",
+    "text": "அனந்த லாடேல்",
+    "meaning_ta": "அனந்தல் - தூக்கத்தை, ஆடேல் - மிகுதியாகக் கொள்ளாதே",
+    "paraphrase_ta": "மிகுதியாகத் தூங்காதே",
+    "translation_en": "Over sleeping is obnoxious.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 32,
+    "section": "ககர வருக்கம்",
+    "text": "கடிவது மற",
+    "meaning_ta": "கடிவது - (ஒருவரைச்) சினந்து பேசுவதை, மற - மறந்துவிடு",
+    "paraphrase_ta": "யாரையும் கோபத்தாற் கடிந்து பேசாதே",
+    "translation_en": "Constant anger is corrosive.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 33,
+    "section": "ககர வருக்கம்",
+    "text": "காப்பது விரதம்",
+    "meaning_ta": "காப்பது - (உயிர்களுக்குத் தீங்கு செய்யாமல் அவற்றைக்) காப்பாற்றுவதே, விரதம் - நோன்பாகும்",
+    "paraphrase_ta": "பிற உயிர்களுக்குத் துன்பஞ் செய்யாமல் (அவற்றைக்) காப்பாற்றுவதே தவமாகும் தான் செய்யத் தொடங்கிய தருமத்தை விடாமற் செய்வதே விரதம் என்றும் பொருள் சொல்லலாம்.",
+    "translation_en": "Protecting is Fasting",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 34,
+    "section": "ககர வருக்கம்",
+    "text": "கிழமைப் படவாழ்",
+    "meaning_ta": "கிழமைப்பட-(உன்உடலும் பொருளும் பிறருக்கு) உரிமைப்படும்படி, வாழ் - வாழு",
+    "paraphrase_ta": "உன் உடம்பாலும் பொருளாலும் பிறருக்கு நன்மை செய்து வாழு",
+    "translation_en": "Live according to days.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 35,
+    "section": "ககர வருக்கம்",
+    "text": "கீழ்மை யகற்று",
+    "meaning_ta": "கீழ்மை - இழிவானவற்றை, அகற்று - நீக்கு",
+    "paraphrase_ta": "இழிவான குணஞ் செயல்களை நீக்கு",
+    "translation_en": "Remove Poverty.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 36,
+    "section": "ககர வருக்கம்",
+    "text": "குணமது கைவிடேல்",
+    "meaning_ta": "குணமது - (மேலாகிய) குணத்தை, கைவிடேல் - கைவிடாதே",
+    "paraphrase_ta": "நற்குணங்களைக் கைசோரவிடாதே நன்மை தருவ தென்று கண்டறிந்ததைக் கைவிடாதே. அது: பகுதிப்பொருள் விகுதி.",
+    "translation_en": "Don't lose character.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 37,
+    "section": "ககர வருக்கம்",
+    "text": "கூடிப் பிரியேல்",
+    "meaning_ta": "கூடி - (நல்லவரோடு) நட்புக்கொண்டு, பிரியேல்-பின் (அவரைவிட்டு) நீங்காதே",
+    "paraphrase_ta": "நல்லவரோடு நட்புச் செய்து பின்பு அவரை விட்டுப் பிரியாதே",
+    "translation_en": "Don't forsake friends.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 38,
+    "section": "ககர வருக்கம்",
+    "text": "கெடுப்ப தொழி",
+    "meaning_ta": "கெடுப்பது - பிறருக்குக் கேடு செய்வதை, ஒழி - விட்டு விடு",
+    "paraphrase_ta": "பிறருக்குக் கெடுதி செய்வதை விட்டுவிடு (கேடு விளைக்கும் காரியத்தைச் செய்யாதே)",
+    "translation_en": "Abandon animosity.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 39,
+    "section": "ககர வருக்கம்",
+    "text": "கேள்வி முயல்",
+    "meaning_ta": "கேள்வி - கற்றவர் சொல்லும் நூற் பொருளைக் கேட்ப தற்கு; முயல் - முயற்சி செய்",
+    "paraphrase_ta": "கற்றறிந்தவர்கள் சொல்லும் நூற் பொருளைக்கேட்க முயற்சி செய்",
+    "translation_en": "Learn by questioning.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 40,
+    "section": "ககர வருக்கம்",
+    "text": "கைவினை கரவேல்",
+    "meaning_ta": "கைவினை - (உனக்குத் தெரிந்த) கைத் தொழிலை, கரவேல் - ஒளியாதே",
+    "paraphrase_ta": "உனக்குத் தெரிந்த கைத்தொழிலை மற்றவர்களுக்கு ஒளியாமற் செய்(ஏதேனும் கைத்தொழில் செய்துகொண்டிரு.)",
+    "translation_en": "Learn handicraft.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 41,
+    "section": "ககர வருக்கம்",
+    "text": "கொள்ளை விரும்பேல்",
+    "meaning_ta": "கொள்ளை-(பிறருடைய பொருளைக்) கொள்ளையிடுதற்கு, விரும்பேல்-ஆசைப்படாதே",
+    "paraphrase_ta": "பிறர் பொருளைக் கவர்ந்துகொள்ள விரும்பாதே",
+    "translation_en": "Don't swindle.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 42,
+    "section": "ககர வருக்கம்",
+    "text": "கோதாட் டொழி",
+    "meaning_ta": "கோது-குற்றம் பொருந்திய, ஆட்டு- விளையாட்டை, ஒழி-நீக்கு",
+    "paraphrase_ta": "குற்றமான விளையாட்டை விட்டுவிடுகோதாட்டொழி என்பதன்பின் 'கௌவை யகற்று, என்று ஒரு கட்டுரை சில புத்தகங்களில் உள்ளது. 'துன்பத்தை நீக்கு' என்பது இதன் பொருள்.",
+    "translation_en": "Ban all illegal games.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 43,
+    "section": "ககர வருக்கம்",
+    "text": "கௌவை அகற்று",
+    "meaning_ta": null,
+    "paraphrase_ta": "வாழ்வில் செயற்கையாக ஏற்படும் துன்பத்தை நீக்கு",
+    "translation_en": "Don't vilify.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 44,
+    "section": "சகர வருக்கம்",
+    "text": "சக்கர நெறிநில்",
+    "meaning_ta": "சக்கரநெறி – (அரசனது ஆணையாகிய) சக்கரம் செல்லும் வழியிலே, நில் – அடங்கி யிரு",
+    "paraphrase_ta": "அரசன் கட்டளை வழியில் அடங்கி நட",
+    "translation_en": "Honor your Lands Constitution.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 45,
+    "section": "சகர வருக்கம்",
+    "text": "சான்றோ ரினத்திரு",
+    "meaning_ta": " சான்றோர் – அறிவினால் நிறைந்தவர்களுடைய, இனத்து – கூட்டத்திலே, இரு – எந்நாளும் இரு",
+    "paraphrase_ta": "அறிவொழுக்கங்களில் நிறைந்த பெரியோர்களின் கூட்டத்தைச் சேர்ந்திரு",
+    "translation_en": "Associate with the noble.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 46,
+    "section": "சகர வருக்கம்",
+    "text": "சித்திரம் பேசேல்",
+    "meaning_ta": "சித்திரம்-பொய்ம்மொழிகளை, பேசேல்-பேசாதே",
+    "paraphrase_ta": "பொய் வார்த்தைகளை மெய்போலப் பேசாதே",
+    "translation_en": "Stop being paradoxical.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 47,
+    "section": "சகர வருக்கம்",
+    "text": "சீர்மை மறவேல்",
+    "meaning_ta": "சீர்மை-புகழுக்கு ஏதுவாகிய குணத்தை, மறவேல்- மறந்துவிடாதே",
+    "paraphrase_ta": "புகழுக்குக் காரணமானவற்றை மறந்துவிடாதே",
+    "translation_en": "Remember to be righteous.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 48,
+    "section": "சகர வருக்கம்",
+    "text": "சுளிக்கச் சொல்லேல்",
+    "meaning_ta": "சுளிக்க - (கேட்பவர்) கோபிக்கும்படியாக,சொல்லேல் - (ஒன்றையும்) பேசாதே",
+    "paraphrase_ta": "கேட்பவர்க்குக் கோபமும் வெறுப்பும் உண்டாகும் படி பேசாதே",
+    "translation_en": "Don't hurt others feelings.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 49,
+    "section": "சகர வருக்கம்",
+    "text": "சூது விரும்பேல்",
+    "meaning_ta": "சூது-சூதாடலை, விரும்பேல்-(ஒருபோதும்) விரும்பாதே",
+    "paraphrase_ta": "ஒருபொழுதும் சூதாடுதலை விரும்பாதே",
+    "translation_en": "Don't gamble.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 50,
+    "section": "சகர வருக்கம்",
+    "text": "செய்வன திருந்தச்செய்",
+    "meaning_ta": "செய்வன-செய்யும் செயல்களை, திருந்த - செவ்வையாக, செய் - செய்",
+    "paraphrase_ta": "செய்யுஞ் செயல்களைத், திருத்தமாகச் செய்",
+    "translation_en": "Action with perfection.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 51,
+    "section": "சகர வருக்கம்",
+    "text": "சேரிடமறிந்து சேர்",
+    "meaning_ta": "சேர் இடம் - அடையத்தகும் (நன்மையாகிய) இடத்தை, அறிந்து - தெரிந்து, சேர் - அடை",
+    "paraphrase_ta": "சேரத்தக்க நல்லிடத்தை ஆராய்ந்தறிந்து சேர்",
+    "translation_en": "Seek out good friends.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 52,
+    "section": "சகர வருக்கம்",
+    "text": "சையெனத் திரியேல்",
+    "meaning_ta": "சை என-(பெரியோர் உன்னைச்) சீ என்று அருவருக்கும்படி, திரியேல் - திரியாதே",
+    "paraphrase_ta": "பெரியோர் சீ என்று வெறுக்கும்படி வீணாய்த் திரியாதே",
+    "translation_en": "Avoid being insulted.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 53,
+    "section": "சகர வருக்கம்",
+    "text": "சொற்சோர்வு படேல்",
+    "meaning_ta": "சொல்-(நீ பிறரோடு பேசும்) சொற்களில், சோர்வு படேல் - மறதிபடப் பேசாதே",
+    "paraphrase_ta": "நீ பிறருடன் பேசும்பொழுதும் மறந்து குற்றமுண்டாகப் பேசாதே",
+    "translation_en": "Don't show fatigue in conversation.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 54,
+    "section": "சகர வருக்கம்",
+    "text": "சோம்பித் திரியேல்",
+    "meaning_ta": "சோம்பி - (நீ செய்யவேண்டும் முயற்சியைச் செய்யாமல்) சோம்பல்கொண்டு, திரியேல் - வீணாகத் திரியாதே",
+    "paraphrase_ta": "முயற்சியின்றிச் சோம்பேறியாகத் திரியாதே",
+    "translation_en": "Don't be a lazybones.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 55,
+    "section": "தகர வருக்கம்",
+    "text": "தக்கோ னெனத்திரி",
+    "meaning_ta": "தக்கோன் என - (உன்னைப் பெரியோர்கள்) யோக்கியன் என்று புகழும்படி, திரி - நடந்துகொள்",
+    "paraphrase_ta": "பெரியோர்கள் உன்னைத் தக்கவன் என்று புகழும்படி நடந்துகொள்",
+    "translation_en": "Be trustworthy.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 56,
+    "section": "தகர வருக்கம்",
+    "text": "தானமது விரும்பு",
+    "meaning_ta": "தானமது - (சற்பாத்திரங்களிலே) தானம் செய்தலை, விரும்பு - ஆசைப்படு",
+    "paraphrase_ta": "தக்கவர்களுக்குத் தானங்கொடுத்தலை விரும்புஅது: பகுதிப்பொருள் விகுதி",
+    "translation_en": "Be kind to the unfortunate.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 57,
+    "section": "தகர வருக்கம்",
+    "text": "திருமாலுக் கடிமை செய்",
+    "meaning_ta": "திருமாலுக்கு - விட்டுணுவுக்கு, அடிமைசெய் - தொண்டுபண்ணு",
+    "paraphrase_ta": "நாராயணமூர்த்திக்குத் தொண்டு செய்",
+    "translation_en": "Serve the protector.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 58,
+    "section": "தகர வருக்கம்",
+    "text": "தீவினை யகற்று",
+    "meaning_ta": "தீவினை-பாவச் செயல்களை, அகற்று-(செய்யாமல்) நீக்கு",
+    "paraphrase_ta": "பாவச் செயல்களைச் செய்யாமல் விலக்கு",
+    "translation_en": "Don't sin.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 59,
+    "section": "தகர வருக்கம்",
+    "text": "துன்பத்திற் கிடங்கொடேல்",
+    "meaning_ta": "துன்பத்திற்கு - வருத்தத்திற்கு, இடங்கொடேல் - (சிறிதாயினும்) இடங்கொடாதே",
+    "paraphrase_ta": "துன்பத்திற்குச் சிறிதும் இடங்கொடாதேமுயற்சி செய்யும்பொழுது வரும் உடம்பின் வருத்தத்திற்கு அஞ்சி அதனை விட்டுவிடலாகாது",
+    "translation_en": "Don't attract suffering.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 60,
+    "section": "தகர வருக்கம்",
+    "text": "தூக்கி வினைசெய்",
+    "meaning_ta": "தூக்கி - (முடிக்கும் வழியை) ஆராய்ந்து, வினை - ஒரு தொழிலை, செய் - (அதன் பின்பு) செய்",
+    "paraphrase_ta": "முடிக்கத் தகுந்த உபாயத்தை ஆராய்ந்தறிந்து ஒரு காரியத்தைச் செய்",
+    "translation_en": "Deliberate every action.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 61,
+    "section": "தகர வருக்கம்",
+    "text": "தெய்வ மிகழேல்",
+    "meaning_ta": "தெய்வம் - கடவுளை, இகழேல் - பழிக்காதே",
+    "paraphrase_ta": "கடவுளை இகழ்ந்து பேசாதே",
+    "translation_en": "Don't defame the divine.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 62,
+    "section": "தகர வருக்கம்",
+    "text": "தேசத்தோ டொத்துவாழ்",
+    "meaning_ta": "தேசத்தோடு - நீ வசிக்கும் தேசத்திலுள்ளவர்களுடனே, ஒத்து - (பகையில்லாமல்) ஒத்து, வாழ் - வாழு",
+    "paraphrase_ta": "நீ வசிக்கும் தேசத்தவருடன் பகையில்லாமலபொருந்தி வாழு",
+    "translation_en": "Live in unison with your countrymen.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 63,
+    "section": "தகர வருக்கம்",
+    "text": "தையல்சொல் கேளேல்",
+    "meaning_ta": "தையல் - (உன்) மனைவியினுடைய, சொல்- சொல்லை, கேளேல் - கேட்டு நடவாதே",
+    "paraphrase_ta": "மனைவி சொல் கேட்டு ஆராயாமல் நடவாதே",
+    "translation_en": "Don't listen to the designing.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 64,
+    "section": "தகர வருக்கம்",
+    "text": "தொன்மை மறவேல்",
+    "meaning_ta": "தொன்மை - பழைமையாகிய நட்பை,மறவேல் - மறந்துவிடாதே",
+    "paraphrase_ta": "பழைமையாகிய நட்பினை மறந்துவிடாதே",
+    "translation_en": "Don't forget your past glory.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 65,
+    "section": "தகர வருக்கம்",
+    "text": "தோற்பன தொடரேல்",
+    "meaning_ta": "தோற்பன-தோல்வியடையக்கூடிய வழக்குகளிலே, தொடரேல்-சம்பந்தப்படாதே",
+    "paraphrase_ta": "தோல்வியடையக்கூடிய காரியங்களில் தலையிடாதே",
+    "translation_en": "Don't compete if sure of defeat.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 66,
+    "section": "நகர வருக்கம்",
+    "text": "நன்மை கடைப்பிடி்",
+    "meaning_ta": "நன்மை - புண்ணியத்தையே, கடைப்பிடி-உறுதியாகப் பிடி",
+    "paraphrase_ta": "நல்வினை செய்தலை உறுதியாகப் பற்றிக்கொள்",
+    "translation_en": "Adhere to the beneficial.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 67,
+    "section": "நகர வருக்கம்",
+    "text": "நாடொப் பனசெய்",
+    "meaning_ta": "நாடு - உன் நாட்டில் உள்ளோர் பலரும்,ஒப்பன - ஒத்துக்கொள்ளத்தக்க நல்ல காரியங்களை,செய் - செய்வாயாக",
+    "paraphrase_ta": "நாட்டிலுள்ளோர் ஒப்புக்கொள்ளக்கூடிய நல்ல செயல்களைச் செய்",
+    "translation_en": "Do nationally agreeable.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 68,
+    "section": "நகர வருக்கம்",
+    "text": "நிலையிற் பிரியேல்",
+    "meaning_ta": "நிலையில் - (நீ நிற்கின்ற உயர்ந்த) நிலையிலே நின்று, பிரியேல் - (ஒருபோதும்) நீங்காதே",
+    "paraphrase_ta": "உன்னுடைய நல்ல நிலையினின்றும் தாழ்ந்துவிடாதே",
+    "translation_en": "Don't depart from good standing.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 69,
+    "section": "நகர வருக்கம்",
+    "text": "நீர்விளை யாடேல்",
+    "meaning_ta": "நீர் - (ஆழம் உள்ள) நீரிலே, விளையாடேல்- (நீந்தி) விளையாடாதே",
+    "paraphrase_ta": "வௌ்ளத்திலே நீந்தி விளையாடாதே",
+    "translation_en": "Don't jump into a watery grave.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 70,
+    "section": "நகர வருக்கம்",
+    "text": "நுண்மை நுகரேல்",
+    "meaning_ta": "நுண்மை - (நோயைத்தருகிற) சிற்றுண்டிகளை,நுகரேல் - உண்ணாதே",
+    "paraphrase_ta": "நோயைத் தரும் சிற்றுண்டிகளை உண்ணாதே",
+    "translation_en": "Don't over snack.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 71,
+    "section": "நகர வருக்கம்",
+    "text": "நூல்பல கல்",
+    "meaning_ta": "நூல் பல - (அறிவை வளர்க்கிற) நூல்கள் பலவற்றையும், கல் - கற்றுக்கொள்",
+    "paraphrase_ta": "அறிவை வளர்க்கும் பல நூல்களையும் கற்றுக்கொள்",
+    "translation_en": "Read lot of books.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 72,
+    "section": "நகர வருக்கம்",
+    "text": "நெற்பயிர் விளை",
+    "meaning_ta": "(நெற்பயிர் - நெல்லுப் பயிரை, விளை- (வேண்டிய முயற்சி செய்து) விளைவி",
+    "paraphrase_ta": "நெற்பயிரை முயற்சியெடுத்து விளையச்செய்உழுதுண்டு வாழ்வதே மேல்.",
+    "translation_en": "Do agriculture.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 73,
+    "section": "நகர வருக்கம்",
+    "text": "நேர்பட வொழுகு",
+    "meaning_ta": "நேர்பட-(உன் ஒழுக்கம் கோணாமல்) செவ்வைப் பட, ஒழுகு - நட",
+    "paraphrase_ta": "ஒழுக்கந் தவறாமல் செவ்வையான வழியில் நட",
+    "translation_en": "Exhibit good manners always.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 74,
+    "section": "நகர வருக்கம்",
+    "text": "நைவினை நணுகேல்",
+    "meaning_ta": "நை - (பிறர்) கெடத்தக்க, வினை - தீவினைகளை, நணுகேல் - (ஒருபோதும்) சாராதே",
+    "paraphrase_ta": "பிறர் வருந்தத்தகுந்த தீவினைகளைச்செய்யாதே",
+    "translation_en": "Don't involve in destruction.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 75,
+    "section": "நகர வருக்கம்",
+    "text": "நொய்ய வுரையேல்",
+    "meaning_ta": "நொய்ய - (பயன் இல்லாத) அற்ப வார்த்தைகளை, உரையேல் - சொல்லாதே",
+    "paraphrase_ta": "வீணான அற்ப வார்த்தைகளைப் பேசாதே",
+    "translation_en": "Don't dabble in sleaze.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 76,
+    "section": "நகர வருக்கம்",
+    "text": "நோய்க்கிடங் கொடேல்",
+    "meaning_ta": "நோய்க்கு - வியாதிகளுக்கு, இடங்கொடேல்-இடங்கொடாதே",
+    "paraphrase_ta": "உணவு, உறக்கம் முதலியவற்றால் பிணிக்கு இடங்கொடுக்காதே",
+    "translation_en": "Avoid unhealthy lifestyle.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 77,
+    "section": "பகர வருக்கம்",
+    "text": "பழிப்பன பகரேல்",
+    "meaning_ta": "பழிப்பன - (அறிவுடையவர்களாலே) பழிக்கப் படுவனவாகிய இழி சொற்களை, பகரேல் - பேசாதே",
+    "paraphrase_ta": "பெரியோர்களாற் பழிக்கப்படுஞ் சொற்களைப் பேசாதே பழிக்கப்படும் சொற்களாவன: பொய், குறளை, கடுஞ்சொல், பயனில் சொல் என்பனவும்; இடக்கர்ச் சொற்களுமாம்.",
+    "translation_en": "Speak no vulgarity.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 78,
+    "section": "பகர வருக்கம்",
+    "text": "பாம்பொடு பழகேல்",
+    "meaning_ta": "பாம்பொடு-(பால் கொடுத்தவருக்கும் விடத்தைக்கொடுக்கிற) பாம்பைப்போல்பவர்களுடனே, பழகேல் -சகவாசஞ் செய்யாதே",
+    "paraphrase_ta": "பாம்புபோலும் கொடியவர்களுடன் பழக்கஞ் செய்யாதே",
+    "translation_en": "Keep away from the vicious.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 79,
+    "section": "பகர வருக்கம்",
+    "text": "பிழைபடச் சொல்லேல்",
+    "meaning_ta": "பிழைபட-வழுக்கள் உண்டாகும்படி,சொல்லேல்-ஒன்றையும் பேசாதே",
+    "paraphrase_ta": "குற்ற முண்டாகும்படி பேசாதே",
+    "translation_en": "Watch out for self incrimination.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 80,
+    "section": "பகர வருக்கம்",
+    "text": "பீடு பெறநில்",
+    "meaning_ta": "பீடு - பெருமையை, பெற - பெறும்படியாக,நில் - (நல்ல வழியிலே) நில்.",
+    "paraphrase_ta": "பெருமை யடையும்படியாக நல்ல வழியிலே நில்லு",
+    "translation_en": "Follow path of honor.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 81,
+    "section": "பகர வருக்கம்",
+    "text": "புகழ்ந்தாரைப் போற்றிவாழ்",
+    "meaning_ta": "புகழ்ந்தாரை-உன்னைத் துதிசெய்து அடுத்தவரை,போற்றி - (கைவிடாமற்) காப்பாற்றி, வாழ் - வாழு",
+    "paraphrase_ta": "அடுத்தவரை ஆதரித்து வாழு",
+    "translation_en": "Protect your benefactor.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 82,
+    "section": "பகர வருக்கம்",
+    "text": "பூமி திருத்தியுண்",
+    "meaning_ta": "பூமி - (உன்) விளைநிலத்தை, திருத்தி-சீர்திருத்திப்பயிர் செய்து, உண் - உண்ணு",
+    "paraphrase_ta": "பூமியைச் சீர்திருத்திப் பயிர்செய்து உண்ணு",
+    "translation_en": "Cultivate the land and feed.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 83,
+    "section": "பகர வருக்கம்",
+    "text": "பெரியாரைத் துணைக்கொள்",
+    "meaning_ta": "பெரியாரை - (அறிவிலே சிறந்த) பெரியோரை,துணைக்கொள் - உனக்குத் துணையாகப் பேணிக்கொள்",
+    "paraphrase_ta": "பெரியாரைத் துணையாக நாடிக்கொள்",
+    "translation_en": "Seek help from the old and wise.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 84,
+    "section": "பகர வருக்கம்",
+    "text": "பேதைமை யகற்று",
+    "meaning_ta": "பேதைமை - அஞ்ஞானத்தை, அகற்று - போக்கு",
+    "paraphrase_ta": "அறியாமையை நீக்கிவிடு",
+    "translation_en": "Eradicate ignorance.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 85,
+    "section": "பகர வருக்கம்",
+    "text": "பையலோ டிணங்கேல்",
+    "meaning_ta": "பையலோடு - சிறு பிள்ளையோடு, இணங்கேல் - கூடாதே",
+    "paraphrase_ta": "அறிவில்லாத சிறுவனோடு கூடித் திரியாதே",
+    "translation_en": "Don't comply with idiots.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 86,
+    "section": "பகர வருக்கம்",
+    "text": "பொருடனைப் போற்றிவாழ்",
+    "meaning_ta": "பொருள்தனை - திரவியத்தை, போற்றி - (மேன் மேலும் உயரும்படி) காத்து, வாழ் - வாழு",
+    "paraphrase_ta": "பொருளை வீண்செலவு செய்யாமற் பாதுகாத்து வாழு",
+    "translation_en": "Protect and enhance your wealth.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 87,
+    "section": "பகர வருக்கம்",
+    "text": "போர்த்தொழில் புரியேல்",
+    "meaning_ta": "போர் - சண்டையாகிய, தொழில் - தொழிலை,புரியேல் - செய்யாதே",
+    "paraphrase_ta": "யாருடனும் கலகம் விளைக்காதே",
+    "translation_en": "Don't encourage war.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 88,
+    "section": "மகர வருக்கம்",
+    "text": "மனந்தடு மாறேல்",
+    "meaning_ta": "மனம் - உள்ளம், தடுமாறேல் - கலங்காதே",
+    "paraphrase_ta": "எதனாலும் மனக்கலக்க மடையாதே",
+    "translation_en": "Don't vacillate.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 89,
+    "section": "மகர வருக்கம்",
+    "text": "மாற்றானுக் கிடங்கொடேல்",
+    "meaning_ta": "மாற்றானுக்கு - பகைவனுக்கு, இடம் கொடேல் - இடங்கொடாதே",
+    "paraphrase_ta": "பகைவன் உன்னைத் துன்புறுத்தும்படி இடங்கொடுக்காதே",
+    "translation_en": "Don't accommodate your enemy.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 90,
+    "section": "மகர வருக்கம்",
+    "text": "மிகைபடச் சொல்லேல்",
+    "meaning_ta": "மிகைபட - சொற்கள் அதிகப்படும்படி, சொல்லேல் - பேசாதே",
+    "paraphrase_ta": "வார்த்தைகளை மிதமிஞ்சிப் பேசாதே",
+    "translation_en": "Don't over dramatize.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 91,
+    "section": "மகர வருக்கம்",
+    "text": "மீதூண் விரும்பேல்",
+    "meaning_ta": "மீது ஊண்-மிகுதியாக உண்ணுதலை, விரும்பேல்-இச்சியாதே",
+    "paraphrase_ta": "மிகுதியாக உணவுண்டலை விரும்பாதே",
+    "translation_en": "Don't be a glutton.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 92,
+    "section": "மகர வருக்கம்",
+    "text": "முனைமுகத்து நில்லேல்",
+    "meaning_ta": "முனைமுகத்து - சண்டை முகத்திலே, நில்லேல் - (போய்) நில்லாதே",
+    "paraphrase_ta": "போர் முனையிலே நின்றுகொண்டிருக்காதே",
+    "translation_en": "Don't join an unjust fight.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 93,
+    "section": "மகர வருக்கம்",
+    "text": "மூர்க்கரோ டிணங்கேல்",
+    "meaning_ta": "மூர்க்கரோடு-மூர்க்கத்தன்மையுள்ளவர்களுடனே, இணங்கேல் - சிநேகம் பண்ணாதே!",
+    "paraphrase_ta": "மூர்க்கத்தன்மை யுள்ளவர்களுடன் சேர்ந்து பழகாதே",
+    "translation_en": "Don't agree with the stubborn.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 94,
+    "section": "மகர வருக்கம்",
+    "text": "மெல்லினல்லாள் தோள்சேர்",
+    "meaning_ta": "மெல் - மெல்லிய, இல் - (உன்) மனையாட்டியாகிய, நல்லாள் - பெண்ணுடைய, தோள் - தோள்களையே, சேர் - பொருந்து",
+    "paraphrase_ta": "பிற மாதரை விரும்பாமல் உன் மனைவியுடன் சேர்ந்து வாழு 1. மெல்லியா டோன் சேர்' என்றும் பாடம்.",
+    "translation_en": "Stick with your exemplary wife.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 95,
+    "section": "மகர வருக்கம்",
+    "text": "மேன்மக்கள் சொற்கேள்",
+    "meaning_ta": "மேன்மக்கள் - உயர்ந்தோருடைய, சொல் - செல்லை, கேள் - கேட்டு நட",
+    "paraphrase_ta": "நல்லொழுக்கமுடைய பெரியோர் சொல்லைக் கேட்டு நட",
+    "translation_en": "Listen to men of quality.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 96,
+    "section": "மகர வருக்கம்",
+    "text": "மைவிழியார் மனையகல்",
+    "meaning_ta": "மைவிழியார் - மைதீட்டிய கண்களையுடைய வேசையருடைய, மனை - வீட்டை, அகல் - (ஒருபோதும் கிட்டாமல்) அகன்றுபோ",
+    "paraphrase_ta": "பரத்தையர் மனையைச் சேராமல் விலகு",
+    "translation_en": "Dissociate from the jealous.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 97,
+    "section": "மகர வருக்கம்",
+    "text": "மொழிவ தறமொழி",
+    "meaning_ta": "மொழிவது - சொல்லப்படும் பொருளை, அற-(சந்தேகம்) நீங்கும்படி, மொழி - சொல்லு",
+    "paraphrase_ta": " சொல்லுவதை ஐயமின்றித் திருத்தமுறச் சொல்லு",
+    "translation_en": "Speak with clarity.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 98,
+    "section": "மகர வருக்கம்",
+    "text": "மோகத்தை முனி",
+    "meaning_ta": "மோகத்தை - ஆசையை, முனி - கோபித்து விலக்கு",
+    "paraphrase_ta": "நிலையில்லாத பொருள்களின் மேலுள்ள ஆசையை வெறுத்துவிடு",
+    "translation_en": "Hate any desire for lust.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 99,
+    "section": "வகர வருக்கம்",
+    "text": "வல்லமை பேசேல்",
+    "meaning_ta": "வல்லமை - (உன்னுடைய) சாமர்த்தியத்தை, பேசேல் - (புகழ்ந்து) பேசாதே",
+    "paraphrase_ta": "உன்னுடைய சாமர்த்தியத்தை நீயே புகழ்ந்து பேசாதே",
+    "translation_en": "Don't self-praise.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 100,
+    "section": "வகர வருக்கம்",
+    "text": "வாதுமுற் கூறேல்",
+    "meaning_ta": "வாது - வாதுகளை, முன் - (பெரியோர்) முன்னே, கூறேல் - பேசாதே",
+    "paraphrase_ta": "பெரியோர்களிடத்தில் முற்பட்டு வாதாடாதே",
+    "translation_en": "Don't gossip or spread rumor.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 101,
+    "section": "வகர வருக்கம்",
+    "text": "வித்தை விரும்பு",
+    "meaning_ta": "வித்தை - கல்விப்பொருளையே, விரும்பு - இச்சி",
+    "paraphrase_ta": "கல்வியாகிய நற்பொருளை விரும்பு",
+    "translation_en": "Long to learn.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 102,
+    "section": "வகர வருக்கம்",
+    "text": "வீடு பெறநில்",
+    "meaning_ta": "வீடு - மோட்சத்தை, பெற - அடையும்படி, நில் - (அதற்குரிய ஞானவழியிலே) நில்",
+    "paraphrase_ta": "முத்தியைப் பெறும்படி சன்மார்க்கத்திலே நில்லு",
+    "translation_en": "Work for a peaceful life.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 103,
+    "section": "வகர வருக்கம்",
+    "text": "உத்தம னாயிரு",
+    "meaning_ta": "உத்தமனாய் - உயர்குணமுடையவனாகி, இரு-வாழ்ந்திரு",
+    "paraphrase_ta": "நற்குணங்களிலே மேற்பட்டவனாகி வாழு",
+    "translation_en": "Lead exemplary life.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 104,
+    "section": "வகர வருக்கம்",
+    "text": "ஊருடன் கூடிவாழ்",
+    "meaning_ta": "ஊருடன் - ஊரவர்களுடனே, கூடி - (நன்மை தீமைகளிலே) அளாவி, வாழ் - வாழு",
+    "paraphrase_ta": "ஊராருடன் நன்மை தீமைகளிற் கலந்து வாழு",
+    "translation_en": "Live amicably.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 105,
+    "section": "வகர வருக்கம்",
+    "text": "வெட்டெனப் பேசேல்",
+    "meaning_ta": "வெட்டு என - கத்திவெட்டைப்போல, பேசேல் - (ஒருவரோடுங் கடினமாகப்) பேசாதே",
+    "paraphrase_ta": "யாருடனும் கத்திவெட்டுப்போலக் கடினமாகப் பேசாதே",
+    "translation_en": "Don't be harsh with words and deeds.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 106,
+    "section": "வகர வருக்கம்",
+    "text": "வேண்டி வினைசெயேல்",
+    "meaning_ta": "வேண்டி - விரும்பி, வினை - தீவினையை,செயேல்-செய்யாதே",
+    "paraphrase_ta": "வேண்டுமென்றே தீவினைகளைச் செய்யாதே",
+    "translation_en": "Don't premeditate harm.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 107,
+    "section": "வகர வருக்கம்",
+    "text": "வைகறைத் துயிலெழு",
+    "meaning_ta": "வைகறை-விடியற்காலத்திலே, துயில்-நித்திரையை விட்டு, எழு - எழுந்திரு",
+    "paraphrase_ta": "நாள்தோறும் சூரியன் உதிக்குமுன்பே தூக்கத்தைவிட்டு எழுந்திரு",
+    "translation_en": "Be an early-riser.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 108,
+    "section": "வகர வருக்கம்",
+    "text": "ஒன்னாரைத் தேறேல்",
+    "meaning_ta": "ஒன்னாரை - பகைவர்களை, தேறேல் - நம்பாதே",
+    "paraphrase_ta": "பகைவரை நம்பாதே 'ஒன்னாரைச் சேரேல்' என்றும் பாடமுண்டு.",
+    "translation_en": "Never join your enemy.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  },
+  {
+    "id": 109,
+    "section": "வகர வருக்கம்",
+    "text": "ஓரஞ் சொல்லேல்",
+    "meaning_ta": "ஓரம் - பட்சபாதத்தை, சொல்லேல் - (யாதொரு வழக்கிலும்) பேசாதே",
+    "paraphrase_ta": "எந்த வழக்கிலும் ஒருபுடைச் சார்பாகப் பேசாமல் நடுவுநிலையுடன் சொல்லு  ஆத்திசூடி மூலமும் உரையும்முற்றிற்று.",
+    "translation_en": "Be impartial in judgement.",
+    "source_url": "https://github.com/tamizhilakkiyam/aathichudi/blob/77896642fae2d72d46ddee6c339f2b0ae25c48fe/public/aathichudi.json"
+  }
+]

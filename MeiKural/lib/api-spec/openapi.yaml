@@ -3,7 +3,7 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: Local-corpus Tirukkural quote verification and evaluation API.
+  description: Local literary-corpus quote verification and evaluation API.
 servers:
   - url: /api
     description: Base API path
@@ -11,9 +11,9 @@ tags:
   - name: health
     description: Health operations
   - name: corpus
-    description: Read-only access to the local Tirukkural corpus
+    description: Read-only access to locally available Tamil literary corpora
   - name: verification
-    description: Deterministic matching against the local corpus only
+    description: Deterministic matching against selected local literary corpora
   - name: evaluation
     description: Deterministic evaluation results
 paths:
@@ -64,6 +64,42 @@ paths:
                 $ref: "#/components/schemas/Kural"
         "404":
           description: Kural not found
+  /literature/catalog:
+    get:
+      operationId: getLiteratureCatalog
+      tags: [corpus]
+      summary: List literary corpora available for verification
+      responses:
+        "200":
+          description: Installed and unavailable literary corpus sources
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LiteratureWork"
+  /literature/verify:
+    post:
+      operationId: verifyLiteraryQuote
+      tags: [verification]
+      summary: Search a selected or all available Tamil literary corpora
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LiteratureVerifyInput"
+      responses:
+        "200":
+          description: Best exact or near match across selected corpora
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LiteratureVerification"
+        "409":
+          description: The requested corpus is not installed
+        "422":
+          description: Invalid work selection or claimed Kural number
   /verify:
     post:
       operationId: verifyQuote
@@ -141,6 +177,82 @@ components:
         needs_human_review:
           type: boolean
       required: [id, paal, chapter_no, chapter_name, line1, line2, meaning_en, needs_human_review]
+    LiteratureWork:
+      type: object
+      properties:
+        id:
+          type: string
+          enum: [thirukkural, purananuru, tolkappiyam, aathichudi]
+        name:
+          type: string
+        available:
+          type: boolean
+        entry_count:
+          type: integer
+        source_file:
+          type: string
+      required: [id, name, available, entry_count, source_file]
+    LiteratureVerifyInput:
+      type: object
+      properties:
+        text:
+          type: string
+          minLength: 1
+          maxLength: 5000
+        work_id:
+          type: string
+          enum: [all, thirukkural, purananuru, tolkappiyam, aathichudi]
+          default: all
+        claimed_id:
+          type: ["integer", "null"]
+          minimum: 1
+          maximum: 1330
+      required: [text]
+    LiteratureVerification:
+      type: object
+      properties:
+        verdict:
+          type: string
+          enum: [verified, near_match, not_found]
+        matched_id:
+          type: ["integer", "null"]
+        score:
+          type: number
+        matched_scope:
+          type: ["string", "null"]
+          enum: [full, line1, line2, null]
+        diff:
+          type: array
+          items:
+            $ref: "#/components/schemas/DiffPart"
+        claimed_id_ok:
+          type: ["boolean", "null"]
+        warning:
+          type: ["string", "null"]
+        work_id:
+          type: ["string", "null"]
+          enum: [thirukkural, purananuru, tolkappiyam, aathichudi, null]
+        work_name:
+          type: ["string", "null"]
+        matched_record:
+          type: ["object", "null"]
+          additionalProperties: true
+        searched_work_ids:
+          type: ["array", "null"]
+          items:
+            type: string
+            enum: [thirukkural, purananuru, tolkappiyam, aathichudi]
+      required:
+        - verdict
+        - matched_id
+        - score
+        - matched_scope
+        - diff
+        - claimed_id_ok
+        - warning
+        - work_id
+        - work_name
+        - matched_record
     DiffPart:
       type: object
       properties:
@@ -307,4 +419,3 @@ components:
           additionalProperties:
             type: integer
       required: [generated_at, near_threshold, metrics, threshold_sweep, verdict_counts, dataset_counts]
-
