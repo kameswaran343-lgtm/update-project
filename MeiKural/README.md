@@ -24,11 +24,13 @@ not supported.
 
 ## Education and simple explanations
 
-The Education tab browses the local corpus by Paal, Athigaram, and Kural
-number. It shows the original Tamil couplet and the available source English
-meaning without replacing either with generated text. Meanings flagged for
-human review are identified as unverified, omitted from the verified-meaning
-display, and not sent to the explanation model as verified context.
+The Tamil Education tab browses the local corpus by Paal, Athigaram, and Kural
+number. It shows the original Tamil couplet and does not present an English
+source gloss as if it were Tamil. Where only an English source meaning exists,
+the interface says that no verified Tamil rendering is available. Meanings
+flagged for human review are identified as unverified and are not sent to the
+explanation model as verified context. The meaning-based memory-quiz mode
+remains unavailable until a verified Tamil meaning source is added.
 
 Simple explanations are generated only when the user selects a Kural and
 clicks **Explain in Simple Terms**. The backend uses Gemini's `generateContent`
@@ -51,10 +53,12 @@ verse and any eligible source meaning are sent to Gemini when an explanation is
 explicitly requested. Generated explanations are educational aids, not
 verified translations or replacements for the source text.
 
-The home-page ticker uses all 1,330 couplets from the local corpus. Its
-Thiruvalluvar statue photograph is by PKharote, shared under
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) via
-[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Indian_Temple_at_dusk_Thiruvalluvar_Statue.jpg).
+The home-page ticker uses all 1,330 couplets from the local corpus. The hero
+uses a locally rendered, animated symbolic figure holding a palm-leaf
+manuscript; it is not a depiction of a specific historical person. The visible
+interface is presented in Tamil. Exact Thirukkural text remains verified when
+line wrapping differs from the canonical 4+3 word layout; the result notes a
+layout difference while preserving the corpus' canonical couplet display.
 
 ## Run it
 
@@ -70,8 +74,9 @@ chmod +x run.sh
 
 In VS Code on Windows, run `pnpm dev` from the project root instead. This starts
 the FastAPI memory/API backend, waits until its memory quiz routes are ready,
-and then starts the web interface. Set `PYTHON` to the Python executable for
-your virtual environment if it is not already active in the terminal. Stop
+and then starts the web interface. Set `PYTHON` to your Python executable only
+if you want to override automatic selection of the project's `.venv`. The
+backend build and typecheck scripts use the same interpreter selection. Stop
 both services with Ctrl+C.
 
 The development services are available at:

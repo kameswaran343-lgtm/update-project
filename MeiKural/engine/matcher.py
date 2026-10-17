@@ -18,7 +18,7 @@ from config import (
     NEAR_THRESHOLD,
     WORD_OVERLAP_WEIGHT,
 )
-from engine.normalize import normalize, normalize_compact
+from engine.normalize import normalize
 
 Scope = Literal["full", "line1", "line2"]
 Verdict = Literal["verified", "near_match", "not_found"]
@@ -54,7 +54,6 @@ class IndexedText:
     scope: Scope
     text: str
     normalized: str
-    compact: str
 
 
 def _word_diff(input_text: str, corpus_text: str) -> list[DiffPart]:
@@ -76,18 +75,30 @@ def _word_diff(input_text: str, corpus_text: str) -> list[DiffPart]:
     return result
 
 
-def _word_overlap(left: str, right: str) -> float:
+def _word_similarity(left: str, right: str) -> float:
     left_words = left.split()
     right_words = right.split()
     if not left_words or not right_words:
         return 0.0
-    left_set, right_set = set(left_words), set(right_words)
-    return (2 * len(left_set & right_set)) / (len(left_set) + len(right_set))
+    matcher = SequenceMatcher(a=left_words, b=right_words, autojunk=False)
+    similarity = 0.0
+    for tag, left_start, left_end, right_start, right_end in matcher.get_opcodes():
+        if tag == "equal":
+            similarity += 100 * (left_end - left_start)
+        elif tag == "replace":
+            similarity += sum(
+                fuzz.ratio(left_word, right_word)
+                for left_word, right_word in zip(
+                    left_words[left_start:left_end],
+                    right_words[right_start:right_end],
+                )
+            )
+    return similarity / max(len(left_words), len(right_words)) / 100
 
 
 def _combined_score(query: str, candidate: str) -> float:
     character_score = float(fuzz.ratio(query, candidate))
-    overlap_score = _word_overlap(query, candidate) * 100
+    overlap_score = _word_similarity(query, candidate) * 100
     weight_sum = CHARACTER_WEIGHT + WORD_OVERLAP_WEIGHT
     if weight_sum <= 0:
         raise ValueError("Matching weights must have a positive sum.")
@@ -156,6 +167,13 @@ def _has_expected_couplet_shape(text: str, record: dict[str, Any]) -> bool:
     )
 
 
+def _has_canonical_couplet(record: dict[str, Any]) -> bool:
+    return (
+        _word_counts_by_line(str(record["line1"])) == [4]
+        and _word_counts_by_line(str(record["line2"])) == [3]
+    )
+
+
 def _has_expected_work_shape(text: str, record: dict[str, Any], work_id: str) -> bool:
     if work_id == "thirukkural":
         return _has_expected_couplet_shape(text, record)
@@ -209,7 +227,6 @@ class Matcher:
                         scope=scope,  # type: ignore[arg-type]
                         text=text,
                         normalized=normalized,
-                        compact=normalized.replace(" ", ""),
                     )
                 )
 
@@ -218,21 +235,18 @@ class Matcher:
 
     def verify(self, text: str, claimed_id: int | None = None) -> Verification:
         query_normalized = normalize(text)
-        query_compact = query_normalized.replace(" ", "")
-        if not query_compact:
+        if not query_normalized:
             return Verification(
                 "not_found", None, 0.0, None, [], None, None, None
             )
 
         exact_candidates = [
-            item for item in self.index if item.compact == query_compact
+            item for item in self.index if item.normalized == query_normalized
         ]
         if exact_candidates:
             selected = self._select_claimed_candidate(exact_candidates, claimed_id)
             matched_id = _record_id(selected.record)
-            if selected.scope != "full" or not _has_expected_work_shape(
-                text, selected.record, self.work_id
-            ):
+            if selected.scope != "full":
                 warning = (
                     "line_word_count_mismatch"
                     if self.work_id == "thirukkural"
@@ -250,6 +264,38 @@ class Matcher:
                     warning=warning,
                     matched_kural=selected.record,
                 )
+            if self.work_id == "thirukkural":
+                word_counts = _word_counts_by_line(text)
+                if not _has_canonical_couplet(selected.record) or sum(word_counts) != 7:
+                    return Verification(
+                        verdict="near_match",
+                        matched_id=matched_id,
+                        score=99.0,
+                        matched_scope=selected.scope,
+                        diff=_word_diff(text, selected.text),
+                        claimed_id_ok=(
+                            None if claimed_id is None else matched_id == claimed_id
+                        ),
+                        warning="line_word_count_mismatch",
+                        matched_kural=selected.record,
+                    )
+                if not _has_expected_work_shape(text, selected.record, self.work_id):
+                    return Verification(
+                        verdict="verified",
+                        matched_id=matched_id,
+                        score=100.0,
+                        matched_scope=selected.scope,
+                        diff=[],
+                        claimed_id_ok=(
+                            None if claimed_id is None else matched_id == claimed_id
+                        ),
+                        warning=(
+                            "attribution_mismatch"
+                            if claimed_id is not None and matched_id != claimed_id
+                            else "line_structure_mismatch"
+                        ),
+                        matched_kural=selected.record,
+                    )
             return Verification(
                 verdict="verified",
                 matched_id=matched_id,

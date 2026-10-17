@@ -32,6 +32,9 @@ node_modules
 /connect.lock
 /coverage
 /libpeerconnection.log
+/htmlcov/
+/.coverage
+/.coverage.*
 npm-debug.log
 yarn-error.log
 testem.log
@@ -53,7 +56,14 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .env
+.env.*
+!.env.example
 .venv/
+venv/
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+build/
 
 # Raw upstream corpus snapshots are reproducible via scripts/build_corpus.py.
 data/raw/*

@@ -31,8 +31,8 @@ from guard.extractor import QuoteCandidate, extract_candidates
 from guard import memory
 
 ABSTAIN_MESSAGE = (
-    "Not found in the Tirukkural corpus. This cannot be confirmed as authentic. "
-    "Please consult a Tamil scholar."
+    "திருக்குறள் தொகுப்பில் இது கிடைக்கவில்லை; இதன் உண்மைத்தன்மையை உறுதிப்படுத்த "
+    "முடியாது. தமிழ் அறிஞரிடம் ஆலோசிக்கவும்."
 )
 
 
@@ -298,15 +298,26 @@ def verify_quote(request: VerifyInput) -> dict:
 def _annotation(candidate: QuoteCandidate, result: dict) -> str:
     verdict = result["verdict"]
     if verdict == "verified":
-        return f" ✅ verified — Kural {result['matched_id']}"
+        matched_id = result["matched_id"]
+        if candidate.claimed_id is not None and candidate.claimed_id != matched_id:
+            return (
+                f" ⚠️ உரை குறள் {matched_id} உடன் பொருந்துகிறது; "
+                f"கூறிய குறள் எண் {candidate.claimed_id} பொருந்தவில்லை"
+            )
+        suffix = "" if candidate.claimed_id == matched_id else f" — குறள் {matched_id}"
+        return f" ✅ உறுதிப்படுத்தப்பட்டது{suffix}"
     if verdict == "near_match":
         kural = result["matched_kural"]
         real_text = f"{kural['line1']}\n{kural['line2']}" if kural else ""
-        return (
-            f" ⚠️ near match — possible Kural {result['matched_id']}: "
-            f"{real_text}"
+        suffix = (
+            ""
+            if candidate.claimed_id == result["matched_id"]
+            else f" — குறள் {result['matched_id']} ஆக இருக்கலாம்"
         )
-    return f" ❌ not found — {ABSTAIN_MESSAGE}"
+        return (
+            f" ⚠️ அருகிய பொருத்தம்{suffix}: {real_text}"
+        )
+    return f" ❌ கிடைக்கவில்லை — {ABSTAIN_MESSAGE}"
 
 
 @router.post("/guard", response_model=GuardResult)

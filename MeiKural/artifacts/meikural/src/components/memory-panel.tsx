@@ -68,7 +68,7 @@ const labels = {
     medium: 'நடுத்தரம்',
     hard: 'கடினம்',
     easyInfo: 'விடுபட்ட சொல்லைத் தேர்ந்தெடு',
-    mediumInfo: 'பொருளைப் பார்த்து குறளை எழுதுங்கள்',
+    mediumInfo: 'சரிபார்க்கப்பட்ட தமிழ் பொருள் கிடைக்கும்போது இந்தப் பயிற்சி திறக்கப்படும்.',
     hardInfo: 'எண்ணைப் பார்த்து குறளைத் தேர்ந்தெடு',
     cancel: 'திரும்பு',
     score: 'மதிப்பெண்',
@@ -93,7 +93,8 @@ const labels = {
     apiUnavailable: 'நினைவுப் பயிற்சி சேவை கிடைக்கவில்லை. VS Code முனையத்தில் `pnpm dev` இயக்கி, இரு சேவைகளும் தொடங்கிய பிறகு மீண்டும் முயற்சிக்கவும்.',
     sessionError: 'வினாடி வினா அமர்வை மீட்டெடுக்க முடியவில்லை. புதிய வினாடி வினாவைத் தொடங்கவும்.',
     answerError: 'பதிலைச் சமர்ப்பிக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.',
-    noMeaning: 'இந்தத் தேர்வில் சரிபார்க்கப்பட்ட ஆங்கிலப் பொருள் இல்லை. வேறு அதிகாரத்தைத் தேர்ந்தெடுக்கவும்.',
+    noMeaning: 'இந்தத் தேர்வில் சரிபார்க்கப்பட்ட பொருள் கிடைக்கவில்லை. வேறு அதிகாரத்தைத் தேர்ந்தெடுக்கவும்.',
+    mediumUnavailable: 'இந்தப் பயிற்சிக்கான பழைய அமர்வு ஆங்கிலப் பொருளைப் பயன்படுத்துகிறது. தமிழில் உறுதிப்படுத்தப்பட்ட பொருள் கிடைக்கும் வரை அது திறக்கப்படாது; புதிய வினாடி வினாவைத் தொடங்கவும்.',
     storageError: 'இந்த உலாவியில் வினாடி வினா அமர்வைச் சேமிக்க முடியவில்லை.',
     placeholder: 'விடுபட்ட சொல்',
     points: 'புள்ளிகள்',
@@ -140,6 +141,7 @@ const labels = {
     sessionError: 'Could not restore the quiz session. Start a new quiz.',
     answerError: 'Could not submit your answer. Please try again.',
     noMeaning: 'This scope has no verified English meanings. Choose another chapter.',
+    mediumUnavailable: 'This saved quiz uses an English meaning and cannot be shown in the Tamil interface.',
     storageError: 'Could not save the quiz session in this browser.',
     placeholder: 'Missing word',
     points: 'points',
@@ -218,6 +220,11 @@ export function MemoryPanel({ language }: { language: Language }) {
       })
       .then((savedQuiz) => {
         if (!active) return;
+        if (savedQuiz.difficulty === 'medium') {
+          sessionStorage.removeItem(QUIZ_STORAGE_KEY);
+          setError(copy.mediumUnavailable);
+          return;
+        }
         setQuiz(savedQuiz);
         setShowFeedback(false);
       })
@@ -232,7 +239,7 @@ export function MemoryPanel({ language }: { language: Language }) {
         setError(cause instanceof Error ? cause.message : copy.sessionError);
       });
     return () => { active = false; };
-  }, [copy.sessionError, copy.storageError]);
+  }, [copy.mediumUnavailable, copy.sessionError, copy.storageError]);
 
   const paals = useMemo(() => [...new Set(records.map((record) => record.paal))], [records]);
   const chapters = useMemo(
@@ -413,7 +420,7 @@ export function MemoryPanel({ language }: { language: Language }) {
           : <div className="space-y-3">
             <div className="flex items-center justify-between"><h3 className="font-display text-lg">{copy.difficulty}</h3><button className="text-xs font-semibold text-muted-foreground underline" onClick={() => setChoosingDifficulty(false)}>{copy.cancel}</button></div>
             <div className="grid gap-3 sm:grid-cols-3">
-              {(['easy', 'medium', 'hard'] as const).map((difficulty) => <button key={difficulty} disabled={busy} onClick={() => { void startQuiz(difficulty); }} className="rounded-xl border border-border bg-background p-4 text-left transition hover:border-primary hover:bg-primary/5 disabled:opacity-50" data-testid={`memory-difficulty-${difficulty}`}><span className="font-display text-base">{copy[difficulty]}</span><span className="mt-1 block text-xs leading-5 text-muted-foreground">{copy[`${difficulty}Info`]}</span></button>)}
+              {(['easy', 'medium', 'hard'] as const).map((difficulty) => <button key={difficulty} disabled={busy || difficulty === 'medium'} onClick={() => { if (difficulty !== 'medium') void startQuiz(difficulty); }} className="rounded-xl border border-border bg-background p-4 text-left transition hover:border-primary hover:bg-primary/5 disabled:cursor-not-allowed disabled:opacity-50" data-testid={`memory-difficulty-${difficulty}`}><span className="font-display text-base">{copy[difficulty]}</span><span className="mt-1 block text-xs leading-5 text-muted-foreground">{copy[`${difficulty}Info`]}</span></button>)}
             </div>
           </div>}
       </div>}

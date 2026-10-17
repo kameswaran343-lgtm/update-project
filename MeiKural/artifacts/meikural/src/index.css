@@ -287,7 +287,14 @@ button, input, textarea { font: inherit; }
 }
 .reveal { animation: rise-in .45s both cubic-bezier(.2,.7,.2,1); }
 @keyframes rise-in { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
-.hero-thiruvalluvar { background-size: cover, cover; background-position: center, center; }
+.hero-thiruvalluvar {
+  background:
+    radial-gradient(ellipse at 79% 43%, rgba(198, 151, 86, .25), transparent 36%),
+    radial-gradient(ellipse at 100% 100%, rgba(57, 116, 94, .38), transparent 46%),
+    linear-gradient(116deg, #102d25 0%, #173f34 60%, #1d4b3d 100%);
+  background-size: cover, cover;
+  background-position: center, center;
+}
 @media (min-width: 1024px) {
   .hero-thiruvalluvar { background-size: cover, auto 135%; background-position: center, 82% 20%; }
 }

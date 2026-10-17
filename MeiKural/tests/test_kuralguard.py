@@ -94,6 +94,48 @@ def test_auto_literature_verification_identifies_purananuru() -> None:
     assert result["matched_record"]["lines"] == record["lines"]
 
 
+def test_purananuru_exact_text_is_verified_when_line_breaks_differ() -> None:
+    record = PURANANURU_CORPUS[0]
+    result = Matcher(
+        records=PURANANURU_CORPUS,
+        work_id="purananuru",
+    ).verify(" ".join(record["lines"]))
+
+    assert result.verdict == "verified"
+    assert result.score == 100
+    assert result.warning is None
+    assert result.matched_id == record["id"]
+
+
+def test_aathichudi_exact_text_is_verified_with_wrapped_lines() -> None:
+    record = AATHICHUDI_CORPUS[0]
+    result = Matcher(
+        records=AATHICHUDI_CORPUS,
+        work_id="aathichudi",
+    ).verify("\n".join(record["text"].split()))
+
+    assert result.verdict == "verified"
+    assert result.score == 100
+    assert result.warning is None
+    assert result.matched_id == record["id"]
+
+
+def test_non_kural_spacing_errors_return_similarity_and_word_differences() -> None:
+    record = AATHICHUDI_CORPUS[0]
+    changed_text = record["text"].replace("விரும்பு", "விரும்ப")
+    result = Matcher(
+        records=AATHICHUDI_CORPUS,
+        work_id="aathichudi",
+    ).verify(changed_text)
+
+    assert result.verdict == "near_match"
+    assert result.score < 100
+    assert result.matched_id == record["id"]
+    assert result.diff
+    assert any(part.kind != "same" for part in result.diff)
+    assert result.score > 90
+
+
 def test_purananuru_dataset_has_explicit_source_coverage() -> None:
     present_ids = {record["id"] for record in PURANANURU_CORPUS}
     known_source_gaps = set(range(151, 161)) | {244, 267, 268, 320, 362}
@@ -121,15 +163,27 @@ def test_tolkappiyam_unavailable_is_reported_without_fallback() -> None:
         verify_literature("தமிழ் உரை", work_id="tolkappiyam")
 
 
-def test_flattened_full_couplet_is_not_verified(matcher: Matcher) -> None:
+def test_flattened_exact_couplet_is_verified_despite_missing_line_break(matcher: Matcher) -> None:
     record = CORPUS[0]
     result = matcher.verify(f"{record['line1']} {record['line2']}")
-    assert result.verdict == "near_match"
-    assert result.score < 100
-    assert result.warning == "line_word_count_mismatch"
+    assert result.verdict == "verified"
+    assert result.score == 100
+    assert result.matched_id == record["id"]
+    assert result.warning == "line_structure_mismatch"
 
 
-def test_full_couplet_with_wrong_line_word_counts_is_not_verified(
+def test_exact_couplet_with_ocr_line_wrapping_is_verified(matcher: Matcher) -> None:
+    record = CORPUS[0]
+    words = f"{record['line1']} {record['line2']}".split()
+    result = matcher.verify(f"{' '.join(words[:2])}\n{' '.join(words[2:6])}\n{words[6]}")
+
+    assert result.verdict == "verified"
+    assert result.score == 100
+    assert result.matched_id == record["id"]
+    assert result.warning == "line_structure_mismatch"
+
+
+def test_exact_couplet_with_noncanonical_line_break_is_verified_with_warning(
     matcher: Matcher,
 ) -> None:
     record = CORPUS[0]
@@ -139,9 +193,9 @@ def test_full_couplet_with_wrong_line_word_counts_is_not_verified(
         f"{' '.join(first_line_words[3:])} {record['line2']}"
     )
     result = matcher.verify(malformed)
-    assert result.verdict == "near_match"
-    assert result.score < 100
-    assert result.warning == "line_word_count_mismatch"
+    assert result.verdict == "verified"
+    assert result.score == 100
+    assert result.warning == "line_structure_mismatch"
 
 
 def test_exact_corpus_shape_exception_is_not_verified(matcher: Matcher) -> None:
@@ -250,9 +304,10 @@ def test_guard_endpoint_annotates_one_real_and_one_spliced_quote() -> None:
     assert len(payload["quotes"]) == 2
     assert payload["summary"]["verified"] == 1
     assert payload["quotes"][0]["claimed_id_ok"] is True
-    assert "✅ verified" in payload["annotated_answer"]
-    assert "⚠️ near match" in payload["annotated_answer"] or "❌ not found" in payload["annotated_answer"]
+    assert "✅ உறுதிப்படுத்தப்பட்டது" in payload["annotated_answer"]
+    assert "⚠️ அருகிய பொருத்தம்" in payload["annotated_answer"] or "❌ கிடைக்கவில்லை" in payload["annotated_answer"]
     assert ABSTAIN_MESSAGE in payload["annotated_answer"] or payload["summary"]["near"] == 1
+    assert f"— குறள் {real['id']}" not in payload["annotated_answer"]
 
 
 def test_verify_endpoint_uses_local_corpus() -> None:
@@ -278,6 +333,20 @@ def test_literature_verify_endpoint_reports_detected_work() -> None:
     assert response.status_code == 200
     assert response.json()["work_id"] == "aathichudi"
     assert response.json()["matched_record"]["text"] == record["text"]
+
+
+def test_literature_verify_endpoint_verifies_flattened_kural_quote() -> None:
+    record = CORPUS[0]
+    response = client.post(
+        "/api/literature/verify",
+        json={"text": f"{record['line1']} {record['line2']}", "work_id": "thirukkural"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["verdict"] == "verified"
+    assert response.json()["score"] == 100
+    assert response.json()["matched_record"]["id"] == record["id"]
+    assert response.json()["warning"] == "line_structure_mismatch"
 
 
 def test_literature_verify_endpoint_reports_purananuru() -> None:

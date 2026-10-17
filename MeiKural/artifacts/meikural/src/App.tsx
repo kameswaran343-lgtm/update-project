@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { getGetEvaluationResultsQueryKey, getGetHealthQueryKey, getGetKuralQueryKey, getHealthCheckQueryKey, useGuardAnswer, useGetEvaluationResults, useGetHealth, useGetKural, useGetLiteratureCatalog, useHealthCheck, useVerifyLiteraryQuote } from '@workspace/api-client-react';
+import { getGetEvaluationResultsQueryKey, getGetKuralQueryKey, useGuardAnswer, useGetEvaluationResults, useGetKural, useGetLiteratureCatalog, useVerifyLiteraryQuote } from '@workspace/api-client-react';
 import type { EvaluationResults, GuardQuote, Kural, LiteratureVerification, LiteratureVerifyInputWorkId, Verification } from '@workspace/api-client-react';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { MemoryPanel } from '@/components/memory-panel';
@@ -42,7 +42,7 @@ type VoiceState = 'idle' | 'listening' | 'processing' | 'error';
 function isLiteratureWorkId(value: string): value is LiteratureVerifyInputWorkId {
   return value === 'all' || value === 'thirukkural' || value === 'purananuru' || value === 'tolkappiyam' || value === 'aathichudi';
 }
-const LanguageContext = createContext<{ language: Language; setLanguage: (language: Language) => void }>({ language: 'ta', setLanguage: () => undefined });
+const LanguageContext = createContext<{ language: Language }>({ language: 'ta' });
 const useLanguage = () => useContext(LanguageContext);
 const text = (language: Language, tamil: string, english: string) => language === 'ta' ? tamil : english;
 
@@ -55,14 +55,33 @@ const tabs: { id: Tab; label: Record<Language, string>; icon: typeof ScanText; n
 ];
 
 function Home() {
-  const { language, setLanguage } = useLanguage();
+  const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState<Tab>('verify');
   const [verses, setVerses] = useState<KuralVerse[]>([]);
   const [verseIndex, setVerseIndex] = useState(0);
   const [versesError, setVersesError] = useState(false);
-  const health = useGetHealth({ query: { queryKey: getGetHealthQueryKey() } });
-  const healthz = useHealthCheck({ query: { queryKey: getHealthCheckQueryKey() } });
-  const apiOnline = Boolean(health.data || healthz.data);
+  const literatureCatalog = useGetLiteratureCatalog();
+  const apiOnline = Boolean(literatureCatalog.data?.some((work) => work.id === 'thirukkural' && work.available));
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const direction = event.key === 'ArrowRight' || event.key === 'ArrowDown'
+      ? 1
+      : event.key === 'ArrowLeft' || event.key === 'ArrowUp'
+        ? -1
+        : event.key === 'Home'
+          ? -index
+          : event.key === 'End'
+            ? tabs.length - index - 1
+            : 0;
+    if (!direction) return;
+    event.preventDefault();
+    const nextIndex = (index + direction + tabs.length) % tabs.length;
+    const nextTab = tabs[nextIndex];
+    if (!nextTab) return;
+    setActiveTab(nextTab.id);
+    event.currentTarget.parentElement
+      ?.querySelectorAll<HTMLButtonElement>('[role="tab"]')[nextIndex]
+      ?.focus();
+  };
   useEffect(() => {
     let active = true;
     void fetch('/api/kurals/verses')
@@ -86,7 +105,7 @@ function Home() {
       return () => window.clearInterval(timer);
   }, [verses.length]);
   return (
-    <main className="grain min-h-[100dvh] overflow-hidden bg-background text-foreground">
+    <main className="grain min-h-[100dvh] overflow-x-clip bg-background text-foreground">
       <div className="mx-auto flex min-h-[100dvh] max-w-[1440px]">
         <aside className="hidden w-[248px] shrink-0 flex-col justify-between border-r border-sidebar-border bg-sidebar px-6 py-7 text-sidebar-foreground md:flex">
           <div>
@@ -112,8 +131,8 @@ function Home() {
           </div>
           <div className="border-t border-sidebar-border pt-5">
             <div className="flex items-center gap-2.5">
-              <span className={`h-2 w-2 rounded-full ${health.isError && healthz.isError ? 'bg-amber-300' : apiOnline ? 'bg-emerald-300' : 'bg-sidebar-primary animate-pulse'}`} />
-              <span className="text-xs text-sidebar-foreground/70" data-testid="status-api">{health.isError && healthz.isError ? text(language, 'சேவை கிடைக்கவில்லை', 'Service unavailable') : apiOnline ? text(language, 'குறள் தொகுப்புடன் இணைக்கப்பட்டது', 'Connected to the Kural corpus') : text(language, 'தொகுப்புடன் இணைக்கிறது…', 'Connecting to corpus…')}</span>
+              <span className={`h-2 w-2 rounded-full ${literatureCatalog.isError ? 'bg-amber-300' : apiOnline ? 'bg-emerald-300' : 'bg-sidebar-primary animate-pulse'}`} />
+              <span className="text-xs text-sidebar-foreground/70" data-testid="status-api">{literatureCatalog.isError ? text(language, 'சரிபார்ப்புச் சேவை கிடைக்கவில்லை', 'Verification service unavailable') : apiOnline ? text(language, 'இலக்கியத் தொகுப்புடன் இணைக்கப்பட்டது', 'Connected to the literature corpus') : text(language, 'தொகுப்புடன் இணைக்கிறது…', 'Connecting to corpus…')}</span>
             </div>
             <p className="mt-3 font-data text-[10px] tracking-wide text-sidebar-foreground/40">{text(language, 'திருக்குறள் · 1330 குறள்கள்', 'Tirukkural · 1,330 couplets')}</p>
           </div>
@@ -122,14 +141,17 @@ function Home() {
           <header className="sticky top-0 z-20 flex h-[68px] items-center justify-between border-b border-border/80 bg-background/95 px-5 backdrop-blur-md sm:px-8 lg:px-12">
             <div className="flex items-center gap-3 md:hidden"><Brand compact /></div>
             <p className="hidden font-data text-[10px] uppercase tracking-[.2em] text-muted-foreground md:block">{text(language, 'மரபுச் செல்வத்தை மதிக்கும் தேடல்', 'A search that respects literary heritage')}</p>
-            <div className="flex items-center gap-3"><div className="flex items-center gap-2 text-xs text-muted-foreground"><span className={`h-1.5 w-1.5 rounded-full ${apiOnline ? 'bg-primary' : 'bg-amber-500'}`} /><span data-testid="text-service-state">{health.isError && healthz.isError ? text(language, 'சேவை கிடைக்கவில்லை', 'Service unavailable') : apiOnline ? text(language, 'தொகுப்பு இணைப்பில் உள்ளது', 'Corpus connected') : text(language, 'சேவையைச் சரிபார்க்கிறது…', 'Checking service…')}</span></div><button type="button" onClick={() => setLanguage(language === 'ta' ? 'en' : 'ta')} className="rounded-lg border border-border px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-muted" aria-label={text(language, 'ஆங்கிலத்திற்கு மாற்றவும்', 'Switch to Tamil')}>{language === 'ta' ? 'English' : 'தமிழ்'}</button></div>
+            <div className="flex items-center gap-2 text-xs text-muted-foreground"><span className={`h-1.5 w-1.5 rounded-full ${literatureCatalog.isError ? 'bg-amber-500' : apiOnline ? 'bg-primary' : 'animate-pulse bg-amber-500'}`} /><span data-testid="text-service-state">{literatureCatalog.isError ? text(language, 'சரிபார்ப்புச் சேவை கிடைக்கவில்லை', 'Verification service unavailable') : apiOnline ? text(language, 'இலக்கியத் தொகுப்பு இணைப்பில் உள்ளது', 'Literature corpus connected') : text(language, 'சேவையைச் சரிபார்க்கிறது…', 'Checking service…')}</span></div>
           </header>
           <div className="mx-auto max-w-[1080px] px-5 pb-14 pt-9 sm:px-8 sm:pt-12 lg:px-12">
-            <section className="hero-thiruvalluvar relative mb-9 min-h-[330px] overflow-hidden rounded-[24px] bg-[#15382f] text-[#f7f2e7] shadow-[0_18px_50px_rgba(21,56,47,.18)] sm:min-h-[345px] lg:min-h-[460px] xl:min-h-[480px]" style={{ backgroundImage: "linear-gradient(90deg, rgba(15, 43, 36, .97) 0%, rgba(15, 43, 36, .84) 38%, rgba(15, 43, 36, .18) 100%), url('/thiruvalluvar-statue.jpg')" }} data-testid="hero-thiruvalluvar">
-              <div className="relative z-10 max-w-[650px] px-6 pb-24 pt-7 sm:px-9 sm:pb-28 sm:pt-9">
+            <section className="hero-thiruvalluvar relative mb-9 min-h-[350px] overflow-hidden rounded-[24px] bg-[#15382f] text-[#f7f2e7] shadow-[0_18px_50px_rgba(21,56,47,.18)] sm:min-h-[390px] lg:min-h-[460px] xl:min-h-[480px]" style={{ backgroundImage: "linear-gradient(90deg, rgba(15, 43, 36, .97) 0%, rgba(15, 43, 36, .84) 38%, rgba(15, 43, 36, .18) 100%), url('/thiruvalluvar-statue.jpg')" }} data-testid="hero-thiruvalluvar">
+              <div className="relative z-10 max-w-[650px] px-6 pb-24 pt-7 sm:px-9 sm:pb-28 sm:pt-9 lg:max-w-[60%]">
                 <div className="flex items-center gap-2 font-data text-[10px] uppercase tracking-[.22em] text-[#e7c989]"><span className="h-px w-6 bg-[#e7c989]" />{text(language, 'தமிழ் இலக்கியம் · ஆதாரத்துடன்', 'Tamil literature · evidence first')}</div>
                 <h1 className="mt-4 max-w-3xl font-display text-[2.1rem] leading-[1.12] tracking-[-.035em] sm:text-[3.15rem]">{language === 'ta' ? <>சொல்லின் <em className="font-display font-medium text-[#e7c989]">மூலத்தை</em> அறியுங்கள்.</> : <>Find the <em className="font-display font-medium text-[#e7c989]">source</em> of a quotation.</>}</h1>
-                <p className="mt-4 max-w-[540px] text-[14px] leading-7 text-white/80">{text(language, 'மேற்கோளை உள்ளூர் திருக்குறள் தொகுப்புடன் ஒப்பிடுங்கள். அப்படியே பொருந்தினால் உறுதிப்படுத்தலாம்; சந்தேகம் இருந்தால் உறுதியற்றதாகவே தெரிவிப்போம்.', 'Compare a quotation with the local Tirukkural corpus. We confirm exact matches and report uncertain results as uncertain.')}</p>
+                <p className="mt-4 max-w-[540px] text-[14px] leading-7 text-white/80">{text(language, 'தேர்ந்தெடுத்த தமிழ் இலக்கியத் தொகுப்புடன் மேற்கோளை ஒப்பிடுங்கள். சொற்கள் பொருந்தினால் உறுதிப்படுத்தி, வேறுபாடுகள் இருந்தால் தெளிவாகக் காட்டுகிறோம்.', 'Compare a quotation with the selected Tamil literature corpus. We confirm exact text and explain differences.')}</p>
+                <button type="button" onClick={() => { setActiveTab('verify'); document.getElementById('active-tab-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }} className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#e7c989] px-4 text-[13px] font-bold text-[#17382f] transition hover:-translate-y-0.5 hover:bg-[#f0d9a5]" data-testid="button-start-verification">
+                  <FileSearch size={16} />{text(language, 'மேற்கோளைச் சரிபார்', 'Check a quotation')}<ArrowRight size={15} />
+                </button>
               </div>
               {verses.length > 0
                 ? <div className="absolute inset-x-0 bottom-0 z-10 min-h-[66px] border-t border-white/15 bg-[#102c25]/85 px-5 py-2.5 backdrop-blur-sm sm:px-8" aria-label={text(language, 'திருக்குறளின் 1330 குறள்களும் வரிசையாக நகர்கின்றன', 'All 1,330 Tirukkural couplets advance in order')} data-testid="verse-ticker">
@@ -142,16 +164,16 @@ function Home() {
                     {versesError ? text(language, 'குறள் ஓட்டத்தை ஏற்ற முடியவில்லை.', 'Could not load the Kural ticker.') : text(language, 'திருக்குறளின் 1330 குறள்களை ஏற்றுகிறது…', 'Loading all 1,330 Tirukkural couplets…')}
                   </div>}
             </section>
-            <div className="mb-8 grid grid-cols-4 gap-1 rounded-2xl border border-border bg-card p-1.5 md:hidden" role="tablist" aria-label={text(language, 'மெய்க்குறள் கருவிகள்', 'Meikural tools')}>
-              {tabs.map((tab) => { const Icon = tab.icon; return <button role="tab" aria-selected={activeTab === tab.id} key={tab.id} onClick={() => setActiveTab(tab.id)} data-testid={`mobile-tab-${tab.id}`} className={`flex min-h-12 items-center justify-center gap-1.5 rounded-xl px-2 text-[12px] font-semibold transition-all ${activeTab === tab.id ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted'}`}><Icon size={15} />{tab.label[language]}</button>; })}
+            <div className="sticky top-[68px] z-10 mb-8 grid grid-cols-2 gap-1 rounded-2xl border border-border bg-card/95 p-1.5 shadow-sm backdrop-blur md:hidden" role="tablist" aria-label={text(language, 'மெய்க்குறள் கருவிகள்', 'Meikural tools')}>
+              {tabs.map((tab, index) => { const Icon = tab.icon; return <button id={`tab-${tab.id}-mobile`} role="tab" aria-controls="active-tab-panel" aria-selected={activeTab === tab.id} tabIndex={activeTab === tab.id ? 0 : -1} key={tab.id} onClick={() => setActiveTab(tab.id)} onKeyDown={(event) => handleTabKeyDown(event, index)} data-testid={`mobile-tab-${tab.id}`} className={`flex min-h-12 items-center justify-center gap-1.5 rounded-xl px-2 text-[12px] font-semibold transition-all ${activeTab === tab.id ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted'}`}><Icon size={15} />{tab.label[language]}</button>; })}
             </div>
-            <div className="mb-7 hidden items-end justify-between border-b border-border md:flex">
+            <div className="sticky top-[68px] z-10 mb-7 hidden items-end justify-between border-b border-border bg-background/95 pt-3 backdrop-blur md:flex">
               <div className="flex gap-7" role="tablist" aria-label={text(language, 'மெய்க்குறள் கருவிகள்', 'Meikural tools')}>
-                {tabs.map((tab) => { const Icon = tab.icon; return <button role="tab" aria-selected={activeTab === tab.id} key={tab.id} onClick={() => setActiveTab(tab.id)} data-testid={`desktop-tab-${tab.id}`} className={`relative flex items-center gap-2 pb-4 text-[13px] font-semibold transition-colors ${activeTab === tab.id ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}><Icon size={16} />{tab.label[language]}<span className={`absolute inset-x-0 -bottom-px h-[2px] transition-opacity ${activeTab === tab.id ? 'bg-primary opacity-100' : 'opacity-0'}`} /></button>; })}
+                {tabs.map((tab, index) => { const Icon = tab.icon; return <button id={`tab-${tab.id}-desktop`} role="tab" aria-controls="active-tab-panel" aria-selected={activeTab === tab.id} tabIndex={activeTab === tab.id ? 0 : -1} key={tab.id} onClick={() => setActiveTab(tab.id)} onKeyDown={(event) => handleTabKeyDown(event, index)} data-testid={`desktop-tab-${tab.id}`} className={`relative flex items-center gap-2 pb-4 text-[13px] font-semibold transition-colors ${activeTab === tab.id ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}><Icon size={16} />{tab.label[language]}<span className={`absolute inset-x-0 -bottom-px h-[2px] transition-opacity ${activeTab === tab.id ? 'bg-primary opacity-100' : 'opacity-0'}`} /></button>; })}
               </div>
               <p className="mb-4 font-data text-[10px] text-muted-foreground">{tabs.find((item) => item.id === activeTab)?.note[language]}</p>
             </div>
-            <div key={activeTab} className="reveal" role="tabpanel">
+            <div id="active-tab-panel" key={activeTab} className="reveal scroll-mt-24" role="tabpanel" aria-label={tabs.find((tab) => tab.id === activeTab)?.label[language]} tabIndex={0}>
               {activeTab === 'verify' && <VerifyPanel />}
               {activeTab === 'guard' && <GuardPanel />}
               {activeTab === 'education' && <EducationPanel />}
@@ -334,10 +356,10 @@ function EducationPanel() {
         {selectedKural.meaning_en && !selectedKural.needs_human_review
           ? <section className="mt-5 rounded-xl border border-border bg-muted/40 p-4" data-testid="education-source-meaning">
             <div className="flex flex-wrap items-center gap-2">
-              <h4 className="text-[12px] font-semibold">{text(language, 'மூலத்தில் உள்ள ஆங்கிலப் பொருள்', 'Available source meaning (English)')}</h4>
-              <span className="rounded-full bg-emerald-100 px-2 py-1 font-data text-[9px] text-emerald-800">{text(language, 'சரிபார்க்கப்பட்ட மூலம்', 'Verified source')}</span>
+              <h4 className="text-[12px] font-semibold">{text(language, 'மூலப் பொருள் பற்றிய குறிப்பு', 'Source meaning note')}</h4>
+              <span className="rounded-full bg-emerald-100 px-2 py-1 font-data text-[9px] text-emerald-800">{text(language, 'மூலம் சரிபார்க்கப்பட்டது', 'Verified source')}</span>
             </div>
-            <p className="mt-2 text-[13px] italic leading-6 text-muted-foreground">{selectedKural.meaning_en}</p>
+            <p className="mt-2 text-[13px] leading-6 text-muted-foreground">{text(language, 'மூலப் பொருள் ஆங்கிலத்தில் மட்டுமே உள்ளது. சரிபார்க்கப்பட்ட தமிழ் உரைமாற்றம் கிடைக்கவில்லை; எனவே அதை இங்கு மொழிபெயர்த்து வழங்கவில்லை.', 'The source meaning is only available in English. No verified Tamil rendering is available, so it is not translated here.')}</p>
           </section>
           : <p className="mt-5 rounded-xl border border-dashed border-border px-4 py-3 text-[12px] leading-5 text-muted-foreground" data-testid="education-meaning-unavailable">
             {selectedKural.meaning_en
@@ -353,7 +375,7 @@ function EducationPanel() {
             className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-[13px] font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-60"
           >
             {explanationLoading ? <LoaderCircle size={16} className="animate-spin" /> : <Sparkles size={16} />}
-            Explain in Simple Terms
+            {text(language, 'எளிய விளக்கத்தைக் காண்க', 'Explain in simple terms')}
           </button>
           {explanationLoading && <p className="mt-3 flex items-center gap-2 text-[12px] text-muted-foreground" role="status">{text(language, 'எளிய விளக்கத்தை உருவாக்குகிறது…', 'Generating a simple explanation…')}</p>}
           {explanationError && <div className="mt-4 rounded-xl border border-[#dfc1b0] bg-[#f5eae3] p-4 text-[12px] leading-5 text-[#87513e]" role="alert" data-testid="education-explanation-error">{explanationError}</div>}
@@ -609,7 +631,7 @@ function VerifyPanel() {
           <option value="all">{text(language, 'கிடைக்கும் அனைத்து இலக்கியங்களையும் தேடு', 'Search all available works')}</option>
           {(literatureCatalog.data ?? []).map((work) => <option key={work.id} value={work.id} disabled={!work.available}>{work.name} {!work.available ? text(language, '— தரவுத்தொகுப்பு இன்னும் கிடைக்கவில்லை', '— dataset not available yet') : work.id === 'purananuru' ? text(language, `(பகுதி: ${work.entry_count}/400)`, `(partial: ${work.entry_count}/400)`) : `(${work.entry_count})`}</option>)}
         </select>
-        {literatureCatalog.isError && <p className="-mt-2 mb-4 text-[11px] text-muted-foreground">{text(language, 'இலக்கியப் பட்டியலை ஏற்ற முடியவில்லை; அனைத்து கிடைக்கும் தொகுப்புகளும் தேடப்படும்.', 'Could not load the literature catalog; the backend will search all available corpora.')}</p>}
+        {literatureCatalog.isError && <div className="-mt-2 mb-4 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-destructive/20 bg-destructive/5 px-3 py-2 text-[11px] text-destructive" role="alert" data-testid="error-literature-catalog"><span>{text(language, 'இலக்கியப் பட்டியலை ஏற்ற முடியவில்லை. சரிபார்ப்புச் சேவையைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.', 'Could not load the literature catalog. Check the verification service and try again.')}</span><button type="button" onClick={() => { void literatureCatalog.refetch(); }} className="font-semibold underline">{text(language, 'மீண்டும் முயற்சி', 'Retry')}</button></div>}
         {workId === 'purananuru' && <p className="-mt-2 mb-4 text-[11px] leading-5 text-muted-foreground" data-testid="text-purananuru-coverage">{text(language, 'இந்தத் தொகுப்பில் 385/400 பாடல்கள் உள்ளன. 151–160, 244, 267–268, 320, 362 சரிபார்க்கப்படவில்லை; பொருத்தம் கிடைக்காதது அந்தப் பாடல்களில் மேற்கோள் இல்லை என்பதை நிரூபிக்காது.', 'This corpus contains 385/400 poems. Poems 151–160, 244, 267–268, 320, and 362 are not covered; a no-match result cannot rule out a quotation from those poems.')}</p>}
         <div className="mb-4 rounded-xl border border-dashed border-border bg-muted/35 px-4 py-3.5" aria-busy={ocrState === 'reading'}>
           <div className="flex flex-wrap items-center gap-3">
@@ -668,12 +690,12 @@ function VerifyPanel() {
         {verify.isError && <InlineError message={text(language, 'இந்த நேரத்தில் மேற்கோளைச் சரிபார்க்க முடியவில்லை.', 'The quotation could not be checked just now.')} onRetry={() => submitQuote(quoteText.trim())} />}
       </form>
     </section>
-    {verify.data ? <LiteratureVerificationResult result={verify.data} inputText={quoteText} /> : <section className="relative flex min-h-[310px] flex-col justify-between overflow-hidden rounded-[22px] border border-border bg-[#e9e4d8] p-6 sm:p-8">
+    {verify.data ? <LiteratureVerificationResult result={verify.data} inputText={quoteText} ocrConfidence={ocrConfidence} /> : <section className="relative flex min-h-[310px] flex-col justify-between overflow-hidden rounded-[22px] border border-border bg-[#e9e4d8] p-6 sm:p-8">
       <div className="absolute -right-10 -top-16 h-64 w-64 rounded-full border border-primary/10" /><div className="absolute -right-1 -top-7 h-48 w-48 rounded-full border border-primary/10" />
       <div className="relative"><div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary"><CircleHelp size={19} /></div><p className="mt-5 font-display text-[21px] leading-7">{language === 'ta' ? <>முதலில் உரையைப் பார்ப்போம்,<br />கூறப்பட்ட எண்ணை அல்ல.</> : <>We check the text first,<br />not the claimed number.</>}</p><p className="mt-3 max-w-[290px] text-[13px] leading-6 text-foreground/65">{text(language, 'உங்கள் உரையை உள்ளூர் தொகுப்புடன் ஒப்பிட்டு, பொருந்தும் மற்றும் வேறுபடும் சொற்களைக் காட்டுகிறோம்.', 'We compare your text with the local corpus and show matching and differing words.')}</p></div>
       <div className="relative mt-8 flex items-center gap-3 border-l-2 border-primary/50 pl-4"><span className="h-10 w-10 rounded-full border border-primary/25 bg-primary/5" /><span className="h-px w-14 bg-primary/30" /><span className="h-6 w-6 rounded-full border border-primary/25 bg-primary/5" /><span className="h-px flex-1 bg-primary/30" /></div>
     </section>}
-    <div className="flex items-start gap-3 rounded-xl border border-border/80 bg-secondary/50 px-4 py-3.5 lg:col-span-2"><Sparkles size={15} className="mt-0.5 shrink-0 text-primary" /><p className="text-[12px] leading-5 text-muted-foreground">{text(language, 'மெய்க்குறள் திருக்குறள் தொகுப்பில் மட்டுமே தேடுகிறது. உண்மைத்தன்மையைத் தீர்மானிக்க பெரிய மொழி மாதிரியைப் பயன்படுத்தாது. இங்கு கிடைக்காத மேற்கோள் வேறு நூலில் இருக்கலாம்.', 'Meikural searches only the Tirukkural corpus and does not use a large language model to judge authenticity. A quote not found here may appear in another work.')}</p></div>
+    <div className="flex items-start gap-3 rounded-xl border border-border/80 bg-secondary/50 px-4 py-3.5 lg:col-span-2"><Sparkles size={15} className="mt-0.5 shrink-0 text-primary" /><p className="text-[12px] leading-5 text-muted-foreground">{text(language, 'தேர்ந்தெடுத்த இலக்கியத் தொகுப்பில் தேடுகிறோம்; பொருத்தம் இல்லை என்பதால் மேற்கோள் தவறு என்று உறுதி செய்ய முடியாது. தொகுப்பில் இடம்பெறாத வேறு நூலிலிருந்து அது வந்திருக்கலாம்.', 'We search the selected literature corpus; no match does not prove a quote is false. It may come from a work not included in this corpus.')}</p></div>
   </div>;
 }
 
@@ -706,7 +728,7 @@ function VerificationResult({ result, inputText }: { result: Verification; input
   </div>;
 }
 
-function LiteratureVerificationResult({ result, inputText }: { result: LiteratureVerification; inputText: string }) {
+function LiteratureVerificationResult({ result, inputText, ocrConfidence }: { result: LiteratureVerification; inputText: string; ocrConfidence: number | null }) {
   const { language } = useLanguage();
   const record = result.matched_record;
   const recordLines = Array.isArray(record?.lines)
@@ -719,6 +741,14 @@ function LiteratureVerificationResult({ result, inputText }: { result: Literatur
       : [record?.line1, record?.line2].filter((line): line is string => typeof line === 'string').join('\n') || recordLines.join('\n');
   const recordId = typeof record?.id === 'string' || typeof record?.id === 'number' ? record.id : result.matched_id;
   const section = typeof record?.section === 'string' ? record.section : null;
+  const meaningTa = typeof record?.meaning_ta === 'string' ? record.meaning_ta : null;
+  const paraphraseTa = typeof record?.paraphrase_ta === 'string' ? record.paraphrase_ta : null;
+  const translationEn = typeof record?.translation_en === 'string' ? record.translation_en : null;
+  const metadata = [
+    { label: text(language, 'புலவர்', 'Poet'), value: record?.poet },
+    { label: text(language, 'திணை', 'Thinai'), value: record?.thinai },
+    { label: text(language, 'துறை', 'Thurai'), value: record?.thurai },
+  ].filter((item): item is { label: string; value: string } => typeof item.value === 'string');
 
   return <div className="space-y-4">
     <StatusCard verdict={result.verdict} score={result.score} matchedId={result.matched_id} scope={result.matched_scope} claimedOk={result.claimed_id_ok} warning={result.warning} workName={result.work_name} />
@@ -727,19 +757,32 @@ function LiteratureVerificationResult({ result, inputText }: { result: Literatur
         <div className="flex items-center gap-2 font-data text-[10px] uppercase tracking-[.13em] text-muted-foreground"><BookOpen size={14} className="text-primary" />{result.work_name ?? text(language, 'இலக்கியப் பதிவு', 'Literary record')}{recordId !== null && recordId !== undefined && <span className="text-foreground">#{recordId}</span>}</div>
         {section && <span className="text-right text-[11px] text-muted-foreground">{section}</span>}
       </div>
-      <div className="px-5 py-5 sm:px-6"><p className="whitespace-pre-line font-tamil text-[17px] leading-[2.1] text-foreground">{recordText}</p></div>
+      <div className="space-y-4 px-5 py-5 sm:px-6">
+        <p className="whitespace-pre-line font-tamil text-[17px] leading-[2.1] text-foreground">{recordText}</p>
+        {metadata.length > 0 && <dl className="flex flex-wrap gap-x-5 gap-y-2 border-t border-border pt-3 text-[11px] text-muted-foreground">{metadata.map(({ label, value }) => <div key={label}><dt className="inline font-semibold">{label}: </dt><dd className="inline">{value}</dd></div>)}</dl>}
+        {(meaningTa || paraphraseTa || translationEn) && <details className="border-t border-border pt-3 text-[12px] leading-6 text-muted-foreground" data-testid="text-literature-meaning">
+          <summary className="cursor-pointer font-semibold">{text(language, 'இந்த ஆத்திசூடியின் பொருள்', 'Meaning of this Aathichudi')}</summary>
+          {meaningTa && <p className="mt-2 font-tamil">{meaningTa}</p>}
+          {paraphraseTa && <p className="mt-2 font-tamil">{paraphraseTa}</p>}
+          {translationEn && <p className="mt-2">{text(language, 'மூல மொழிபெயர்ப்பு ஆங்கிலத்தில் உள்ளது; சரிபார்க்கப்பட்ட தமிழ் மொழிபெயர்ப்பு கிடைக்கவில்லை.', 'The source translation is English; no verified Tamil translation is available.')}</p>}
+        </details>}
+        {result.work_id === 'purananuru' && <p className="border-t border-border pt-3 text-[11px] leading-5 text-muted-foreground" data-testid="text-purananuru-meaning-unavailable">{text(language, 'இந்தத் தரவுத்தொகுப்பில் சரிபார்க்கப்பட்ட பாடல் பொருள் இல்லை. இங்கு காட்டப்படுவது தமிழ் மூல உரை மற்றும் சொல் ஒப்பீடு மட்டுமே.', 'A verified poem translation is not included in this dataset. This result shows the Tamil source text and textual comparison only.')}</p>}
+      </div>
     </section> : null}
-    {result.verdict !== 'not_found' && <DiffComparison diff={result.diff} inputText={inputText} />}
+    {result.verdict !== 'not_found' && <DiffComparison diff={result.diff} inputText={inputText} ocrConfidence={ocrConfidence} />}
   </div>;
 }
 
 function StatusCard({ verdict, score, matchedId, scope, claimedOk, warning, workName }: { verdict: string; score: number; matchedId: number | null; scope: string | null; claimedOk: boolean | null; warning: string | null; workName?: string | null }) {
   const { language } = useLanguage();
   const wordCountMismatch = warning === 'line_word_count_mismatch';
+  const lineStructureMismatch = warning === 'line_structure_mismatch';
   const style = verdict === 'verified' ? 'status-verified' : verdict === 'near_match' ? 'status-near' : 'status-not-found';
-  const title = wordCountMismatch ? text(language, 'வரி அமைப்பு பொருந்தவில்லை', 'Line structure mismatch') : verdict === 'verified' ? text(language, 'தொகுப்பில் உறுதிப்படுத்தப்பட்டது', 'Verified in corpus') : verdict === 'near_match' ? text(language, 'அருகிய பொருத்தம் — உரையை மீள்பார்க்கவும்', 'Near match — review the text') : text(language, 'தொகுப்பில் கிடைக்கவில்லை', 'Not found in corpus');
+  const title = wordCountMismatch || (lineStructureMismatch && verdict !== 'verified') ? text(language, 'வரி அமைப்பு பொருந்தவில்லை', 'Line structure mismatch') : verdict === 'verified' ? text(language, 'தொகுப்பில் உறுதிப்படுத்தப்பட்டது', 'Verified in corpus') : verdict === 'near_match' ? text(language, 'அருகிய பொருத்தம் — உரையை மீள்பார்க்கவும்', 'Near match — review the text') : text(language, 'தொகுப்பில் கிடைக்கவில்லை', 'Not found in corpus');
   const message = wordCountMismatch
     ? text(language, 'முதல் வரியில் 4 சொற்களும் இரண்டாம் வரியில் 3 சொற்களும் இருக்க வேண்டும்.', 'A full match requires 4 words on line 1 and 3 words on line 2.')
+    : lineStructureMismatch
+      ? text(language, 'உரையின் சொற்கள் பொருந்துகின்றன; வரி முறிப்பு மட்டும் மாறுபடுகிறது. படம் அல்லது மூல உரையுடன் வரிகளைச் சரிபார்க்கவும்.', 'The words match, but the line breaks differ. Check the line layout against the image or source.')
     : verdict === 'verified'
     ? text(language, 'இந்த உரை தேர்ந்தெடுக்கப்பட்ட இலக்கியத் தொகுப்பிலுள்ள பதிவுடன் அப்படியே பொருந்துகிறது.', 'This text exactly matches a record in the selected literary corpus.')
     : verdict === 'near_match'
@@ -750,6 +793,8 @@ function StatusCard({ verdict, score, matchedId, scope, claimedOk, warning, work
     ? text(language, 'கூறப்பட்ட குறள் எண் பொருந்தவில்லை; உரை வேறொரு குறளுடன் பொருந்துகிறது.', 'The claimed Kural number does not match; the text matches another Kural.')
     : wordCountMismatch
       ? null
+      : lineStructureMismatch
+        ? text(language, 'வரி அமைப்பு மட்டும் வேறுபட்டுள்ளது; இதைச் சரிபார்க்கும்போது OCR அல்லது வரி முறிப்பை கவனத்தில் கொள்ளுங்கள்.', 'Only the line layout differs; consider OCR or line wrapping when reviewing this result.')
       : warning ? text(language, 'குறள் எண்ணை மீண்டும் சரிபார்க்கவும்.', 'Check the Kural number again.') : null;
   const marker = verdict === 'verified' ? <Check size={17} /> : verdict === 'near_match' ? <TriangleAlert size={17} /> : <FileSearch size={17} />;
   return <section className={`rounded-[20px] border p-5 ${style}`} data-testid={`status-${verdict}`}>
@@ -769,7 +814,7 @@ function KuralCard({ kural, diff }: { kural: Kural; diff?: Verification['diff'] 
   const { language } = useLanguage();
   return <section className="overflow-hidden rounded-[20px] border border-border bg-card" data-testid={`card-matched-kural-${kural.id}`}>
     <div className="flex items-center justify-between border-b border-border bg-muted/55 px-5 py-3"><div className="flex items-center gap-2 font-data text-[10px] uppercase tracking-[.13em] text-muted-foreground"><BookOpen size={14} className="text-primary" />{text(language, 'குறள்', 'Kural')} <span className="text-foreground">#{kural.id}</span><span>· {kural.paal}</span></div><span className="text-right text-[11px] text-muted-foreground">{text(language, 'அதிகாரம்', 'Chapter')} {kural.chapter_no} · {kural.chapter_name}</span></div>
-    <div className="px-5 py-5 sm:px-6"><p className="font-tamil text-[17px] leading-[2.1] text-foreground" data-testid="text-kural-line1">{renderDiffLine(kural.line1, diff, 'corpus')}</p><p className="font-tamil text-[17px] leading-[2.1] text-foreground" data-testid="text-kural-line2">{renderDiffLine(kural.line2, diff, 'corpus')}</p>{kural.meaning_en && <details className="mt-4 border-t border-border pt-3 text-[12px] leading-5 text-muted-foreground" data-testid="text-kural-meaning"><summary className="cursor-pointer font-semibold">{text(language, 'மூலத்தில் உள்ள ஆங்கிலப் பொருளைக் காண்க', 'View the source English meaning')}</summary><p className="mt-2 italic">{kural.meaning_en}</p></details>}<div className="mt-4 flex items-center gap-2 font-data text-[9px] uppercase tracking-[.12em] text-muted-foreground"><span className={`h-1.5 w-1.5 rounded-full ${kural.needs_human_review ? 'bg-amber-500' : 'bg-primary'}`} />{kural.needs_human_review ? text(language, 'மனிதர் சரிபார்ப்பு பரிந்துரைக்கப்படுகிறது', 'Human review recommended') : text(language, 'தொகுப்பிலுள்ள பதிவு', 'Corpus entry')}</div></div>
+    <div className="px-5 py-5 sm:px-6"><p className="font-tamil text-[17px] leading-[2.1] text-foreground" data-testid="text-kural-line1">{renderDiffLine(kural.line1, diff, 'corpus')}</p><p className="font-tamil text-[17px] leading-[2.1] text-foreground" data-testid="text-kural-line2">{renderDiffLine(kural.line2, diff, 'corpus')}</p>{kural.meaning_en && <p className="mt-4 border-t border-border pt-3 text-[12px] leading-5 text-muted-foreground" data-testid="text-kural-meaning">{text(language, 'மூலப் பொருள் ஆங்கிலத்தில் மட்டுமே உள்ளது; சரிபார்க்கப்பட்ட தமிழ் உரைமாற்றம் கிடைக்கவில்லை.', 'The source meaning is only available in English; no verified Tamil rendering is available.')}</p>}<div className="mt-4 flex items-center gap-2 font-data text-[9px] uppercase tracking-[.12em] text-muted-foreground"><span className={`h-1.5 w-1.5 rounded-full ${kural.needs_human_review ? 'bg-amber-500' : 'bg-primary'}`} />{kural.needs_human_review ? text(language, 'மனிதர் சரிபார்ப்பு பரிந்துரைக்கப்படுகிறது', 'Human review recommended') : text(language, 'தொகுப்பிலுள்ள பதிவு', 'Corpus entry')}</div></div>
   </section>;
 }
 
@@ -791,10 +836,31 @@ function renderDiffLine(text: string, diff: Verification['diff'] | undefined, fi
   return fragments;
 }
 
-function DiffComparison({ diff, inputText }: { diff: Verification['diff']; inputText: string }) {
+function DiffComparison({ diff, inputText, ocrConfidence = null }: { diff: Verification['diff']; inputText: string; ocrConfidence?: number | null }) {
   const { language } = useLanguage();
-  if (!diff.length) return null;
-  return <section className="rounded-[18px] border border-border bg-card p-4 sm:p-5" data-testid="word-diff"><div className="mb-3 flex items-center justify-between"><h3 className="text-[12px] font-semibold">{text(language, 'சொல் ஒப்பீடு', 'Word comparison')}</h3><span className="font-data text-[9px] uppercase tracking-[.1em] text-muted-foreground">{text(language, 'உள்ளீடு / தொகுப்பு', 'Input / corpus')}</span></div><div className="grid grid-cols-2 gap-3 border-b border-border pb-2 font-data text-[9px] uppercase tracking-[.12em] text-muted-foreground"><span>{text(language, 'நீங்கள் அளித்த உரை', 'Your text')}</span><span>{text(language, 'தொகுப்பு உரை', 'Corpus text')}</span></div><div className="divide-y divide-border">{diff.map((part, index) => <div key={`${index}-${part.kind}`} className="grid grid-cols-2 gap-3 py-2.5 text-[12px] leading-5"><span className={part.kind === 'input_only' || part.kind === 'changed' ? 'rounded bg-[#f5e4dc] px-1 text-[#87513e]' : 'text-foreground'}>{part.input || <span className="text-muted-foreground/50">—</span>}</span><span className={part.kind === 'corpus_only' || part.kind === 'changed' ? 'rounded bg-[#e7f0e9] px-1 text-[#285b49]' : 'text-foreground'}>{part.corpus || <span className="text-muted-foreground/50">—</span>}</span></div>)}</div><p className="mt-2 border-t border-border pt-3 text-[10px] leading-4 text-muted-foreground">{text(language, 'நீங்கள் உள்ளிட்டது:', 'You entered:')} {inputText}</p></section>;
+  const differences = diff.filter((part) => part.kind !== 'same');
+  if (!differences.length) return null;
+  const changedCount = differences.filter((part) => part.kind === 'changed').length;
+  const inputOnlyCount = differences.filter((part) => part.kind === 'input_only').length;
+  const corpusOnlyCount = differences.filter((part) => part.kind === 'corpus_only').length;
+  const differenceSummary = [
+    changedCount > 0 && text(language, `மாற்று ${changedCount}`, `changed ${changedCount}`),
+    inputOnlyCount > 0 && text(language, `கூடுதல் ${inputOnlyCount}`, `extra ${inputOnlyCount}`),
+    corpusOnlyCount > 0 && text(language, `விடுபட்ட ${corpusOnlyCount}`, `missing ${corpusOnlyCount}`),
+  ].filter(Boolean).join(' · ');
+  return <section className="rounded-[18px] border border-border bg-card p-4 sm:p-5" data-testid="word-diff">
+    <div className="mb-3 flex items-center justify-between"><h3 className="text-[12px] font-semibold">{text(language, 'என்ன வேறுபடுகிறது?', 'What differs?')}</h3><span className="font-data text-[9px] uppercase tracking-[.1em] text-muted-foreground">{text(language, 'உள்ளீடு / தொகுப்பு', 'Input / corpus')}</span></div>
+    <p className="mb-3 text-[11px] leading-5 text-muted-foreground">{text(language, 'சிவப்பு: உங்கள் உரையில் மாறிய அல்லது கூடுதலாக உள்ள சொற்கள். பச்சை: தொகுப்பிலுள்ள சரியான உரை. OCR பயன்படுத்தினால், படத்துடன் ஒப்பிட்டுத் திருத்தவும்.', 'Red: changed or extra words in your text. Green: the corresponding corpus text. If you used OCR, compare with the image and edit before deciding the source is wrong.')}</p>
+    {ocrConfidence !== null && ocrConfidence < 70 && <p className="mb-3 rounded-lg bg-amber-50 px-3 py-2 text-[11px] leading-5 text-amber-800" data-testid="text-low-ocr-confidence">{text(language, `OCR நம்பிக்கை ${Math.round(ocrConfidence)}% மட்டுமே. வேறுபாடு படத்தைப் படித்ததில் ஏற்பட்டிருக்கலாம்; மூலப் படத்துடன் ஒப்பிடவும்.`, `OCR confidence is only ${Math.round(ocrConfidence)}%. The difference may come from recognition; compare it with the source image.`)}</p>}
+    {differenceSummary && <p className="mb-3 font-data text-[10px] text-muted-foreground" data-testid="text-difference-summary">{differenceSummary}</p>}
+    <div className="grid grid-cols-2 gap-3 border-b border-border pb-2 font-data text-[9px] uppercase tracking-[.12em] text-muted-foreground"><span>{text(language, 'நீங்கள் அளித்த உரை', 'Your text')}</span><span>{text(language, 'தொகுப்பு உரை', 'Corpus text')}</span></div>
+    <div className="divide-y divide-border">{diff.map((part, index) => <div key={`${index}-${part.kind}`} className="grid grid-cols-2 gap-3 py-2.5 text-[12px] leading-5">
+      {part.kind !== 'same' && <span className="col-span-2 font-data text-[9px] uppercase tracking-[.08em] text-muted-foreground">{part.kind === 'changed' ? text(language, 'மாற்றிய சொல்', 'Changed word') : part.kind === 'input_only' ? text(language, 'உங்கள் உரையில் மட்டும் · கூடுதல்', 'Only in your text · extra') : text(language, 'சரியான உரையில் உள்ளது · உங்கள் உரையில் விடுபட்டது', 'In corpus · missing from your text')}</span>}
+      <span className={part.kind === 'input_only' || part.kind === 'changed' ? 'rounded bg-[#f5e4dc] px-1 text-[#87513e]' : 'text-foreground'}>{part.input || <span className="text-muted-foreground/50">—</span>}</span>
+      <span className={part.kind === 'corpus_only' || part.kind === 'changed' ? 'rounded bg-[#e7f0e9] px-1 text-[#285b49]' : 'text-foreground'}>{part.corpus || <span className="text-muted-foreground/50">—</span>}</span>
+    </div>)}</div>
+    <p className="mt-2 border-t border-border pt-3 text-[10px] leading-4 text-muted-foreground">{text(language, 'நீங்கள் உள்ளிட்டது:', 'You entered:')} {inputText}</p>
+  </section>;
 }
 
 function GuardPanel() {
@@ -842,7 +908,7 @@ function QuoteReview({ quote, index }: { quote: GuardQuote; index: number }) {
     <div className="flex items-start justify-between gap-3"><blockquote className="line-clamp-4 text-[13px] leading-6 text-foreground/85">“{quote.text}”</blockquote><span className={`shrink-0 rounded-full px-2.5 py-1 font-data text-[9px] uppercase tracking-[.08em] ${quote.verdict === 'verified' ? 'pill-verified' : quote.verdict === 'near_match' ? 'pill-near' : 'pill-not-found'}`}>{quote.warning === 'line_word_count_mismatch' ? text(language, 'வரி அமைப்பு பொருந்தவில்லை', 'Structure mismatch') : quote.verdict === 'near_match' ? text(language, 'அருகிய பொருத்தம்', 'Near match') : quote.verdict === 'not_found' ? text(language, 'கிடைக்கவில்லை', 'Not found') : text(language, 'உறுதி செய்யப்பட்டது', 'Verified')}</span></div>
     <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-data text-[10px] text-muted-foreground">{quote.matched_id !== null && <span>{text(language, 'நெருக்கமான குறள்', 'Closest Kural')} {quote.matched_id}</span>}<span>{Math.round(quote.score)}% {text(language, 'மதிப்பெண்', 'score')}</span>{scope && <span>{scope}</span>}</div>
     {quote.verdict === 'not_found' ? <p className="mt-3 text-[11px] leading-5 text-[#845340]">{text(language, 'திருக்குறள் தொகுப்பில் இது கிடைக்கவில்லை. இதன் உண்மைத்தன்மையை உறுதிப்படுத்த முடியாது. தமிழ் அறிஞரிடம் ஆலோசிக்கவும்.', 'Not found in the Tirukkural corpus. This cannot be confirmed as authentic. Please consult a Tamil scholar.')}</p> : quote.matched_kural && <div className="mt-3 rounded-xl bg-muted/65 px-4 py-3"><p className="font-tamil text-[14px] leading-8">{quote.matched_kural.line1}<br />{quote.matched_kural.line2}</p><p className="mt-1 font-data text-[9px] text-muted-foreground">{text(language, 'குறள்', 'Kural')} {quote.matched_kural.id} · {quote.matched_kural.chapter_name}</p></div>}
-    {quote.warning && <p className="mt-3 text-[11px] leading-5 text-muted-foreground">{quote.warning === 'attribution_mismatch' ? text(language, 'கூறப்பட்ட குறள் எண் பொருந்தவில்லை.', 'The claimed Kural number does not match.') : quote.warning === 'line_word_count_mismatch' ? text(language, 'முழுப் பொருத்தத்திற்கு முதல் வரியில் 4 சொற்களும் இரண்டாம் வரியில் 3 சொற்களும் இருக்க வேண்டும்.', 'A full match requires 4 words on line 1 and 3 words on line 2.') : quote.warning}</p>}
+    {quote.warning && <p className="mt-3 text-[11px] leading-5 text-muted-foreground">{quote.warning === 'attribution_mismatch' ? text(language, 'கூறப்பட்ட குறள் எண் பொருந்தவில்லை.', 'The claimed Kural number does not match.') : quote.warning === 'line_word_count_mismatch' ? text(language, 'முழுப் பொருத்தத்திற்கு முதல் வரியில் 4 சொற்களும் இரண்டாம் வரியில் 3 சொற்களும் இருக்க வேண்டும்.', 'A full match requires 4 words on line 1 and 3 words on line 2.') : quote.warning === 'line_structure_mismatch' ? text(language, 'சொற்கள் பொருந்துகின்றன; குறளின் 4+3 வரி அமைப்பிலிருந்து முறிப்பு மாறுபடுகிறது.', 'The words match, but the line breaks differ from the 4+3 Kural structure.') : text(language, 'சரிபார்ப்பு எச்சரிக்கை உள்ளது.', 'A verification warning is present.')}</p>}
   </article>;
 }
 
@@ -909,8 +975,13 @@ function humanize(value: string, language: Language) {
     real_quotes: { ta: 'உண்மையான மேற்கோள்கள்', en: 'Real quotes' },
     altered_quotes: { ta: 'மாற்றப்பட்ட மேற்கோள்கள்', en: 'Altered quotes' },
     fabricated_quotes: { ta: 'புனையப்பட்ட மேற்கோள்கள்', en: 'Fabricated quotes' },
+    thirukkural: { ta: 'திருக்குறள்', en: 'Tirukkural' },
+    purananuru: { ta: 'புறநானூறு', en: 'Purananuru' },
+    tolkappiyam: { ta: 'தொல்காப்பியம்', en: 'Tolkappiyam' },
+    aathichudi: { ta: 'ஆத்திசூடி', en: 'Aathichudi' },
+    all: { ta: 'அனைத்தும்', en: 'All' },
   };
-  return labels[value]?.[language] ?? value.replaceAll('_', ' ');
+  return labels[value]?.[language] ?? text(language, 'மற்றவை', 'Other');
 }
 function formatDate(value: string, language: Language) { const parsed = new Date(value); return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleString(language === 'ta' ? 'ta-IN' : 'en-US', { dateStyle: 'medium', timeStyle: 'short' }); }
 
@@ -944,17 +1015,15 @@ function RoutedErrorBoundary({ children }: { children: ReactNode }) {
 }
 
 function App() {
-  const [language, setLanguage] = useState<Language>(() => localStorage.getItem('kuralguard-language') === 'en' ? 'en' : 'ta');
   useEffect(() => {
-    localStorage.setItem('kuralguard-language', language);
-    document.documentElement.lang = language;
-    const title = text(language, 'மெய்க்குறள்', 'Meikural');
+    document.documentElement.lang = 'ta';
+    const title = 'மெய்க்குறள்';
     document.title = title;
     document.querySelectorAll<HTMLMetaElement>('meta[property="og:title"], meta[name="twitter:title"]').forEach((meta) => { meta.content = title; });
-    const description = text(language, 'திருக்குறள் தொகுப்புடன் மேற்கோள்களை ஒப்பிட்டு சரிபார்க்கும் கருவி.', 'Verify quotations against the Tirukkural corpus.');
+    const description = 'தமிழ் இலக்கியத் தொகுப்புகளுடன் மேற்கோள்களை ஒப்பிட்டு சரிபார்க்கும் கருவி.';
     document.querySelectorAll<HTMLMetaElement>('meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]').forEach((meta) => { meta.content = description; });
-  }, [language]);
-  return <LanguageContext.Provider value={{ language, setLanguage }}><QueryClientProvider client={queryClient}><TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><Router /></WouterRouter><Toaster /></TooltipProvider></QueryClientProvider></LanguageContext.Provider>;
+  }, []);
+  return <LanguageContext.Provider value={{ language: 'ta' }}><QueryClientProvider client={queryClient}><TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><Router /></WouterRouter><Toaster /></TooltipProvider></QueryClientProvider></LanguageContext.Provider>;
 }
 
 export default App;
